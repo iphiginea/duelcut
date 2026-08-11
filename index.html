@@ -79,6 +79,9 @@
   .confirmation p{color:var(--text-dim);margin:6px 0 18px;}
   .confirmation button{background:var(--teal);color:#0b0b10;border:none;padding:10px 20px;border-radius:var(--radius);font-weight:600;cursor:pointer;}
   #rankings-list{display:flex;flex-direction:column;gap:8px;}
+  .viewer-type{font-family:'Bebas Neue';font-size:26px;letter-spacing:0.06em;color:var(--teal);text-align:center;margin-bottom:16px;cursor:pointer;text-shadow:0 0 22px rgba(79,224,199,0.3);transition:.15s;}
+  .viewer-type:hover{opacity:0.8;}
+  .viewer-type .hint{display:block;font-family:'IBM Plex Sans';font-size:10px;letter-spacing:0.1em;text-transform:uppercase;color:var(--text-dim);text-shadow:none;margin-top:4px;font-weight:600;}
   .rankings-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:14px;}
   .header-btns{display:flex;gap:8px;}
   .rankings-count{color:var(--text-dim);font-size:13px;}
@@ -159,6 +162,7 @@
       </div>
     </section>
     <section id="rankings-view" class="hidden">
+      <div id="viewer-type" class="viewer-type hidden"></div>
       <div class="rankings-header">
         <span class="rankings-count mono" id="rankings-count"></span>
         <div class="header-btns">
@@ -253,6 +257,7 @@ function bindEvents(){
   el('recap-btn').onclick = openRecap;
   el('recap-close').onclick = closeRecap;
   el('recap-shuffle').onclick = () => { el('recap-text').innerHTML = buildRecap(); };
+  el('viewer-type').onclick = renderViewerType;
   initDuelSwipe();
 }
 function renderView(){
@@ -380,43 +385,60 @@ function renderDuel(){
   el('duel-right').onclick = () => handleDuelChoice(false);
 }
 let dragState = null;
+let mouseDragActive = false;
+function getEventX(e){
+  if(e.touches && e.touches.length) return e.touches[0].clientX;
+  if(e.changedTouches && e.changedTouches.length) return e.changedTouches[0].clientX;
+  return e.clientX;
+}
 function initDuelSwipe(){
   const stage = el('duel-stage');
-  stage.addEventListener('pointerdown', onDuelPointerDown);
-  stage.addEventListener('pointermove', onDuelPointerMove);
-  stage.addEventListener('pointerup', onDuelPointerUp);
-  stage.addEventListener('pointercancel', onDuelPointerCancel);
+  stage.addEventListener('touchstart', onDuelDragStart, {passive:true});
+  stage.addEventListener('touchmove', onDuelDragMove, {passive:false});
+  stage.addEventListener('touchend', onDuelDragEnd);
+  stage.addEventListener('touchcancel', onDuelDragCancel);
+  stage.addEventListener('mousedown', onDuelDragStart);
 }
-function onDuelPointerDown(e){
-  dragState = { startX: e.clientX, dx: 0, pointerId: e.pointerId };
+function onDuelDragStart(e){
+  dragState = { startX: getEventX(e), dx: 0 };
   const stage = el('duel-stage');
-  stage.setPointerCapture(e.pointerId);
   stage.classList.add('dragging');
   stage.style.transition = '';
+  if(e.type === 'mousedown'){
+    mouseDragActive = true;
+    document.addEventListener('mousemove', onDuelDragMove);
+    document.addEventListener('mouseup', onDuelDragEnd);
+  }
 }
-function onDuelPointerMove(e){
-  if(!dragState || e.pointerId !== dragState.pointerId) return;
-  dragState.dx = e.clientX - dragState.startX;
+function onDuelDragMove(e){
+  if(!dragState) return;
+  if(e.type === 'touchmove') e.preventDefault();
+  dragState.dx = getEventX(e) - dragState.startX;
   const stage = el('duel-stage');
   const clamped = Math.max(-160, Math.min(160, dragState.dx));
   stage.style.transform = `translateX(${clamped}px) rotate(${clamped/28}deg)`;
   el('duel-left').classList.toggle('swipe-target', dragState.dx < -40);
   el('duel-right').classList.toggle('swipe-target', dragState.dx > 40);
 }
-function onDuelPointerUp(e){
-  if(!dragState || e.pointerId !== dragState.pointerId) return;
+function onDuelDragEnd(e){
+  if(!dragState) return;
   const dx = dragState.dx;
   const stage = el('duel-stage');
   stage.classList.remove('dragging');
   const threshold = Math.min(110, stage.offsetWidth * 0.22);
   dragState = null;
+  if(mouseDragActive){
+    document.removeEventListener('mousemove', onDuelDragMove);
+    document.removeEventListener('mouseup', onDuelDragEnd);
+    mouseDragActive = false;
+  }
   if(Math.abs(dx) > threshold){
     flingAndChoose(dx > 0);
   }else{
     resetDuelDrag();
   }
 }
-function onDuelPointerCancel(){
+function onDuelDragCancel(){
   dragState = null;
   resetDuelDrag();
 }
@@ -510,6 +532,7 @@ function resetToSearch(){
   el('search-status').innerHTML = '';
 }
 function renderRankings(){
+  renderViewerType();
   const container = el('rankings-list');
   el('rankings-count').textContent = state.library.length ? `${state.library.length} movie${state.library.length===1?'':'s'} ranked` : '';
   if(state.library.length===0){
@@ -571,6 +594,69 @@ function exportCSV(){
   a.click();
   document.body.removeChild(a);
   URL.revokeObjectURL(url);
+}
+const GENRE_DESCRIPTORS = {
+  'Action': ['Reckless','Explosive','Restless'],
+  'Adventure': ['Restless','Bold','Wandering'],
+  'Animation': ['Childlike','Nostalgic','Whimsical'],
+  'Comedy': ['Chaotic','Goofy','Unserious'],
+  'Crime': ['Villainous','Shady','Calculating'],
+  'Documentary': ['Pretentious','Insufferable','Well-Read'],
+  'Drama': ['Sensitive','Brooding','Tortured'],
+  'Family': ['Wholesome','Soft','Sentimental'],
+  'Fantasy': ['Whimsical','Delusional','Mystical'],
+  'History': ['Nostalgic','Professorial','Long-Winded'],
+  'Horror': ['Deranged','Feral','Twisted'],
+  'Music': ['Dramatic','Extra','Emotional'],
+  'Mystery': ['Suspicious','Cryptic','Nosy'],
+  'Romance': ['Hopeless','Yearning','Soft'],
+  'Science Fiction': ['Alien','Cerebral','Detached'],
+  'TV Movie': ['Basic','Unbothered','Undemanding'],
+  'Thriller': ['Paranoid','Jumpy','On-Edge'],
+  'War': ['Grim','Hardened','Stoic'],
+  'Western': ['Stubborn','Lone','Weathered']
+};
+function computeViewerType(){
+  const lib = state.library;
+  if(lib.length < 3) return null;
+  const sorted = [...lib].sort((a,b)=>b.elo-a.elo);
+  const topSlice = sorted.slice(0, Math.max(3, Math.ceil(sorted.length/2)));
+  const counts = {};
+  topSlice.forEach(m => (m.genres||[]).forEach(gid => {
+    const name = state.genreMap[gid];
+    if(name) counts[name] = (counts[name]||0) + 1;
+  }));
+  const ranked = Object.entries(counts).sort((a,b)=>b[1]-a[1]).map(([name]) => name);
+  if(ranked.length === 0) return null;
+  const words = [];
+  const usedWords = new Set();
+  const genrePool = ranked.length >= 3 ? ranked.slice(0,3) : ranked;
+  genrePool.forEach(g => {
+    const pool = (GENRE_DESCRIPTORS[g] || [g]).filter(w => !usedWords.has(w));
+    const chosen = pool.length ? pool[Math.floor(Math.random()*pool.length)] : g;
+    usedWords.add(chosen);
+    words.push(chosen);
+  });
+  while(words.length < 3 && ranked.length){
+    const g = ranked[Math.floor(Math.random()*ranked.length)];
+    const pool = (GENRE_DESCRIPTORS[g] || [g]).filter(w => !usedWords.has(w));
+    if(pool.length === 0) break;
+    const chosen = pool[Math.floor(Math.random()*pool.length)];
+    usedWords.add(chosen);
+    words.push(chosen);
+  }
+  return words;
+}
+function renderViewerType(){
+  const words = computeViewerType();
+  const badge = el('viewer-type');
+  if(!words){
+    badge.classList.add('hidden');
+    badge.innerHTML = '';
+    return;
+  }
+  badge.classList.remove('hidden');
+  badge.innerHTML = `${words.join(' · ')}<span class="hint">tap to reroll</span>`;
 }
 function openRecap(){
   el('recap-text').innerHTML = buildRecap();
