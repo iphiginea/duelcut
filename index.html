@@ -115,6 +115,14 @@
   #settings-modal button, #recap-modal button{padding:9px 16px;border-radius:8px;border:1px solid var(--border);background:var(--surface-2);color:var(--text);cursor:pointer;font-weight:600;font-size:13px;}
   #settings-modal button.save, #recap-modal button.save{background:var(--teal);border-color:var(--teal);color:#0b0b10;}
   #settings-modal button.cancel:hover, #recap-modal button.cancel:hover{border-color:var(--text-dim);}
+  .settings-section{border-top:1px solid var(--border);margin-top:18px;padding-top:18px;}
+  .settings-section h3{font-family:'Bebas Neue';font-size:20px;font-weight:400;margin:0 0 6px;}
+  .settings-section p{color:var(--text-dim);font-size:13px;line-height:1.5;margin-bottom:12px;}
+  .file-btn{display:inline-block;padding:9px 16px;border-radius:8px;border:1px solid var(--border);background:var(--surface-2);color:var(--text);cursor:pointer;font-weight:600;font-size:13px;}
+  .file-btn:hover{border-color:var(--teal);color:var(--teal);}
+  .file-btn.primary{background:var(--teal);border-color:var(--teal);color:#0b0b10;}
+  .file-row{display:flex;gap:8px;flex-wrap:wrap;}
+  .status-note{font-size:12px;color:var(--text-dim);margin-top:10px;line-height:1.5;}
   .recap-text{color:var(--text);font-size:14px;line-height:1.65;margin:12px 0 18px;}
   .recap-text p{margin:0 0 12px;}
   .recap-text .stat{color:var(--teal);font-weight:600;}
@@ -184,6 +192,27 @@
     <div class="row">
       <button class="cancel" id="settings-cancel">Cancel</button>
       <button class="save" id="settings-save">Save</button>
+    </div>
+
+    <div class="settings-section">
+      <h3>Backup &amp; Sync</h3>
+      <p>Export your rankings as a file, then import it in another browser or on another device to bring everything over. <strong>Importing replaces</strong> whatever's currently on this device.</p>
+      <div class="file-row">
+        <button class="file-btn" id="export-backup-btn">Export Backup</button>
+        <label class="file-btn" for="import-backup-input">Import Backup</label>
+        <input type="file" id="import-backup-input" accept="application/json" style="display:none;">
+      </div>
+      <div class="status-note" id="backup-status"></div>
+    </div>
+
+    <div class="settings-section">
+      <h3>Import from Letterboxd</h3>
+      <p>In Letterboxd, go to Settings → Import &amp; Export → Export Your Data, then upload the <code>diary.csv</code> or <code>ratings.csv</code> file from the downloaded zip. Each film gets matched on TMDB and seeded with a starting score based on your star rating.</p>
+      <div class="file-row">
+        <label class="file-btn primary" for="import-letterboxd-input">Choose CSV File</label>
+        <input type="file" id="import-letterboxd-input" accept=".csv" style="display:none;">
+      </div>
+      <div class="status-note" id="letterboxd-status"></div>
     </div>
   </div>
 </div>
@@ -258,6 +287,9 @@ function bindEvents(){
   el('recap-close').onclick = closeRecap;
   el('recap-shuffle').onclick = () => { el('recap-text').innerHTML = buildRecap(); };
   el('viewer-type').onclick = renderViewerType;
+  el('export-backup-btn').onclick = exportBackup;
+  el('import-backup-input').addEventListener('change', handleImportBackupFile);
+  el('import-letterboxd-input').addEventListener('change', handleImportLetterboxdFile);
   initDuelSwipe();
 }
 function renderView(){
@@ -594,6 +626,153 @@ function exportCSV(){
   a.click();
   document.body.removeChild(a);
   URL.revokeObjectURL(url);
+}
+function exportBackup(){
+  const payload = {
+    app: 'duel-cut',
+    version: 1,
+    exportedAt: new Date().toISOString(),
+    library: state.library,
+    genreMap: state.genreMap
+  };
+  const blob = new Blob([JSON.stringify(payload, null, 2)], {type:'application/json'});
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = 'duel-cut-backup.json';
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
+  URL.revokeObjectURL(url);
+  el('backup-status').textContent = `Exported ${state.library.length} movies.`;
+}
+function handleImportBackupFile(e){
+  const file = e.target.files[0];
+  e.target.value = '';
+  if(!file) return;
+  const reader = new FileReader();
+  reader.onload = async () => {
+    try{
+      const data = JSON.parse(reader.result);
+      if(!Array.isArray(data.library)) throw new Error('bad format');
+      state.library = data.library;
+      if(data.genreMap) state.genreMap = data.genreMap;
+      await storageSet('duelcut:library', JSON.stringify(state.library));
+      if(data.genreMap) await storageSet('duelcut:genres', JSON.stringify(state.genreMap));
+      el('backup-status').textContent = `Imported ${state.library.length} movies. This replaced your previous library on this device.`;
+      if(state.view === 'rankings') renderRankings();
+    }catch(err){
+      el('backup-status').textContent = `Couldn't read that file — make sure it's a Duel Cut backup (.json).`;
+    }
+  };
+  reader.readAsText(file);
+}
+function parseCSV(text){
+  const rows = [];
+  let row = [], field = '', inQuotes = false;
+  for(let i = 0; i < text.length; i++){
+    const c = text[i];
+    if(inQuotes){
+      if(c === '"'){
+        if(text[i+1] === '"'){ field += '"'; i++; }
+        else inQuotes = false;
+      }else{
+        field += c;
+      }
+    }else{
+      if(c === '"'){ inQuotes = true; }
+      else if(c === ','){ row.push(field); field = ''; }
+      else if(c === '\n' || c === '\r'){
+        if(c === '\r' && text[i+1] === '\n') i++;
+        row.push(field); field = '';
+        rows.push(row); row = [];
+      }else{
+        field += c;
+      }
+    }
+  }
+  if(field.length || row.length){ row.push(field); rows.push(row); }
+  return rows.filter(r => !(r.length === 1 && r[0] === ''));
+}
+function parseLetterboxdCSV(text){
+  const rows = parseCSV(text);
+  if(rows.length < 2) return [];
+  const header = rows[0].map(h => h.trim().toLowerCase());
+  const nameIdx = header.indexOf('name');
+  const yearIdx = header.indexOf('year');
+  const ratingIdx = header.indexOf('rating');
+  if(nameIdx === -1) return [];
+  const items = [];
+  for(let i = 1; i < rows.length; i++){
+    const r = rows[i];
+    if(!r[nameIdx]) continue;
+    const rating = ratingIdx !== -1 ? parseFloat(r[ratingIdx]) : NaN;
+    items.push({
+      title: r[nameIdx].trim(),
+      year: yearIdx !== -1 ? (r[yearIdx]||'').trim() : '',
+      rating: isNaN(rating) ? null : rating
+    });
+  }
+  const seen = new Map();
+  items.forEach(it => {
+    const key = it.title.toLowerCase() + '|' + it.year;
+    const existing = seen.get(key);
+    if(!existing || (it.rating != null && existing.rating == null)){
+      seen.set(key, it);
+    }
+  });
+  return [...seen.values()];
+}
+async function handleImportLetterboxdFile(e){
+  const file = e.target.files[0];
+  e.target.value = '';
+  if(!file) return;
+  if(!state.apiKey){
+    el('letterboxd-status').textContent = 'Add your TMDB API key above first, then try again.';
+    return;
+  }
+  const text = await file.text();
+  const items = parseLetterboxdCSV(text);
+  if(items.length === 0){
+    el('letterboxd-status').textContent = `Couldn't find any films in that file — make sure it's diary.csv or ratings.csv from your Letterboxd export.`;
+    return;
+  }
+  let added = 0, skipped = 0, failed = 0;
+  for(let i = 0; i < items.length; i++){
+    const it = items[i];
+    el('letterboxd-status').textContent = `Matching ${i+1} of ${items.length}: ${it.title}…`;
+    const alreadyByTitle = state.library.find(m =>
+      m.title.toLowerCase() === it.title.toLowerCase() && (!it.year || m.year === it.year));
+    if(alreadyByTitle){ skipped++; continue; }
+    try{
+      const query = encodeURIComponent(it.title);
+      const yearParam = it.year ? `&year=${encodeURIComponent(it.year)}` : '';
+      const res = await fetch(`https://api.themoviedb.org/3/search/movie?api_key=${encodeURIComponent(state.apiKey)}&query=${query}${yearParam}`);
+      if(!res.ok){ failed++; continue; }
+      const data = await res.json();
+      const match = (data.results || [])[0];
+      if(!match){ failed++; continue; }
+      if(state.library.find(m => m.id === match.id)){ skipped++; continue; }
+      const elo = it.rating != null ? 1500 + (it.rating - 3) * 200 : 1500;
+      state.library.push({
+        id: match.id,
+        title: match.title,
+        year: (match.release_date||'').slice(0,4) || it.year || '—',
+        poster_path: match.poster_path,
+        elo,
+        genres: match.genre_ids || [],
+        tmdbRating: typeof match.vote_average === 'number' ? match.vote_average : null,
+        rerankCount: 0
+      });
+      added++;
+    }catch(err){
+      failed++;
+    }
+    await new Promise(r => setTimeout(r, 150));
+  }
+  await storageSet('duelcut:library', JSON.stringify(state.library));
+  el('letterboxd-status').textContent = `Done — added ${added}, skipped ${skipped} (already logged), ${failed} couldn't be matched on TMDB.`;
+  if(state.view === 'rankings') renderRankings();
 }
 const GENRE_DESCRIPTORS = {
   'Action': ['Reckless','Explosive','Restless'],
