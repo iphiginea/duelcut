@@ -104,4 +104,1215 @@
   .stats-bar-fill{height:100%;background:var(--teal);border-radius:4px;}
   .stats-bar-count{width:24px;flex:none;text-align:right;color:var(--text-dim);}
   .random-duel-status{font-size:12px;color:var(--amber);margin-bottom:10px;}
-  .tier-row{display:flex;gap:10
+  .tier-row{display:flex;gap:10px;align-items:flex-start;margin-bottom:10px;background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:10px;}
+  .tier-label{width:36px;flex:none;font-family:'Bebas Neue';font-size:24px;text-align:center;border-radius:6px;padding:8px 0;color:#0b0b10;}
+  .tier-label.tier-s{background:var(--amber);}
+  .tier-label.tier-a{background:var(--olive);}
+  .tier-label.tier-b{background:#8fd6c9;}
+  .tier-label.tier-c{background:var(--text-dim);}
+  .tier-label.tier-d{background:var(--crimson);color:#fff;}
+  .tier-movies{display:flex;flex-wrap:wrap;gap:6px;flex:1;}
+  .tier-movie{width:44px;}
+  .tier-movie img{width:44px;height:66px;object-fit:cover;border-radius:4px;display:block;}
+  .tier-movie-placeholder{width:44px;height:66px;background:var(--surface-2);border-radius:4px;display:flex;align-items:center;justify-content:center;color:var(--text-dim);font-size:9px;text-align:center;}
+  .undo-btn{display:block;margin:10px auto 0;background:none;border:1px solid var(--border);color:var(--text-dim);padding:8px 14px;border-radius:8px;font-size:12px;cursor:pointer;transition:.15s;}
+  .undo-btn:hover{border-color:var(--amber);color:var(--amber);}
+  .compare-list{display:flex;flex-direction:column;gap:8px;margin-top:12px;}
+  .compare-row{background:var(--surface-2);border-radius:8px;padding:10px 12px;}
+  .compare-row .t{font-weight:600;font-size:14px;}
+  .compare-row .scores{color:var(--text-dim);font-size:12px;margin-top:2px;}
+  .stat-inline{color:var(--amber);font-weight:600;}
+  .discover-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(100px,1fr));gap:10px;margin-top:12px;}
+  .rankings-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:14px;}
+  .rankings-count{color:var(--text-dim);font-size:13px;}
+  .rank-row{display:flex;align-items:center;gap:12px;background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:8px 12px;position:relative;}
+  .rank-row .rank{font-family:'IBM Plex Mono';font-weight:600;font-size:15px;color:var(--text-dim);width:28px;text-align:center;flex:none;}
+  .rank-row:nth-child(1) .rank{color:var(--amber);}
+  .rank-row:nth-child(2) .rank{color:#cfcfd6;}
+  .rank-row:nth-child(3) .rank{color:#c98a4b;}
+  .rank-row img{width:38px;height:57px;object-fit:cover;border-radius:4px;flex:none;background:var(--surface-2);}
+  .rank-row .placeholder-thumb{width:38px;height:57px;border-radius:4px;background:var(--surface-2);display:flex;align-items:center;justify-content:center;color:var(--text-dim);font-size:9px;flex:none;text-align:center;}
+  .rank-row .info{flex:1;min-width:0;}
+  .rank-row .info .t{font-weight:600;font-size:14px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+  .rank-row .info .y{color:var(--text-dim);font-size:11px;}
+  .rank-row .score{font-family:'IBM Plex Mono';font-size:14px;color:var(--amber);flex:none;}
+  .rank-row .remove-btn{background:none;border:none;color:var(--text-dim);cursor:pointer;font-size:16px;flex:none;padding:4px;}
+  .rank-row .remove-btn:hover{color:var(--crimson);}
+  .rank-row .rerank-btn{background:none;border:none;color:var(--text-dim);cursor:pointer;font-size:16px;flex:none;padding:4px;}
+  .rank-row .rerank-btn:hover{color:var(--amber);}
+  .rank-row .confirm-remove{display:flex;gap:6px;flex:none;}
+  .rank-row .confirm-remove button{font-size:11px;padding:4px 8px;border-radius:6px;border:1px solid var(--border);background:var(--surface-2);color:var(--text);cursor:pointer;}
+  .rank-row .confirm-remove button.yes{border-color:var(--crimson);color:var(--crimson);}
+  #settings-modal, #discover-modal, #compare-modal, #stats-modal{position:fixed;inset:0;background:rgba(10,10,14,0.7);display:flex;align-items:center;justify-content:center;padding:20px;z-index:10;}
+  #settings-modal .box, #discover-modal .box, #compare-modal .box, #stats-modal .box{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:24px;max-width:440px;width:100%;max-height:80vh;overflow-y:auto;}
+  #settings-modal h2, #discover-modal h2, #compare-modal h2, #stats-modal h2{margin:0 0 8px;font-family:'Bebas Neue';font-size:26px;font-weight:400;}
+  #settings-modal p{color:var(--text-dim);font-size:13px;line-height:1.5;margin-bottom:14px;}
+  #settings-modal a{color:var(--amber);}
+  #settings-modal input{width:100%;background:var(--surface-2);border:1px solid var(--border);color:var(--text);padding:10px 12px;border-radius:8px;font-family:'IBM Plex Mono';font-size:13px;margin-bottom:14px;}
+  #settings-modal .row, #discover-modal .row, #compare-modal .row, #stats-modal .row{display:flex;gap:8px;justify-content:flex-end;}
+  #settings-modal button, #discover-modal button, #compare-modal button, #stats-modal button{padding:9px 16px;border-radius:8px;border:1px solid var(--border);background:var(--surface-2);color:var(--text);cursor:pointer;font-weight:600;font-size:13px;}
+  #settings-modal button.save, #discover-modal button.save, #compare-modal button.save, #stats-modal button.save{background:var(--teal);border-color:var(--teal);color:var(--text);}
+  #settings-modal button.cancel:hover, #discover-modal button.cancel:hover, #compare-modal button.cancel:hover, #stats-modal button.cancel:hover{border-color:var(--text-dim);}
+  .settings-section{border-top:1px solid var(--border);margin-top:18px;padding-top:18px;}
+  .settings-section h3{font-family:'Bebas Neue';font-size:20px;font-weight:400;margin:0 0 6px;}
+  .settings-section p{color:var(--text-dim);font-size:13px;line-height:1.5;margin-bottom:12px;}
+  .file-btn{display:inline-block;padding:9px 16px;border-radius:8px;border:1px solid var(--border);background:var(--surface-2);color:var(--text);cursor:pointer;font-weight:600;font-size:13px;}
+  .file-btn:hover{border-color:var(--amber);color:var(--amber);}
+  .file-btn.primary{background:var(--teal);border-color:var(--teal);color:var(--text);}
+  .file-row{display:flex;gap:8px;flex-wrap:wrap;}
+  .status-note{font-size:12px;color:var(--text-dim);margin-top:10px;line-height:1.5;}
+  .spinner{width:18px;height:18px;border:2px solid var(--border);border-top-color:var(--teal);border-radius:50%;animation:spin .7s linear infinite;display:inline-block;}
+  @keyframes spin{to{transform:rotate(360deg);}}
+</style>
+</head>
+<body>
+<div id="app">
+  <header>
+    <div class="brand">
+      <h1 class="display">Duel Cut</h1>
+      <small>Your taste, directed by you.</small>
+    </div>
+    <div class="header-icons">
+      <button id="stats-btn" title="Stats">📊</button>
+      <button id="random-duel-btn" title="Random Duel">🎲</button>
+      <button id="discover-btn" title="Discover">🔎</button>
+      <button id="export-csv-btn" title="Export CSV">⬇️</button>
+      <button id="settings-btn" title="Settings">⚙</button>
+    </div>
+  </header>
+
+  <div id="random-duel-status" class="random-duel-status hidden"></div>
+
+  <nav>
+    <button id="tab-log" class="active">Log a Movie</button>
+    <button id="tab-rankings">Rankings</button>
+  </nav>
+
+  <main>
+    <section id="log-view">
+      <div id="search-panel">
+        <div class="search-row">
+          <input id="search-input" type="text" placeholder="Search a movie you've seen…" autocomplete="off">
+          <button id="search-btn">Search</button>
+        </div>
+        <div id="search-status"></div>
+        <div id="search-results"></div>
+      </div>
+
+      <div id="duel-arena" class="hidden">
+        <div class="duel-progress mono" id="duel-progress"></div>
+        <div id="duel-stage" class="duel-stage">
+          <div class="duel-card" id="duel-left"></div>
+          <div class="vs-divider"><span>VS</span></div>
+          <div class="duel-card" id="duel-right"></div>
+        </div>
+        <div class="inline-msg" style="text-align:center;">Swipe left or right toward the one you liked more — or just tap it.</div>
+        <button id="undo-duel-btn" class="undo-btn hidden">↺ Undo last pick</button>
+      </div>
+
+      <div id="confirmation-view" class="hidden confirmation">
+        <div class="rank-number mono" id="confirm-rank"></div>
+        <div class="rank-out-of">out of 10</div>
+        <p id="confirm-text"></p>
+        <button id="confirm-done">Log another</button>
+      </div>
+    </section>
+
+    <section id="rankings-view" class="hidden">
+      <p class="rankings-tagline">See who made the cut.</p>
+      <input id="rankings-search" type="text" class="rankings-search" placeholder="Find a movie in your rankings…" autocomplete="off">
+      <div class="filter-row">
+        <select id="filter-genre"><option value="">All Genres</option></select>
+        <select id="filter-decade"><option value="">All Decades</option></select>
+        <select id="sort-select">
+          <option value="score">Sort: Score</option>
+          <option value="recent">Sort: Recently Added</option>
+          <option value="title">Sort: Title A–Z</option>
+        </select>
+      </div>
+      <div class="view-toggle">
+        <button id="view-list-btn" class="active">List</button>
+        <button id="view-tier-btn">Tiers</button>
+      </div>
+      <div class="rankings-header">
+        <span class="rankings-count mono" id="rankings-count"></span>
+      </div>
+      <div id="rankings-list"></div>
+    </section>
+  </main>
+</div>
+
+<div id="settings-modal" class="hidden">
+  <div class="box">
+    <h2 class="display">TMDB API Key</h2>
+    <p>Duel Cut pulls posters and details from The Movie Database. Grab a free API key from
+      <a href="https://www.themoviedb.org/settings/api" target="_blank">themoviedb.org/settings/api</a>
+      and paste it below. It's stored only for you.</p>
+    <input id="api-key-input" type="text" placeholder="Paste your TMDB API key">
+    <div class="row">
+      <button class="cancel" id="settings-cancel">Cancel</button>
+      <button class="save" id="settings-save">Save</button>
+    </div>
+
+    <div class="settings-section">
+      <h3>Backup &amp; Sync</h3>
+      <p>Export your rankings as a file, then import it in another browser or on another device to bring everything over. <strong>Importing replaces</strong> whatever's currently on this device.</p>
+      <div class="file-row">
+        <button class="file-btn" id="export-backup-btn">Export Backup</button>
+        <label class="file-btn" for="import-backup-input">Import Backup</label>
+        <input type="file" id="import-backup-input" accept="application/json" style="display:none;">
+      </div>
+      <div class="status-note" id="backup-status"></div>
+    </div>
+
+    <div class="settings-section">
+      <h3>Import from Letterboxd</h3>
+      <p>In Letterboxd, go to Settings → Import &amp; Export → Export Your Data, then upload the <code>diary.csv</code> or <code>ratings.csv</code> file from the downloaded zip. Each film gets matched on TMDB and seeded with a starting score based on your star rating.</p>
+      <div class="file-row">
+        <label class="file-btn primary" for="import-letterboxd-input">Choose CSV File</label>
+        <input type="file" id="import-letterboxd-input" accept=".csv" style="display:none;">
+      </div>
+      <div class="status-note" id="letterboxd-status"></div>
+    </div>
+
+    <div class="settings-section">
+      <h3>Compare with a Friend</h3>
+      <p>Have them export their own backup (Settings → Export Backup on their device) and send you the file. Upload it here to see how your tastes line up — this won't change your own rankings.</p>
+      <div class="file-row">
+        <label class="file-btn" for="compare-input">Choose Their Backup</label>
+        <input type="file" id="compare-input" accept="application/json" style="display:none;">
+      </div>
+      <div class="status-note" id="compare-status"></div>
+    </div>
+  </div>
+</div>
+
+<div id="compare-modal" class="hidden">
+  <div class="box">
+    <h2 class="display">Taste Match</h2>
+    <div id="compare-content"></div>
+    <div class="row">
+      <button class="cancel" id="compare-close">Close</button>
+    </div>
+  </div>
+</div>
+
+<div id="discover-modal" class="hidden">
+  <div class="box">
+    <h2 class="display">Hidden Gems</h2>
+    <div id="discover-content"></div>
+    <div class="row">
+      <button class="cancel" id="discover-close">Close</button>
+      <button class="save" id="discover-reroll">🔀 Reroll</button>
+    </div>
+  </div>
+</div>
+
+<div id="stats-modal" class="hidden">
+  <div class="box">
+    <h2 class="display">Your Stats</h2>
+    <div id="stats-content"></div>
+    <div class="row">
+      <button class="cancel" id="stats-close">Close</button>
+    </div>
+  </div>
+</div>
+
+<script>
+const state = {
+  apiKey: null,
+  library: [],
+  view: 'log',
+  pendingMovie: null,
+  duelQueue: [],
+  duelIndex: 0,
+  isRerank: false,
+  isRandomDuel: false,
+  lastPendingWon: null,
+  duelHistory: [],
+  rankingsViewMode: 'list',
+  discoverCandidates: [],
+  genreMap: {},
+  rankingsQuery: '',
+  filterGenre: '',
+  filterDecade: '',
+  sortMode: 'score',
+  totalDuels: 0
+};
+
+const el = id => document.getElementById(id);
+
+async function storageGet(key){
+  try{ return localStorage.getItem(key); }catch(e){ return null; }
+}
+async function storageSet(key, value){
+  try{ localStorage.setItem(key, value); }catch(e){ console.error('storage set failed', e); }
+}
+
+async function init(){
+  const key = await storageGet('duelcut:api-key');
+  if(key) state.apiKey = key;
+  const lib = await storageGet('duelcut:library');
+  if(lib){ try{ state.library = JSON.parse(lib); }catch(e){ state.library = []; } }
+  const genres = await storageGet('duelcut:genres');
+  if(genres){ try{ state.genreMap = JSON.parse(genres); }catch(e){ state.genreMap = {}; } }
+  const duels = await storageGet('duelcut:totalduels');
+  if(duels){ const n = parseInt(duels, 10); state.totalDuels = isNaN(n) ? 0 : n; }
+  bindEvents();
+  renderView();
+  ensureGenreMap();
+}
+
+async function ensureGenreMap(){
+  if(Object.keys(state.genreMap).length > 0) return;
+  if(!state.apiKey) return;
+  try{
+    const res = await fetch(`https://api.themoviedb.org/3/genre/movie/list?api_key=${encodeURIComponent(state.apiKey)}`);
+    if(!res.ok) return;
+    const data = await res.json();
+    const map = {};
+    (data.genres || []).forEach(g => { map[g.id] = g.name; });
+    state.genreMap = map;
+    await storageSet('duelcut:genres', JSON.stringify(map));
+  }catch(e){ /* skip genre flavor if this fails */ }
+}
+
+function bindEvents(){
+  el('tab-log').onclick = () => { state.view='log'; renderView(); };
+  el('tab-rankings').onclick = () => { state.view='rankings'; renderView(); };
+  el('settings-btn').onclick = openSettings;
+  el('settings-cancel').onclick = closeSettings;
+  el('settings-save').onclick = saveApiKey;
+  el('search-btn').onclick = runSearch;
+  el('search-input').addEventListener('keydown', e => { if(e.key==='Enter') runSearch(); });
+  let debounceTimer;
+  el('search-input').addEventListener('input', () => {
+    clearTimeout(debounceTimer);
+    debounceTimer = setTimeout(runSearch, 400);
+  });
+  el('confirm-done').onclick = resetToSearch;
+  el('export-csv-btn').onclick = exportCSV;
+  el('export-backup-btn').onclick = exportBackup;
+  el('import-backup-input').addEventListener('change', handleImportBackupFile);
+  el('import-letterboxd-input').addEventListener('change', handleImportLetterboxdFile);
+  el('rankings-search').addEventListener('input', () => {
+    state.rankingsQuery = el('rankings-search').value;
+    renderRankingsList();
+  });
+  el('discover-btn').onclick = openDiscover;
+  el('discover-close').onclick = closeDiscover;
+  el('discover-reroll').onclick = () => { if(state.discoverCandidates.length) showDiscoverBatch(); };
+  el('view-list-btn').onclick = () => { state.rankingsViewMode = 'list'; updateViewToggle(); renderRankingsList(); };
+  el('view-tier-btn').onclick = () => { state.rankingsViewMode = 'tiers'; updateViewToggle(); renderRankingsList(); };
+  el('random-duel-btn').onclick = startRandomDuel;
+  el('undo-duel-btn').onclick = undoLastDuel;
+  el('compare-input').addEventListener('change', handleCompareFile);
+  el('compare-close').onclick = () => el('compare-modal').classList.add('hidden');
+  el('filter-genre').addEventListener('change', () => { state.filterGenre = el('filter-genre').value; renderRankingsList(); });
+  el('filter-decade').addEventListener('change', () => { state.filterDecade = el('filter-decade').value; renderRankingsList(); });
+  el('sort-select').addEventListener('change', () => { state.sortMode = el('sort-select').value; renderRankingsList(); });
+  el('stats-btn').onclick = () => { el('stats-content').innerHTML = buildStats(); el('stats-modal').classList.remove('hidden'); };
+  el('stats-close').onclick = () => el('stats-modal').classList.add('hidden');
+  initDuelSwipe();
+}
+
+function renderView(){
+  el('tab-log').classList.toggle('active', state.view==='log');
+  el('tab-rankings').classList.toggle('active', state.view==='rankings');
+  el('log-view').classList.toggle('hidden', state.view!=='log');
+  el('rankings-view').classList.toggle('hidden', state.view!=='rankings');
+  if(state.view==='rankings') renderRankings();
+}
+
+function openSettings(){
+  el('api-key-input').value = state.apiKey || '';
+  el('settings-modal').classList.remove('hidden');
+}
+function closeSettings(){ el('settings-modal').classList.add('hidden'); }
+async function saveApiKey(){
+  const val = el('api-key-input').value.trim();
+  state.apiKey = val || null;
+  await storageSet('duelcut:api-key', val);
+  closeSettings();
+  ensureGenreMap();
+}
+
+async function runSearch(){
+  const query = el('search-input').value.trim();
+  el('search-results').innerHTML = '';
+  if(!query) { el('search-status').innerHTML=''; return; }
+  if(!state.apiKey){
+    el('search-status').innerHTML = `<div class="inline-msg warn">Add your TMDB API key first — tap the ⚙ up top.</div>`;
+    return;
+  }
+  el('search-status').innerHTML = `<span class="spinner"></span>`;
+  try{
+    const res = await fetch(`https://api.themoviedb.org/3/search/movie?api_key=${encodeURIComponent(state.apiKey)}&query=${encodeURIComponent(query)}`);
+    if(!res.ok){
+      el('search-status').innerHTML = `<div class="inline-msg warn">TMDB rejected that request. Check your API key in settings.</div>`;
+      return;
+    }
+    const data = await res.json();
+    el('search-status').innerHTML = '';
+    renderSearchResults(data.results || []);
+  }catch(e){
+    el('search-status').innerHTML = `<div class="inline-msg warn">Couldn't reach TMDB. Try again.</div>`;
+  }
+}
+
+function posterUrl(path, size){
+  return path ? `https://image.tmdb.org/t/p/${size}${path}` : null;
+}
+
+function renderSearchResults(results){
+  const container = el('search-results');
+  container.innerHTML = '';
+  if(results.length===0){
+    container.innerHTML = `<div class="empty-note">No matches. Try a different title.</div>`;
+    return;
+  }
+  results.slice(0,12).forEach(movie => {
+    const already = state.library.find(m => m.id===movie.id);
+    const card = document.createElement('div');
+    card.className = 'result-card';
+    const poster = posterUrl(movie.poster_path, 'w185');
+    const year = (movie.release_date||'').slice(0,4) || '—';
+    card.innerHTML = `
+      ${poster ? `<img src="${poster}" alt="${escapeHtml(movie.title)}">` : `<div class="placeholder">${escapeHtml(movie.title)}</div>`}
+      <div class="meta"><div class="t">${escapeHtml(movie.title)}</div><div class="y">${year}${already?' · already logged':''}</div></div>
+    `;
+    card.onclick = () => selectMovie(movie, already);
+    container.appendChild(card);
+  });
+}
+
+function escapeHtml(s){
+  const d = document.createElement('div');
+  d.textContent = s;
+  return d.innerHTML;
+}
+
+function selectMovie(movie, already){
+  if(already){
+    state.view = 'rankings';
+    renderView();
+    return;
+  }
+  state.pendingMovie = {
+    id: movie.id,
+    title: movie.title,
+    year: (movie.release_date||'').slice(0,4) || '—',
+    poster_path: movie.poster_path,
+    elo: 1500,
+    genres: movie.genre_ids || [],
+    tmdbRating: typeof movie.vote_average === 'number' ? movie.vote_average : null,
+    rerankCount: 0,
+    addedAt: Date.now()
+  };
+  const opponents = pickOpponents(state.library, 5);
+  state.duelQueue = opponents;
+  state.duelIndex = 0;
+  state.isRerank = false;
+  state.isRandomDuel = false;
+  state.duelHistory = [];
+
+  el('search-panel').classList.add('hidden');
+  el('confirmation-view').classList.add('hidden');
+
+  if(opponents.length===0){
+    finalizeMovie();
+    return;
+  }
+  el('duel-arena').classList.remove('hidden');
+  renderDuel();
+}
+
+function pickOpponents(library, max){
+  if(library.length<=max) return library.slice();
+  const pool = [...library];
+  const chosen = [];
+  while(chosen.length < max && pool.length > 0){
+    const idx = Math.floor(Math.random()*pool.length);
+    chosen.push(pool.splice(idx,1)[0]);
+  }
+  return chosen;
+}
+
+function duelCardHtml(movie){
+  const poster = posterUrl(movie.poster_path, 'w342');
+  return `
+    ${poster ? `<img src="${poster}" alt="${escapeHtml(movie.title)}">` : `<div class="placeholder">${escapeHtml(movie.title)}</div>`}
+    <div class="meta"><div class="t">${escapeHtml(movie.title)}</div><div class="y">${movie.year}</div></div>
+  `;
+}
+
+function renderDuel(){
+  const opponent = state.duelQueue[state.duelIndex];
+  el('duel-progress').textContent = `Duel ${state.duelIndex+1} of ${state.duelQueue.length}`;
+  el('duel-left').innerHTML = duelCardHtml(state.pendingMovie);
+  el('duel-right').innerHTML = duelCardHtml(opponent);
+  el('duel-left').onclick = () => handleDuelChoice(true);
+  el('duel-right').onclick = () => handleDuelChoice(false);
+  updateUndoVisibility();
+}
+
+function updateUndoVisibility(){
+  el('undo-duel-btn').classList.toggle('hidden', state.duelHistory.length === 0);
+}
+
+let dragState = null;
+let mouseDragActive = false;
+
+function getEventX(e){
+  if(e.touches && e.touches.length) return e.touches[0].clientX;
+  if(e.changedTouches && e.changedTouches.length) return e.changedTouches[0].clientX;
+  return e.clientX;
+}
+
+function initDuelSwipe(){
+  const stage = el('duel-stage');
+  stage.addEventListener('touchstart', onDuelDragStart, {passive:true});
+  stage.addEventListener('touchmove', onDuelDragMove, {passive:false});
+  stage.addEventListener('touchend', onDuelDragEnd);
+  stage.addEventListener('touchcancel', onDuelDragCancel);
+  stage.addEventListener('mousedown', onDuelDragStart);
+}
+
+function onDuelDragStart(e){
+  dragState = { startX: getEventX(e), dx: 0 };
+  const stage = el('duel-stage');
+  stage.classList.add('dragging');
+  stage.style.transition = '';
+  if(e.type === 'mousedown'){
+    mouseDragActive = true;
+    document.addEventListener('mousemove', onDuelDragMove);
+    document.addEventListener('mouseup', onDuelDragEnd);
+  }
+}
+
+function onDuelDragMove(e){
+  if(!dragState) return;
+  if(e.type === 'touchmove') e.preventDefault();
+  dragState.dx = getEventX(e) - dragState.startX;
+  const stage = el('duel-stage');
+  const clamped = Math.max(-160, Math.min(160, dragState.dx));
+  stage.style.transform = `translateX(${clamped}px) rotate(${clamped/28}deg)`;
+  el('duel-left').classList.toggle('swipe-target', dragState.dx < -40);
+  el('duel-right').classList.toggle('swipe-target', dragState.dx > 40);
+}
+
+function onDuelDragEnd(e){
+  if(!dragState) return;
+  const dx = dragState.dx;
+  const stage = el('duel-stage');
+  stage.classList.remove('dragging');
+  const threshold = Math.min(110, stage.offsetWidth * 0.22);
+  dragState = null;
+  if(mouseDragActive){
+    document.removeEventListener('mousemove', onDuelDragMove);
+    document.removeEventListener('mouseup', onDuelDragEnd);
+    mouseDragActive = false;
+  }
+  if(Math.abs(dx) > threshold){
+    flingAndChoose(dx > 0);
+  }else{
+    resetDuelDrag();
+  }
+}
+
+function onDuelDragCancel(){
+  dragState = null;
+  resetDuelDrag();
+}
+
+function resetDuelDrag(){
+  const stage = el('duel-stage');
+  stage.style.transition = 'transform .25s ease';
+  stage.style.transform = '';
+  el('duel-left').classList.remove('swipe-target');
+  el('duel-right').classList.remove('swipe-target');
+  setTimeout(() => { stage.style.transition = ''; }, 250);
+}
+
+function flingAndChoose(chooseRight){
+  const stage = el('duel-stage');
+  const dir = chooseRight ? 1 : -1;
+  stage.style.transition = 'transform .22s ease, opacity .22s ease';
+  stage.style.transform = `translateX(${dir*520}px) rotate(${dir*18}deg)`;
+  stage.style.opacity = '0';
+  setTimeout(() => {
+    stage.style.transition = '';
+    stage.style.transform = '';
+    stage.style.opacity = '';
+    el('duel-left').classList.remove('swipe-target');
+    el('duel-right').classList.remove('swipe-target');
+    handleDuelChoice(!chooseRight);
+  }, 200);
+}
+
+function expectedScore(a,b){ return 1/(1+Math.pow(10,(b-a)/400)); }
+
+function eloToScore(elo){
+  const score = 10/(1+Math.pow(10,-(elo-1500)/400));
+  return score.toFixed(1);
+}
+
+function handleDuelChoice(pendingWon){
+  const K = 32;
+  const opponent = state.duelQueue[state.duelIndex];
+  const eP = expectedScore(state.pendingMovie.elo, opponent.elo);
+  const eO = 1-eP;
+  const sP = pendingWon ? 1 : 0;
+  const sO = pendingWon ? 0 : 1;
+
+  state.duelHistory.push({
+    pendingEloBefore: state.pendingMovie.elo,
+    opponentId: opponent.id,
+    opponentEloBefore: opponent.elo,
+    duelIndexBefore: state.duelIndex
+  });
+
+  state.pendingMovie.elo = state.pendingMovie.elo + K*(sP-eP);
+  const libOpponent = state.library.find(m=>m.id===opponent.id);
+  if(libOpponent) libOpponent.elo = libOpponent.elo + K*(sO-eO);
+  state.lastPendingWon = pendingWon;
+  state.totalDuels++;
+  storageSet('duelcut:totalduels', String(state.totalDuels));
+
+  state.duelIndex++;
+  if(state.duelIndex >= state.duelQueue.length){
+    finalizeMovie();
+  }else{
+    renderDuel();
+  }
+}
+
+function undoLastDuel(){
+  if(state.duelHistory.length === 0) return;
+  const snap = state.duelHistory.pop();
+  state.pendingMovie.elo = snap.pendingEloBefore;
+  const libOpponent = state.library.find(m => m.id === snap.opponentId);
+  if(libOpponent) libOpponent.elo = snap.opponentEloBefore;
+  const queueOpponent = state.duelQueue.find(m => m.id === snap.opponentId);
+  if(queueOpponent) queueOpponent.elo = snap.opponentEloBefore;
+  state.duelIndex = snap.duelIndexBefore;
+  state.totalDuels = Math.max(0, state.totalDuels - 1);
+  storageSet('duelcut:totalduels', String(state.totalDuels));
+  renderDuel();
+}
+
+async function finalizeMovie(){
+  el('duel-arena').classList.add('hidden');
+  state.duelHistory = [];
+
+  if(state.isRandomDuel){
+    const opponent = state.duelQueue[0];
+    const scoreP = eloToScore(state.pendingMovie.elo);
+    const scoreO = eloToScore(opponent.elo);
+    await storageSet('duelcut:library', JSON.stringify(state.library));
+    const winnerTitle = state.lastPendingWon ? state.pendingMovie.title : opponent.title;
+    el('confirm-rank').textContent = `⚔️`;
+    el('confirm-text').textContent = `${state.pendingMovie.title} (${scoreP}/10) vs ${opponent.title} (${scoreO}/10) — ${winnerTitle} takes it!`;
+    state.isRandomDuel = false;
+    el('confirmation-view').classList.remove('hidden');
+    return;
+  }
+
+  if(!state.isRerank){
+    state.library.push(state.pendingMovie);
+  }else{
+    state.pendingMovie.rerankCount = (state.pendingMovie.rerankCount || 0) + 1;
+  }
+  await storageSet('duelcut:library', JSON.stringify(state.library));
+  const sorted = [...state.library].sort((a,b)=>b.elo-a.elo);
+  const rank = sorted.findIndex(m=>m.id===state.pendingMovie.id) + 1;
+  const score = eloToScore(state.pendingMovie.elo);
+  const verb = state.isRerank ? 're-ranked' : 'lands';
+  el('confirm-rank').textContent = `${score}`;
+  el('confirm-text').textContent = `${state.pendingMovie.title} ${verb} at #${rank} of ${state.library.length}, with a power score of ${score}/10.`;
+  state.isRerank = false;
+  el('confirmation-view').classList.remove('hidden');
+}
+
+function startRerank(movie){
+  state.pendingMovie = movie;
+  state.isRerank = true;
+  state.isRandomDuel = false;
+  state.duelHistory = [];
+  const pool = state.library.filter(m => m.id !== movie.id);
+  state.duelQueue = pickOpponents(pool, 5);
+  state.duelIndex = 0;
+
+  state.view = 'log';
+  renderView();
+  el('search-panel').classList.add('hidden');
+  el('confirmation-view').classList.add('hidden');
+
+  if(state.duelQueue.length === 0){
+    finalizeMovie();
+    return;
+  }
+  el('duel-arena').classList.remove('hidden');
+  renderDuel();
+}
+
+function startRandomDuel(){
+  if(state.library.length < 2){
+    const note = el('random-duel-status');
+    note.textContent = 'Log at least 2 movies before you can start a random duel.';
+    note.classList.remove('hidden');
+    setTimeout(() => note.classList.add('hidden'), 3000);
+    return;
+  }
+  const pool = [...state.library];
+  const a = pool.splice(Math.floor(Math.random()*pool.length), 1)[0];
+  const b = pool.splice(Math.floor(Math.random()*pool.length), 1)[0];
+
+  state.pendingMovie = a;
+  state.duelQueue = [b];
+  state.duelIndex = 0;
+  state.isRerank = false;
+  state.isRandomDuel = true;
+  state.duelHistory = [];
+
+  state.view = 'log';
+  renderView();
+  el('search-panel').classList.add('hidden');
+  el('confirmation-view').classList.add('hidden');
+  el('duel-arena').classList.remove('hidden');
+  renderDuel();
+}
+
+function resetToSearch(){
+  state.pendingMovie = null;
+  state.duelQueue = [];
+  state.duelIndex = 0;
+  state.isRandomDuel = false;
+  state.duelHistory = [];
+  el('confirmation-view').classList.add('hidden');
+  el('search-panel').classList.remove('hidden');
+  el('search-input').value = '';
+  el('search-results').innerHTML = '';
+  el('search-status').innerHTML = '';
+}
+
+function renderRankings(){
+  updateViewToggle();
+  renderRankingsList();
+}
+
+function updateViewToggle(){
+  el('view-list-btn').classList.toggle('active', state.rankingsViewMode === 'list');
+  el('view-tier-btn').classList.toggle('active', state.rankingsViewMode === 'tiers');
+}
+
+function populateFilterOptions(){
+  const genreSel = el('filter-genre');
+  const decadeSel = el('filter-decade');
+  const genreNames = new Set();
+  const decades = new Set();
+  state.library.forEach(m => {
+    (m.genres||[]).forEach(gid => { const n = state.genreMap[gid]; if(n) genreNames.add(n); });
+    const y = parseInt(m.year, 10);
+    if(!isNaN(y)) decades.add(Math.floor(y/10)*10);
+  });
+  const sortedGenres = [...genreNames].sort();
+  const sortedDecades = [...decades].sort((a,b) => b - a);
+  genreSel.innerHTML = `<option value="">All Genres</option>` + sortedGenres.map(g => `<option value="${escapeHtml(g)}">${escapeHtml(g)}</option>`).join('');
+  decadeSel.innerHTML = `<option value="">All Decades</option>` + sortedDecades.map(d => `<option value="${d}">${d}s</option>`).join('');
+  genreSel.value = state.filterGenre || '';
+  decadeSel.value = state.filterDecade || '';
+}
+
+function normalizeTitle(s){
+  return (s || '')
+    .toLowerCase()
+    .normalize('NFD').replace(/[\u0300-\u036f]/g, '')
+    .replace(/^(the|a|an)\s+/, '')
+    .replace(/[^a-z0-9]+/g, ' ')
+    .trim();
+}
+
+function renderRankingsList(){
+  const container = el('rankings-list');
+  el('rankings-count').textContent = state.library.length ? `${state.library.length} movie${state.library.length===1?'':'s'} ranked` : '';
+  if(state.library.length===0){
+    container.innerHTML = `<div class="empty-note">No duels fought yet. Log your first movie to start the ranking.</div>`;
+    return;
+  }
+  populateFilterOptions();
+
+  const sorted = [...state.library].sort((a,b)=>b.elo-a.elo);
+  const query = normalizeTitle(state.rankingsQuery || '');
+  let ranked = sorted.map((movie, idx) => ({ movie, rank: idx+1 }));
+
+  if(query) ranked = ranked.filter(r => normalizeTitle(r.movie.title).includes(query));
+  if(state.filterGenre) ranked = ranked.filter(r => (r.movie.genres||[]).some(gid => state.genreMap[gid] === state.filterGenre));
+  if(state.filterDecade) ranked = ranked.filter(r => {
+    const y = parseInt(r.movie.year, 10);
+    return !isNaN(y) && Math.floor(y/10)*10 === parseInt(state.filterDecade, 10);
+  });
+
+  if(state.sortMode === 'recent'){
+    ranked = [...ranked].sort((a,b) => (b.movie.addedAt||0) - (a.movie.addedAt||0));
+  }else if(state.sortMode === 'title'){
+    ranked = [...ranked].sort((a,b) => a.movie.title.localeCompare(b.movie.title));
+  }
+
+  const visible = ranked;
+
+  container.innerHTML = '';
+  if(visible.length === 0){
+    container.innerHTML = `<div class="empty-note">No movies match these filters.</div>`;
+    return;
+  }
+
+  if(state.rankingsViewMode === 'tiers'){
+    renderTierView(container, visible);
+    return;
+  }
+
+  visible.forEach(({movie, rank}) => {
+    const row = document.createElement('div');
+    row.className = 'rank-row';
+    const thumb = posterUrl(movie.poster_path, 'w92');
+    row.innerHTML = `
+      <div class="rank mono">${rank}</div>
+      ${thumb ? `<img src="${thumb}" alt="">` : `<div class="placeholder-thumb">${escapeHtml(movie.title.slice(0,2))}</div>`}
+      <div class="info">
+        <div class="t">${escapeHtml(movie.title)}</div>
+        <div class="y">${movie.year}</div>
+      </div>
+      <div class="score mono">${eloToScore(movie.elo)}</div>
+      <button class="rerank-btn" title="Re-rank">↻</button>
+      <button class="remove-btn" data-id="${movie.id}" title="Remove">×</button>
+    `;
+    row.querySelector('.rerank-btn').onclick = () => startRerank(movie);
+    row.querySelector('.remove-btn').onclick = (e) => askRemove(row, movie.id);
+    container.appendChild(row);
+  });
+}
+
+function renderTierView(container, visible){
+  const tiers = [
+    {key:'S', label:'S', min:9, className:'tier-s'},
+    {key:'A', label:'A', min:8, className:'tier-a'},
+    {key:'B', label:'B', min:6.5, className:'tier-b'},
+    {key:'C', label:'C', min:5, className:'tier-c'},
+    {key:'D', label:'D', min:-Infinity, className:'tier-d'}
+  ];
+  const buckets = {S:[], A:[], B:[], C:[], D:[]};
+  visible.forEach(({movie, rank}) => {
+    const score = parseFloat(eloToScore(movie.elo));
+    const tier = tiers.find(t => score >= t.min);
+    buckets[tier.key].push({movie, rank});
+  });
+  container.innerHTML = '';
+  tiers.forEach(t => {
+    const items = buckets[t.key];
+    if(items.length === 0) return;
+    const row = document.createElement('div');
+    row.className = 'tier-row';
+    const moviesHtml = items.map(({movie, rank}) => {
+      const thumb = posterUrl(movie.poster_path, 'w92');
+      return `<div class="tier-movie" title="${escapeHtml(movie.title)} — #${rank}, ${eloToScore(movie.elo)}/10">
+        ${thumb ? `<img src="${thumb}" alt="">` : `<div class="tier-movie-placeholder">${escapeHtml(movie.title.slice(0,2))}</div>`}
+      </div>`;
+    }).join('');
+    row.innerHTML = `<div class="tier-label ${t.className}">${t.label}</div><div class="tier-movies">${moviesHtml}</div>`;
+    container.appendChild(row);
+  });
+}
+
+function askRemove(row, id){
+  const btn = row.querySelector('.remove-btn');
+  const wrap = document.createElement('div');
+  wrap.className = 'confirm-remove';
+  wrap.innerHTML = `<button class="yes">Remove</button><button class="no">Cancel</button>`;
+  btn.replaceWith(wrap);
+  wrap.querySelector('.yes').onclick = async () => {
+    state.library = state.library.filter(m=>m.id!==id);
+    await storageSet('duelcut:library', JSON.stringify(state.library));
+    renderRankings();
+  };
+  wrap.querySelector('.no').onclick = () => renderRankings();
+}
+
+function csvEscape(value){
+  const s = String(value);
+  if(/[",\n]/.test(s)) return '"' + s.replace(/"/g,'""') + '"';
+  return s;
+}
+
+function exportCSV(){
+  if(state.library.length===0) return;
+  const sorted = [...state.library].sort((a,b)=>b.elo-a.elo);
+  const header = ['Rank','Title','Year','Power Score (out of 10)','Elo Rating','TMDB ID'];
+  const rows = sorted.map((m,idx) => [idx+1, m.title, m.year, eloToScore(m.elo), Math.round(m.elo), m.id]);
+  const csv = [header, ...rows].map(row => row.map(csvEscape).join(',')).join('\n');
+  const blob = new Blob([csv], {type:'text/csv'});
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = 'duel-cut-rankings.csv';
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
+  URL.revokeObjectURL(url);
+}
+
+function exportBackup(){
+  const payload = {
+    app: 'duel-cut',
+    version: 1,
+    exportedAt: new Date().toISOString(),
+    library: state.library,
+    genreMap: state.genreMap
+  };
+  const blob = new Blob([JSON.stringify(payload, null, 2)], {type:'application/json'});
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = 'duel-cut-backup.json';
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
+  URL.revokeObjectURL(url);
+  el('backup-status').textContent = `Exported ${state.library.length} movies.`;
+}
+
+function handleImportBackupFile(e){
+  const file = e.target.files[0];
+  e.target.value = '';
+  if(!file) return;
+  const reader = new FileReader();
+  reader.onload = async () => {
+    try{
+      const data = JSON.parse(reader.result);
+      if(!Array.isArray(data.library)) throw new Error('bad format');
+      state.library = data.library;
+      if(data.genreMap) state.genreMap = data.genreMap;
+      await storageSet('duelcut:library', JSON.stringify(state.library));
+      if(data.genreMap) await storageSet('duelcut:genres', JSON.stringify(state.genreMap));
+      el('backup-status').textContent = `Imported ${state.library.length} movies. This replaced your previous library on this device.`;
+      if(state.view === 'rankings') renderRankings();
+    }catch(err){
+      el('backup-status').textContent = `Couldn't read that file — make sure it's a Duel Cut backup (.json).`;
+    }
+  };
+  reader.readAsText(file);
+}
+
+function parseCSV(text){
+  const rows = [];
+  let row = [], field = '', inQuotes = false;
+  for(let i = 0; i < text.length; i++){
+    const c = text[i];
+    if(inQuotes){
+      if(c === '"'){
+        if(text[i+1] === '"'){ field += '"'; i++; }
+        else inQuotes = false;
+      }else{
+        field += c;
+      }
+    }else{
+      if(c === '"'){ inQuotes = true; }
+      else if(c === ','){ row.push(field); field = ''; }
+      else if(c === '\n' || c === '\r'){
+        if(c === '\r' && text[i+1] === '\n') i++;
+        row.push(field); field = '';
+        rows.push(row); row = [];
+      }else{
+        field += c;
+      }
+    }
+  }
+  if(field.length || row.length){ row.push(field); rows.push(row); }
+  return rows.filter(r => !(r.length === 1 && r[0] === ''));
+}
+
+function parseLetterboxdCSV(text){
+  const rows = parseCSV(text);
+  if(rows.length < 2) return [];
+  const header = rows[0].map(h => h.trim().toLowerCase());
+  const nameIdx = header.indexOf('name');
+  const yearIdx = header.indexOf('year');
+  const ratingIdx = header.indexOf('rating');
+  if(nameIdx === -1) return [];
+  const items = [];
+  for(let i = 1; i < rows.length; i++){
+    const r = rows[i];
+    if(!r[nameIdx]) continue;
+    const rating = ratingIdx !== -1 ? parseFloat(r[ratingIdx]) : NaN;
+    items.push({
+      title: r[nameIdx].trim(),
+      year: yearIdx !== -1 ? (r[yearIdx]||'').trim() : '',
+      rating: isNaN(rating) ? null : rating
+    });
+  }
+  const seen = new Map();
+  items.forEach(it => {
+    const key = normalizeTitle(it.title) + '|' + it.year;
+    const existing = seen.get(key);
+    if(!existing || (it.rating != null && existing.rating == null)){
+      seen.set(key, it);
+    }
+  });
+  return [...seen.values()];
+}
+
+async function handleImportLetterboxdFile(e){
+  const file = e.target.files[0];
+  e.target.value = '';
+  if(!file) return;
+  if(!state.apiKey){
+    el('letterboxd-status').textContent = 'Add your TMDB API key above first, then try again.';
+    return;
+  }
+  const text = await file.text();
+  const items = parseLetterboxdCSV(text);
+  if(items.length === 0){
+    el('letterboxd-status').textContent = `Couldn't find any films in that file — make sure it's diary.csv or ratings.csv from your Letterboxd export.`;
+    return;
+  }
+
+  let added = 0, skipped = 0, failed = 0;
+  for(let i = 0; i < items.length; i++){
+    const it = items[i];
+    el('letterboxd-status').textContent = `Matching ${i+1} of ${items.length}: ${it.title}…`;
+
+    const alreadyByTitle = state.library.find(m =>
+      normalizeTitle(m.title) === normalizeTitle(it.title) &&
+      (!it.year || !m.year || Math.abs((parseInt(m.year,10)||0) - (parseInt(it.year,10)||0)) <= 1));
+    if(alreadyByTitle){ skipped++; continue; }
+
+    try{
+      const query = encodeURIComponent(it.title);
+      const yearParam = it.year ? `&year=${encodeURIComponent(it.year)}` : '';
+      const res = await fetch(`https://api.themoviedb.org/3/search/movie?api_key=${encodeURIComponent(state.apiKey)}&query=${query}${yearParam}`);
+      if(!res.ok){ failed++; continue; }
+      const data = await res.json();
+      const match = (data.results || [])[0];
+      if(!match){ failed++; continue; }
+
+      if(state.library.find(m => m.id === match.id)){ skipped++; continue; }
+
+      const elo = it.rating != null ? 1500 + (it.rating - 3) * 200 : 1500;
+      state.library.push({
+        id: match.id,
+        title: match.title,
+        year: (match.release_date||'').slice(0,4) || it.year || '—',
+        poster_path: match.poster_path,
+        elo,
+        genres: match.genre_ids || [],
+        tmdbRating: typeof match.vote_average === 'number' ? match.vote_average : null,
+        rerankCount: 0,
+        addedAt: Date.now()
+      });
+      added++;
+    }catch(err){
+      failed++;
+    }
+    await new Promise(r => setTimeout(r, 150));
+  }
+
+  await storageSet('duelcut:library', JSON.stringify(state.library));
+  el('letterboxd-status').textContent = `Done — added ${added}, skipped ${skipped} (already logged), ${failed} couldn't be matched on TMDB.`;
+  if(state.view === 'rankings') renderRankings();
+}
+
+function handleCompareFile(e){
+  const file = e.target.files[0];
+  e.target.value = '';
+  if(!file) return;
+  const reader = new FileReader();
+  reader.onload = () => {
+    try{
+      const data = JSON.parse(reader.result);
+      if(!Array.isArray(data.library)) throw new Error('bad format');
+      runComparison(data.library);
+    }catch(err){
+      el('compare-status').textContent = `Couldn't read that file — make sure it's a Duel Cut backup (.json).`;
+    }
+  };
+  reader.readAsText(file);
+}
+
+function runComparison(friendLibrary){
+  const overlap = [];
+  state.library.forEach(m => {
+    const f = friendLibrary.find(fl => fl.id === m.id);
+    if(f){
+      overlap.push({
+        title: m.title,
+        mine: parseFloat(eloToScore(m.elo)),
+        theirs: parseFloat(eloToScore(f.elo))
+      });
+    }
+  });
+
+  closeSettings();
+  el('compare-modal').classList.remove('hidden');
+  const content = el('compare-content');
+
+  if(overlap.length === 0){
+    content.innerHTML = `<p class="status-note" style="margin-top:0;">No movies in common yet — log some of the same films to compare tastes.</p>`;
+    return;
+  }
+
+  const avgDiff = overlap.reduce((s,o) => s + Math.abs(o.mine - o.theirs), 0) / overlap.length;
+  const matchPct = Math.max(0, Math.round(100 - avgDiff * 12));
+  const biggest = [...overlap].sort((a,b) => Math.abs(b.mine-b.theirs) - Math.abs(a.mine-a.theirs)).slice(0,5);
+
+  let html = `<p class="status-note" style="margin-top:0;">${overlap.length} movie${overlap.length===1?'':'s'} in common — <span class="stat-inline">${matchPct}% taste match</span>.</p>`;
+  html += `<div class="compare-list">`;
+  biggest.forEach(o => {
+    html += `<div class="compare-row"><div class="t">${escapeHtml(o.title)}</div><div class="scores">You: <b>${o.mine.toFixed(1)}</b> · Them: <b>${o.theirs.toFixed(1)}</b></div></div>`;
+  });
+  html += `</div>`;
+  content.innerHTML = html;
+}
+
+async function openDiscover(){
+  el('discover-modal').classList.remove('hidden');
+  el('discover-content').innerHTML = `<div class="status-note"><span class="spinner"></span> Finding some hidden gems based on your favorites…</div>`;
+  state.discoverCandidates = [];
+
+  if(!state.apiKey){
+    el('discover-content').innerHTML = `<div class="inline-msg warn">Add your TMDB API key in Settings first.</div>`;
+    return;
+  }
+  const sorted = [...state.library].sort((a,b)=>b.elo-a.elo);
+  const seeds = sorted.slice(0, Math.min(5, sorted.length));
+  if(seeds.length === 0){
+    el('discover-content').innerHTML = `<div class="empty-note">Log a few movies first so I have something to work from.</div>`;
+    return;
+  }
+
+  const candidates = new Map();
+  for(const seed of seeds){
+    try{
+      const res = await fetch(`https://api.themoviedb.org/3/movie/${seed.id}/recommendations?api_key=${encodeURIComponent(state.apiKey)}`);
+      if(res.ok){
+        const data = await res.json();
+        (data.results || []).forEach(m => {
+          if(!state.library.find(lm => lm.id === m.id) && !candidates.has(m.id)){
+            candidates.set(m.id, m);
+          }
+        });
+      }
+    }catch(e){ /* skip this seed on failure */ }
+    await new Promise(r => setTimeout(r, 120));
+  }
+
+  let list = [...candidates.values()].filter(m => (m.vote_count || 0) >= 15);
+  list.sort((a,b) => (a.popularity || 0) - (b.popularity || 0));
+  list = list.slice(0, 20);
+
+  if(list.length === 0){
+    el('discover-content').innerHTML = `<div class="empty-note">Couldn't turn up any hidden gems this time — try again after logging a few more movies.</div>`;
+    return;
+  }
+  state.discoverCandidates = list;
+  showDiscoverBatch();
+}
+
+function showDiscoverBatch(){
+  const pool = [...state.discoverCandidates];
+  const chosen = [];
+  while(chosen.length < 3 && pool.length > 0){
+    const idx = Math.floor(Math.random()*pool.length);
+    chosen.push(pool.splice(idx,1)[0]);
+  }
+  renderDiscoverResults(chosen);
+}
+
+function renderDiscoverResults(list){
+  const container = el('discover-content');
+  container.innerHTML = `<p class="status-note" style="margin-top:0;">Lesser-known picks based on your top-rated movies. Tap one to open its page on The Movie Database.</p><div id="discover-grid" class="discover-grid"></div>`;
+  const grid = el('discover-grid');
+  list.forEach(movie => {
+    const poster = posterUrl(movie.poster_path, 'w185');
+    const year = (movie.release_date || '').slice(0,4) || '—';
+    const card = document.createElement('a');
+    card.className = 'result-card';
+    card.href = `https://www.themoviedb.org/movie/${movie.id}`;
+    card.target = '_blank';
+    card.rel = 'noopener noreferrer';
+    card.innerHTML = `
+      ${poster ? `<img src="${poster}" alt="${escapeHtml(movie.title)}">` : `<div class="placeholder">${escapeHtml(movie.title)}</div>`}
+      <div class="meta"><div class="t">${escapeHtml(movie.title)}</div><div class="y">${year}</div></div>
+    `;
+    grid.appendChild(card);
+  });
+}
+
+function closeDiscover(){ el('discover-modal').classList.add('hidden'); }
+
+function buildStats(){
+  const lib = state.library;
+  if(lib.length === 0){
+    return `<p class="empty-note">No movies logged yet — stats will show up once you start ranking.</p>`;
+  }
+  const avg = lib.reduce((s,m) => s + parseFloat(eloToScore(m.elo)), 0) / lib.length;
+
+  const genreCounts = {};
+  lib.forEach(m => (m.genres||[]).forEach(gid => {
+    const name = state.genreMap[gid];
+    if(name) genreCounts[name] = (genreCounts[name]||0) + 1;
+  }));
+  const genreEntries = Object.entries(genreCounts).sort((a,b) => b[1]-a[1]).slice(0,8);
+  const maxGenreCount = genreEntries.length ? genreEntries[0][1] : 1;
+
+  const decadeCounts = {};
+  lib.forEach(m => {
+    const y = parseInt(m.year, 10);
+    if(!isNaN(y)){ const d = Math.floor(y/10)*10; decadeCounts[d] = (decadeCounts[d]||0) + 1; }
+  });
+  const decadeEntries = Object.entries(decadeCounts).sort((a,b) => Number(a[0]) - Number(b[0]));
+  const maxDecadeCount = decadeEntries.length ? Math.max(...decadeEntries.map(e => e[1])) : 1;
+
+  const buckets = [[0,2],[2,4],[4,6],[6,8],[8,10.01]];
+  const bucketLabels = ['0-2','2-4','4-6','6-8','8-10'];
+  const bucketCounts = buckets.map(([lo,hi]) => lib.filter(m => {
+    const s = parseFloat(eloToScore(m.elo));
+    return s >= lo && s < hi;
+  }).length);
+  const maxBucketCount = Math.max(...bucketCounts, 1);
+
+  const bar = (label, count, max) => {
+    const pct = Math.round((count/max)*100);
+    return `<div class="stats-bar-row"><div class="stats-bar-label">${escapeHtml(String(label))}</div><div class="stats-bar-track"><div class="stats-bar-fill" style="width:${pct}%"></div></div><div class="stats-bar-count">${count}</div></div>`;
+  };
+
+  let html = `
+    <div class="stats-summary">
+      <div class="stat-box"><div class="stat-num">${lib.length}</div><div class="stat-label">Movies</div></div>
+      <div class="stat-box"><div class="stat-num">${state.totalDuels}</div><div class="stat-label">Duels Fought</div></div>
+      <div class="stat-box"><div class="stat-num">${avg.toFixed(1)}</div><div class="stat-label">Avg Score</div></div>
+    </div>
+  `;
+
+  if(genreEntries.length){
+    html += `<h3 class="stats-heading">Top Genres</h3><div class="stats-bars">`;
+    genreEntries.forEach(([name,count]) => { html += bar(name, count, maxGenreCount); });
+    html += `</div>`;
+  }
+
+  if(decadeEntries.length){
+    html += `<h3 class="stats-heading">By Decade</h3><div class="stats-bars">`;
+    decadeEntries.forEach(([decade,count]) => { html += bar(`${decade}s`, count, maxDecadeCount); });
+    html += `</div>`;
+  }
+
+  html += `<h3 class="stats-heading">Score Distribution</h3><div class="stats-bars">`;
+  bucketLabels.forEach((label,i) => { html += bar(label, bucketCounts[i], maxBucketCount); });
+  html += `</div>`;
+
+  return html;
+}
+
+init();
+</script>
+</body>
+</html>
