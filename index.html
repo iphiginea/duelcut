@@ -53,32 +53,32 @@
   .empty-note a{color:var(--teal);}
   .inline-msg{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:14px;font-size:14px;color:var(--text-dim);}
   .inline-msg.warn{border-color:var(--amber);color:var(--amber);}
-  #duel-arena{display:flex;flex-direction:column;gap:18px;}
+  #duel-arena{display:flex;flex-direction:column;gap:12px;}
   .duel-progress{text-align:center;color:var(--text-dim);font-size:12px;text-transform:uppercase;letter-spacing:0.12em;}
-  .duel-stage{display:flex;align-items:center;gap:0;position:relative;touch-action:none;cursor:grab;will-change:transform;}
+  .duel-stage{display:flex;align-items:flex-start;justify-content:center;gap:0;position:relative;touch-action:none;cursor:grab;will-change:transform;}
   .duel-stage.dragging{cursor:grabbing;}
-  .duel-card{flex:1;background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);overflow:hidden;cursor:pointer;transition:.2s;text-align:center;}
+  .duel-card{flex:1;max-width:44%;display:flex;flex-direction:column;align-items:center;background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);overflow:hidden;cursor:pointer;transition:.2s;text-align:center;}
   .duel-card:hover{transform:scale(1.02) rotate(var(--tilt));border-color:var(--teal);box-shadow:0 8px 30px rgba(79,224,199,0.15);}
   .duel-card.swipe-target{border-color:var(--teal);box-shadow:0 0 0 2px var(--teal) inset, 0 8px 30px rgba(79,224,199,0.3);}
   .duel-card:first-child{--tilt:-1deg;}
   .duel-card:last-child{--tilt:1deg;}
-  .duel-card img{width:100%;aspect-ratio:2/3;object-fit:cover;display:block;}
-  .duel-card .placeholder{width:100%;aspect-ratio:2/3;display:flex;align-items:center;justify-content:center;background:var(--surface-2);color:var(--text-dim);padding:10px;text-align:center;font-size:13px;}
-  .duel-card .meta{padding:12px 10px;}
-  .duel-card .meta .t{font-weight:600;font-size:14px;line-height:1.25;}
-  .duel-card .meta .y{color:var(--text-dim);font-size:12px;margin-top:2px;}
-  .vs-divider{width:56px;flex:none;display:flex;align-items:center;justify-content:center;position:relative;z-index:2;}
-  .vs-divider span{font-family:'Bebas Neue';font-size:26px;color:var(--crimson);text-shadow:0 0 18px rgba(228,70,58,0.65);}
-  @media (max-width:520px){
-    .duel-stage{flex-direction:column;}
-    .vs-divider{width:100%;height:36px;}
-  }
+  .duel-card img{height:clamp(150px, 34vh, 260px);width:auto;max-width:100%;aspect-ratio:2/3;object-fit:cover;display:block;}
+  .duel-card .placeholder{height:clamp(150px, 34vh, 260px);aspect-ratio:2/3;display:flex;align-items:center;justify-content:center;background:var(--surface-2);color:var(--text-dim);padding:10px;text-align:center;font-size:13px;}
+  .duel-card .meta{padding:10px 8px;width:100%;}
+  .duel-card .meta .t{font-weight:600;font-size:13px;line-height:1.25;}
+  .duel-card .meta .y{color:var(--text-dim);font-size:11px;margin-top:2px;}
+  .vs-divider{width:44px;flex:none;display:flex;align-items:center;justify-content:center;position:relative;z-index:2;align-self:center;}
+  .vs-divider span{font-family:'Bebas Neue';font-size:22px;color:var(--crimson);text-shadow:0 0 18px rgba(228,70,58,0.65);}
   .confirmation{background:var(--surface);border:1px solid var(--teal);border-radius:var(--radius);padding:24px;text-align:center;}
   .confirmation .rank-number{font-family:'Bebas Neue';font-size:64px;color:var(--teal);line-height:1;}
   .confirmation .rank-out-of{color:var(--text-dim);font-size:11px;text-transform:uppercase;letter-spacing:0.14em;margin-top:2px;}
   .confirmation p{color:var(--text-dim);margin:6px 0 18px;}
   .confirmation button{background:var(--teal);color:#0b0b10;border:none;padding:10px 20px;border-radius:var(--radius);font-weight:600;cursor:pointer;}
   #rankings-list{display:flex;flex-direction:column;gap:8px;}
+  .rankings-search{width:100%;background:var(--surface);border:1px solid var(--border);color:var(--text);padding:10px 14px;border-radius:var(--radius);font-size:14px;font-family:'IBM Plex Sans';margin-bottom:14px;}
+  .rankings-search:focus{outline:none;border-color:var(--teal);}
+  .rankings-search::placeholder{color:var(--text-dim);}
+  .discover-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(100px,1fr));gap:10px;margin-top:12px;}
   .viewer-type{font-family:'Bebas Neue';font-size:26px;letter-spacing:0.06em;color:var(--teal);text-align:center;margin-bottom:16px;cursor:pointer;text-shadow:0 0 22px rgba(79,224,199,0.3);transition:.15s;}
   .viewer-type:hover{opacity:0.8;}
   .viewer-type .hint{display:block;font-family:'IBM Plex Sans';font-size:10px;letter-spacing:0.1em;text-transform:uppercase;color:var(--text-dim);text-shadow:none;margin-top:4px;font-weight:600;}
@@ -105,16 +105,16 @@
   .rank-row .confirm-remove{display:flex;gap:6px;flex:none;}
   .rank-row .confirm-remove button{font-size:11px;padding:4px 8px;border-radius:6px;border:1px solid var(--border);background:var(--surface-2);color:var(--text);cursor:pointer;}
   .rank-row .confirm-remove button.yes{border-color:var(--crimson);color:var(--crimson);}
-  #settings-modal, #recap-modal{position:fixed;inset:0;background:rgba(10,10,14,0.7);display:flex;align-items:center;justify-content:center;padding:20px;z-index:10;}
-  #settings-modal .box, #recap-modal .box{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:24px;max-width:440px;width:100%;max-height:80vh;overflow-y:auto;}
-  #settings-modal h2, #recap-modal h2{margin:0 0 8px;font-family:'Bebas Neue';font-size:26px;font-weight:400;}
+  #settings-modal, #recap-modal, #discover-modal{position:fixed;inset:0;background:rgba(10,10,14,0.7);display:flex;align-items:center;justify-content:center;padding:20px;z-index:10;}
+  #settings-modal .box, #recap-modal .box, #discover-modal .box{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:24px;max-width:440px;width:100%;max-height:80vh;overflow-y:auto;}
+  #settings-modal h2, #recap-modal h2, #discover-modal h2{margin:0 0 8px;font-family:'Bebas Neue';font-size:26px;font-weight:400;}
   #settings-modal p{color:var(--text-dim);font-size:13px;line-height:1.5;margin-bottom:14px;}
   #settings-modal a{color:var(--teal);}
   #settings-modal input{width:100%;background:var(--surface-2);border:1px solid var(--border);color:var(--text);padding:10px 12px;border-radius:8px;font-family:'IBM Plex Mono';font-size:13px;margin-bottom:14px;}
-  #settings-modal .row, #recap-modal .row{display:flex;gap:8px;justify-content:flex-end;}
-  #settings-modal button, #recap-modal button{padding:9px 16px;border-radius:8px;border:1px solid var(--border);background:var(--surface-2);color:var(--text);cursor:pointer;font-weight:600;font-size:13px;}
-  #settings-modal button.save, #recap-modal button.save{background:var(--teal);border-color:var(--teal);color:#0b0b10;}
-  #settings-modal button.cancel:hover, #recap-modal button.cancel:hover{border-color:var(--text-dim);}
+  #settings-modal .row, #recap-modal .row, #discover-modal .row{display:flex;gap:8px;justify-content:flex-end;}
+  #settings-modal button, #recap-modal button, #discover-modal button{padding:9px 16px;border-radius:8px;border:1px solid var(--border);background:var(--surface-2);color:var(--text);cursor:pointer;font-weight:600;font-size:13px;}
+  #settings-modal button.save, #recap-modal button.save, #discover-modal button.save{background:var(--teal);border-color:var(--teal);color:#0b0b10;}
+  #settings-modal button.cancel:hover, #recap-modal button.cancel:hover, #discover-modal button.cancel:hover{border-color:var(--text-dim);}
   .settings-section{border-top:1px solid var(--border);margin-top:18px;padding-top:18px;}
   .settings-section h3{font-family:'Bebas Neue';font-size:20px;font-weight:400;margin:0 0 6px;}
   .settings-section p{color:var(--text-dim);font-size:13px;line-height:1.5;margin-bottom:12px;}
@@ -171,9 +171,11 @@
     </section>
     <section id="rankings-view" class="hidden">
       <div id="viewer-type" class="viewer-type hidden"></div>
+      <input id="rankings-search" type="text" class="rankings-search" placeholder="Find a movie in your rankings…" autocomplete="off">
       <div class="rankings-header">
         <span class="rankings-count mono" id="rankings-count"></span>
         <div class="header-btns">
+          <button id="discover-btn">🔎 Discover</button>
           <button id="recap-btn">🔥 Recap</button>
           <button id="export-csv-btn">Export CSV</button>
         </div>
@@ -193,7 +195,6 @@
       <button class="cancel" id="settings-cancel">Cancel</button>
       <button class="save" id="settings-save">Save</button>
     </div>
-
     <div class="settings-section">
       <h3>Backup &amp; Sync</h3>
       <p>Export your rankings as a file, then import it in another browser or on another device to bring everything over. <strong>Importing replaces</strong> whatever's currently on this device.</p>
@@ -204,7 +205,6 @@
       </div>
       <div class="status-note" id="backup-status"></div>
     </div>
-
     <div class="settings-section">
       <h3>Import from Letterboxd</h3>
       <p>In Letterboxd, go to Settings → Import &amp; Export → Export Your Data, then upload the <code>diary.csv</code> or <code>ratings.csv</code> file from the downloaded zip. Each film gets matched on TMDB and seeded with a starting score based on your star rating.</p>
@@ -226,6 +226,15 @@
     </div>
   </div>
 </div>
+<div id="discover-modal" class="hidden">
+  <div class="box">
+    <h2 class="display">Hidden Gems</h2>
+    <div id="discover-content"></div>
+    <div class="row">
+      <button class="cancel" id="discover-close">Close</button>
+    </div>
+  </div>
+</div>
 <script>
 const state = {
   apiKey: null,
@@ -235,7 +244,8 @@ const state = {
   duelQueue: [],
   duelIndex: 0,
   isRerank: false,
-  genreMap: {}
+  genreMap: {},
+  rankingsQuery: ''
 };
 const el = id => document.getElementById(id);
 async function storageGet(key){
@@ -290,6 +300,12 @@ function bindEvents(){
   el('export-backup-btn').onclick = exportBackup;
   el('import-backup-input').addEventListener('change', handleImportBackupFile);
   el('import-letterboxd-input').addEventListener('change', handleImportLetterboxdFile);
+  el('rankings-search').addEventListener('input', () => {
+    state.rankingsQuery = el('rankings-search').value;
+    renderRankingsList();
+  });
+  el('discover-btn').onclick = openDiscover;
+  el('discover-close').onclick = closeDiscover;
   initDuelSwipe();
 }
 function renderView(){
@@ -565,6 +581,17 @@ function resetToSearch(){
 }
 function renderRankings(){
   renderViewerType();
+  renderRankingsList();
+}
+function normalizeTitle(s){
+  return (s || '')
+    .toLowerCase()
+    .normalize('NFD').replace(/[\u0300-\u036f]/g, '')
+    .replace(/^(the|a|an)\s+/, '')
+    .replace(/[^a-z0-9]+/g, ' ')
+    .trim();
+}
+function renderRankingsList(){
   const container = el('rankings-list');
   el('rankings-count').textContent = state.library.length ? `${state.library.length} movie${state.library.length===1?'':'s'} ranked` : '';
   if(state.library.length===0){
@@ -572,13 +599,20 @@ function renderRankings(){
     return;
   }
   const sorted = [...state.library].sort((a,b)=>b.elo-a.elo);
+  const query = normalizeTitle(state.rankingsQuery || '');
+  const ranked = sorted.map((movie, idx) => ({ movie, rank: idx+1 }));
+  const visible = query ? ranked.filter(r => normalizeTitle(r.movie.title).includes(query)) : ranked;
   container.innerHTML = '';
-  sorted.forEach((movie, idx) => {
+  if(visible.length === 0){
+    container.innerHTML = `<div class="empty-note">No movies match "${escapeHtml(state.rankingsQuery)}".</div>`;
+    return;
+  }
+  visible.forEach(({movie, rank}) => {
     const row = document.createElement('div');
     row.className = 'rank-row';
     const thumb = posterUrl(movie.poster_path, 'w92');
     row.innerHTML = `
-      <div class="rank mono">${idx+1}</div>
+      <div class="rank mono">${rank}</div>
       ${thumb ? `<img src="${thumb}" alt="">` : `<div class="placeholder-thumb">${escapeHtml(movie.title.slice(0,2))}</div>`}
       <div class="info">
         <div class="t">${escapeHtml(movie.title)}</div>
@@ -715,7 +749,7 @@ function parseLetterboxdCSV(text){
   }
   const seen = new Map();
   items.forEach(it => {
-    const key = it.title.toLowerCase() + '|' + it.year;
+    const key = normalizeTitle(it.title) + '|' + it.year;
     const existing = seen.get(key);
     if(!existing || (it.rating != null && existing.rating == null)){
       seen.set(key, it);
@@ -742,7 +776,8 @@ async function handleImportLetterboxdFile(e){
     const it = items[i];
     el('letterboxd-status').textContent = `Matching ${i+1} of ${items.length}: ${it.title}…`;
     const alreadyByTitle = state.library.find(m =>
-      m.title.toLowerCase() === it.title.toLowerCase() && (!it.year || m.year === it.year));
+      normalizeTitle(m.title) === normalizeTitle(it.title) &&
+      (!it.year || !m.year || Math.abs((parseInt(m.year,10)||0) - (parseInt(it.year,10)||0)) <= 1));
     if(alreadyByTitle){ skipped++; continue; }
     try{
       const query = encodeURIComponent(it.title);
@@ -774,6 +809,66 @@ async function handleImportLetterboxdFile(e){
   el('letterboxd-status').textContent = `Done — added ${added}, skipped ${skipped} (already logged), ${failed} couldn't be matched on TMDB.`;
   if(state.view === 'rankings') renderRankings();
 }
+async function openDiscover(){
+  el('discover-modal').classList.remove('hidden');
+  el('discover-content').innerHTML = `<div class="status-note"><span class="spinner"></span> Finding some hidden gems based on your favorites…</div>`;
+  if(!state.apiKey){
+    el('discover-content').innerHTML = `<div class="inline-msg warn">Add your TMDB API key in Settings first.</div>`;
+    return;
+  }
+  const sorted = [...state.library].sort((a,b)=>b.elo-a.elo);
+  const seeds = sorted.slice(0, Math.min(5, sorted.length));
+  if(seeds.length === 0){
+    el('discover-content').innerHTML = `<div class="empty-note">Log a few movies first so I have something to work from.</div>`;
+    return;
+  }
+  const candidates = new Map();
+  for(const seed of seeds){
+    try{
+      const res = await fetch(`https://api.themoviedb.org/3/movie/${seed.id}/recommendations?api_key=${encodeURIComponent(state.apiKey)}`);
+      if(res.ok){
+        const data = await res.json();
+        (data.results || []).forEach(m => {
+          if(!state.library.find(lm => lm.id === m.id) && !candidates.has(m.id)){
+            candidates.set(m.id, m);
+          }
+        });
+      }
+    }catch(e){ /* skip this seed on failure */ }
+    await new Promise(r => setTimeout(r, 120));
+  }
+  let list = [...candidates.values()].filter(m => (m.vote_count || 0) >= 15);
+  list.sort((a,b) => (a.popularity || 0) - (b.popularity || 0));
+  list = list.slice(0, 9);
+  if(list.length === 0){
+    el('discover-content').innerHTML = `<div class="empty-note">Couldn't turn up any hidden gems this time — try again after logging a few more movies.</div>`;
+    return;
+  }
+  renderDiscoverResults(list);
+}
+function renderDiscoverResults(list){
+  const container = el('discover-content');
+  container.innerHTML = `<p class="status-note" style="margin-top:0;">Lesser-known picks based on your top-rated movies. Tap one to log and duel it in.</p><div id="discover-grid" class="discover-grid"></div>`;
+  const grid = el('discover-grid');
+  list.forEach(movie => {
+    const poster = posterUrl(movie.poster_path, 'w185');
+    const year = (movie.release_date || '').slice(0,4) || '—';
+    const card = document.createElement('div');
+    card.className = 'result-card';
+    card.innerHTML = `
+      ${poster ? `<img src="${poster}" alt="${escapeHtml(movie.title)}">` : `<div class="placeholder">${escapeHtml(movie.title)}</div>`}
+      <div class="meta"><div class="t">${escapeHtml(movie.title)}</div><div class="y">${year}</div></div>
+    `;
+    card.onclick = () => {
+      closeDiscover();
+      state.view = 'log';
+      renderView();
+      selectMovie(movie, false);
+    };
+    grid.appendChild(card);
+  });
+}
+function closeDiscover(){ el('discover-modal').classList.add('hidden'); }
 const GENRE_DESCRIPTORS = {
   'Action': ['Reckless','Explosive','Restless'],
   'Adventure': ['Restless','Bold','Wandering'],
