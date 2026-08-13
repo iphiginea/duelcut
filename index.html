@@ -4,6 +4,13 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Duel Cut</title>
+<link rel="manifest" href="manifest.json">
+<meta name="theme-color" content="#040011">
+<link rel="icon" href="icon-192.png">
+<link rel="apple-touch-icon" href="icon-192.png">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Duel Cut">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
@@ -63,6 +70,9 @@
   #search-results{display:grid;grid-template-columns:repeat(auto-fill,minmax(110px,1fr));gap:12px;}
   .result-card{display:block;cursor:pointer;background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);overflow:hidden;transition:.15s;position:relative;text-decoration:none;color:inherit;}
   .result-card:hover{border-color:var(--amber);transform:translateY(-2px);}
+  .watchlist-add-btn{position:absolute;top:6px;right:6px;width:26px;height:26px;border-radius:50%;background:rgba(4,0,17,0.72);border:1px solid var(--border);color:var(--text);font-size:13px;cursor:pointer;display:flex;align-items:center;justify-content:center;padding:0;z-index:2;}
+  .watchlist-add-btn:hover{border-color:var(--amber);color:var(--amber);}
+  .watchlist-add-btn.added{color:var(--olive);border-color:var(--olive);}
   .result-card img{width:100%;aspect-ratio:2/3;object-fit:cover;display:block;background:var(--surface-2);}
   .result-card .placeholder{width:100%;aspect-ratio:2/3;display:flex;align-items:center;justify-content:center;background:var(--surface-2);color:var(--text-dim);font-size:12px;padding:8px;text-align:center;}
   .result-card .meta{padding:8px;}
@@ -109,6 +119,13 @@
   .filter-row{display:flex;gap:8px;margin-bottom:14px;flex-wrap:wrap;}
   .filter-row select{flex:1;min-width:100px;background:var(--surface);border:1px solid var(--border);color:var(--text);padding:9px 8px;border-radius:8px;font-size:12px;font-family:'IBM Plex Sans';}
   .filter-row select:focus{outline:none;border-color:var(--amber);}
+  .sort-wrap{position:relative;flex:none;}
+  .sort-btn{background:var(--surface);border:1px solid var(--border);color:var(--text);padding:9px 14px;border-radius:8px;font-size:12px;font-weight:600;cursor:pointer;white-space:nowrap;font-family:'IBM Plex Sans';}
+  .sort-btn:hover{border-color:var(--amber);color:var(--amber);}
+  #sort-dropdown{top:42px;min-width:210px;}
+  #sort-dropdown button{justify-content:space-between;}
+  #sort-dropdown button.active{color:var(--amber);}
+  #sort-dropdown button.active::after{content:'✓';margin-left:8px;}
   .stats-summary{display:flex;gap:10px;margin-bottom:20px;}
   .stat-box{flex:1;background:var(--surface-2);border-radius:8px;padding:14px 8px;text-align:center;}
   .stat-num{font-family:'Bebas Neue';font-size:32px;color:var(--amber);line-height:1;}
@@ -220,7 +237,8 @@
   <div id="random-duel-status" class="random-duel-status hidden"></div>
 
   <nav>
-    <button id="tab-log" class="active">Log a Movie</button>
+    <button id="tab-log" class="active">Log</button>
+    <button id="tab-watchlist">Watchlist</button>
     <button id="tab-rankings">Rankings</button>
   </nav>
 
@@ -254,20 +272,31 @@
       </div>
     </section>
 
+    <section id="watchlist-view" class="hidden">
+      <p class="rankings-tagline">Movies you're saving for later.</p>
+      <div class="rankings-header">
+        <span class="rankings-count mono" id="watchlist-count"></span>
+      </div>
+      <div id="watchlist-list"></div>
+    </section>
+
     <section id="rankings-view" class="hidden">
       <p class="rankings-tagline">See who made the cut.</p>
       <input id="rankings-search" type="text" class="rankings-search" placeholder="Find a movie in your rankings…" autocomplete="off">
       <div class="filter-row">
         <select id="filter-genre"><option value="">All Genres</option></select>
         <select id="filter-decade"><option value="">All Decades</option></select>
-        <select id="sort-select">
-          <option value="rank_asc">Sort: Lowest Rank to Highest</option>
-          <option value="rank_desc" selected>Sort: Highest Rank to Lowest</option>
-          <option value="added_asc">Sort: Oldest Ranked to Newest</option>
-          <option value="added_desc">Sort: Newest Ranked to Oldest</option>
-          <option value="title_asc">Sort: A–Z</option>
-          <option value="title_desc">Sort: Z–A</option>
-        </select>
+        <div class="sort-wrap">
+          <button id="sort-btn" class="sort-btn" title="Sort">⇅ Sort</button>
+          <div id="sort-dropdown" class="menu-dropdown hidden">
+            <button data-sort="rank_desc">Highest Rank to Lowest</button>
+            <button data-sort="rank_asc">Lowest Rank to Highest</button>
+            <button data-sort="added_desc">Newest Ranked to Oldest</button>
+            <button data-sort="added_asc">Oldest Ranked to Newest</button>
+            <button data-sort="title_asc">A–Z</button>
+            <button data-sort="title_desc">Z–A</button>
+          </div>
+        </div>
       </div>
       <div class="view-toggle">
         <button id="view-list-btn" class="active">List</button>
@@ -296,6 +325,7 @@
     <div class="settings-section">
       <h3>Backup &amp; Sync</h3>
       <p>Export your rankings as a file, then import it in another browser or on another device to bring everything over. <strong>Importing replaces</strong> whatever's currently on this device.</p>
+      <p>Duel Cut also <strong>auto-exports a backup</strong> every 25 duels or 2 weeks, whichever comes first. Tip: set Safari's downloads to iCloud Drive (Settings → Safari → Downloads → iCloud Drive) so these land somewhere that syncs automatically.</p>
       <div class="file-row">
         <button class="file-btn" id="export-backup-btn">Export Backup</button>
         <label class="file-btn" for="import-backup-input">Import Backup</label>
@@ -391,7 +421,10 @@ const state = {
   suggestPool: [],
   suggestPage: 1,
   randomLoopActive: false,
-  randomLoopTimeout: null
+  randomLoopTimeout: null,
+  watchlist: [],
+  lastBackupAt: 0,
+  duelsSinceBackup: 0
 };
 
 const el = id => document.getElementById(id);
@@ -412,6 +445,12 @@ async function init(){
   if(genres){ try{ state.genreMap = JSON.parse(genres); }catch(e){ state.genreMap = {}; } }
   const duels = await storageGet('duelcut:totalduels');
   if(duels){ const n = parseInt(duels, 10); state.totalDuels = isNaN(n) ? 0 : n; }
+  const watchlistRaw = await storageGet('duelcut:watchlist');
+  if(watchlistRaw){ try{ state.watchlist = JSON.parse(watchlistRaw); }catch(e){ state.watchlist = []; } }
+  const lastBackupRaw = await storageGet('duelcut:lastbackup');
+  if(lastBackupRaw){ const n = parseInt(lastBackupRaw, 10); state.lastBackupAt = isNaN(n) ? 0 : n; }
+  const sinceBackupRaw = await storageGet('duelcut:duelssincebackup');
+  if(sinceBackupRaw){ const n = parseInt(sinceBackupRaw, 10); state.duelsSinceBackup = isNaN(n) ? 0 : n; }
   bindEvents();
   renderView();
   ensureGenreMap();
@@ -433,15 +472,29 @@ async function ensureGenreMap(){
 
 function bindEvents(){
   el('tab-log').onclick = () => { stopRandomLoop(); state.view='log'; renderView(); };
+  el('tab-watchlist').onclick = () => { stopRandomLoop(); state.view='watchlist'; renderView(); };
   el('tab-rankings').onclick = () => { stopRandomLoop(); state.view='rankings'; renderView(); };
   el('settings-btn').onclick = openSettings;
   el('menu-btn').onclick = (e) => { e.stopPropagation(); el('menu-dropdown').classList.toggle('hidden'); };
   el('menu-dropdown').addEventListener('click', (e) => {
     if(e.target.closest('button')) el('menu-dropdown').classList.add('hidden');
   });
+  el('sort-btn').onclick = (e) => { e.stopPropagation(); el('sort-dropdown').classList.toggle('hidden'); };
+  el('sort-dropdown').addEventListener('click', (e) => {
+    const btn = e.target.closest('button[data-sort]');
+    if(btn){
+      state.sortMode = btn.dataset.sort;
+      updateSortDropdown();
+      renderRankingsList();
+      el('sort-dropdown').classList.add('hidden');
+    }
+  });
   document.addEventListener('click', (e) => {
     if(!el('menu-dropdown').contains(e.target) && e.target !== el('menu-btn')){
       el('menu-dropdown').classList.add('hidden');
+    }
+    if(!el('sort-dropdown').contains(e.target) && e.target !== el('sort-btn')){
+      el('sort-dropdown').classList.add('hidden');
     }
   });
   el('settings-cancel').onclick = closeSettings;
@@ -480,7 +533,6 @@ function bindEvents(){
   el('compare-close').onclick = () => el('compare-modal').classList.add('hidden');
   el('filter-genre').addEventListener('change', () => { state.filterGenre = el('filter-genre').value; renderRankingsList(); });
   el('filter-decade').addEventListener('change', () => { state.filterDecade = el('filter-decade').value; renderRankingsList(); });
-  el('sort-select').addEventListener('change', () => { state.sortMode = el('sort-select').value; renderRankingsList(); });
   el('stats-btn').onclick = () => { el('stats-content').innerHTML = buildStats(); el('stats-modal').classList.remove('hidden'); };
   el('stats-close').onclick = () => el('stats-modal').classList.add('hidden');
   initDuelSwipe();
@@ -488,10 +540,13 @@ function bindEvents(){
 
 function renderView(){
   el('tab-log').classList.toggle('active', state.view==='log');
+  el('tab-watchlist').classList.toggle('active', state.view==='watchlist');
   el('tab-rankings').classList.toggle('active', state.view==='rankings');
   el('log-view').classList.toggle('hidden', state.view!=='log');
+  el('watchlist-view').classList.toggle('hidden', state.view!=='watchlist');
   el('rankings-view').classList.toggle('hidden', state.view!=='rankings');
   if(state.view==='rankings') renderRankings();
+  if(state.view==='watchlist') renderWatchlist();
 }
 
 function openSettings(){
@@ -544,15 +599,26 @@ function renderSearchResults(results){
   }
   results.slice(0,12).forEach(movie => {
     const already = state.library.find(m => m.id===movie.id);
+    const onWatchlist = state.watchlist.find(m => m.id===movie.id);
     const card = document.createElement('div');
     card.className = 'result-card';
     const poster = posterUrl(movie.poster_path, 'w185');
     const year = (movie.release_date||'').slice(0,4) || '—';
     card.innerHTML = `
       ${poster ? `<img src="${poster}" alt="${escapeHtml(movie.title)}">` : `<div class="placeholder">${escapeHtml(movie.title)}</div>`}
-      <div class="meta"><div class="t">${escapeHtml(movie.title)}</div><div class="y">${year}${already?' · already logged':''}</div></div>
+      <button class="watchlist-add-btn ${onWatchlist?'added':''}" title="${onWatchlist?'On your watchlist':'Add to Watchlist'}">${onWatchlist?'✓':'🔖'}</button>
+      <div class="meta"><div class="t">${escapeHtml(movie.title)}</div><div class="y">${year}${already?' · already logged':onWatchlist?' · on watchlist':''}</div></div>
     `;
     card.onclick = () => selectMovie(movie, already);
+    const bookmarkBtn = card.querySelector('.watchlist-add-btn');
+    bookmarkBtn.onclick = (e) => {
+      e.stopPropagation();
+      if(already || bookmarkBtn.classList.contains('added')) return;
+      addToWatchlist(movie);
+      bookmarkBtn.classList.add('added');
+      bookmarkBtn.textContent = '✓';
+      bookmarkBtn.title = 'On your watchlist';
+    };
     container.appendChild(card);
   });
 }
@@ -757,6 +823,7 @@ function handleDuelChoice(pendingWon){
   if(state.totalDuels > 0 && state.totalDuels % 50 === 0){
     celebrateMilestone(state.totalDuels);
   }
+  maybeAutoBackup();
 
   state.duelIndex++;
   if(state.duelIndex >= state.duelQueue.length){
@@ -886,6 +953,19 @@ function celebrateMilestone(count){
   }, 2800);
 }
 
+function maybeAutoBackup(){
+  state.duelsSinceBackup = (state.duelsSinceBackup || 0) + 1;
+  const twoWeeksMs = 14 * 24 * 60 * 60 * 1000;
+  const dueByCount = state.duelsSinceBackup >= 25;
+  const dueByTime = !state.lastBackupAt || (Date.now() - state.lastBackupAt) >= twoWeeksMs;
+  if(dueByCount || dueByTime){
+    exportBackup();
+    showRandomToast('📦 Auto-backup saved — check your Downloads or iCloud Drive.');
+  }else{
+    storageSet('duelcut:duelssincebackup', String(state.duelsSinceBackup));
+  }
+}
+
 function stopRandomLoop(){
   state.randomLoopActive = false;
   if(state.randomLoopTimeout){
@@ -974,7 +1054,14 @@ function normalizeTitle(s){
     .trim();
 }
 
+function updateSortDropdown(){
+  document.querySelectorAll('#sort-dropdown button[data-sort]').forEach(btn => {
+    btn.classList.toggle('active', btn.dataset.sort === state.sortMode);
+  });
+}
+
 function renderRankingsList(){
+  updateSortDropdown();
   const container = el('rankings-list');
   el('rankings-count').textContent = state.library.length ? `${state.library.length} movie${state.library.length===1?'':'s'} ranked` : '';
   if(state.library.length===0){
@@ -1041,6 +1128,7 @@ function renderRankingsList(){
   });
 }
 
+
 function renderTierView(container, visible){
   const tiers = [
     {key:'S', label:'S', min:9, className:'tier-s'},
@@ -1086,6 +1174,79 @@ function askRemove(row, id){
   wrap.querySelector('.no').onclick = () => renderRankings();
 }
 
+function addToWatchlist(movie){
+  if(state.watchlist.find(m => m.id === movie.id) || state.library.find(m => m.id === movie.id)) return;
+  state.watchlist.push({
+    id: movie.id,
+    title: movie.title,
+    year: (movie.release_date || '').slice(0,4) || '—',
+    poster_path: movie.poster_path,
+    genres: movie.genre_ids || [],
+    tmdbRating: typeof movie.vote_average === 'number' ? movie.vote_average : null,
+    addedAt: Date.now()
+  });
+  storageSet('duelcut:watchlist', JSON.stringify(state.watchlist));
+}
+
+function renderWatchlist(){
+  const container = el('watchlist-list');
+  el('watchlist-count').textContent = state.watchlist.length ? `${state.watchlist.length} movie${state.watchlist.length===1?'':'s'} saved` : '';
+  if(state.watchlist.length === 0){
+    container.innerHTML = `<div class="empty-note">Nothing saved yet. Tap the 🔖 on a search result, or save a pick from Discover.</div>`;
+    return;
+  }
+  const sorted = [...state.watchlist].sort((a,b) => (b.addedAt||0) - (a.addedAt||0));
+  container.innerHTML = '';
+  sorted.forEach(movie => {
+    const row = document.createElement('div');
+    row.className = 'rank-row';
+    const thumb = posterUrl(movie.poster_path, 'w92');
+    row.innerHTML = `
+      ${thumb ? `<img src="${thumb}" alt="">` : `<div class="placeholder-thumb">${escapeHtml(movie.title.slice(0,2))}</div>`}
+      <div class="info">
+        <div class="t">${escapeHtml(movie.title)}</div>
+        <div class="y">${movie.year}</div>
+      </div>
+      <button class="rerank-btn" title="Mark watched">✓</button>
+      <button class="remove-btn" title="Remove">×</button>
+    `;
+    row.querySelector('.rerank-btn').onclick = () => markWatched(movie);
+    row.querySelector('.remove-btn').onclick = () => askRemoveWatchlist(row, movie.id);
+    container.appendChild(row);
+  });
+}
+
+function askRemoveWatchlist(row, id){
+  const btn = row.querySelector('.remove-btn');
+  const wrap = document.createElement('div');
+  wrap.className = 'confirm-remove';
+  wrap.innerHTML = `<button class="yes">Remove</button><button class="no">Cancel</button>`;
+  btn.replaceWith(wrap);
+  wrap.querySelector('.yes').onclick = async () => {
+    state.watchlist = state.watchlist.filter(m => m.id !== id);
+    await storageSet('duelcut:watchlist', JSON.stringify(state.watchlist));
+    renderWatchlist();
+  };
+  wrap.querySelector('.no').onclick = () => renderWatchlist();
+}
+
+function markWatched(watchlistItem){
+  state.watchlist = state.watchlist.filter(m => m.id !== watchlistItem.id);
+  storageSet('duelcut:watchlist', JSON.stringify(state.watchlist));
+  const pseudoMovie = {
+    id: watchlistItem.id,
+    title: watchlistItem.title,
+    release_date: watchlistItem.year,
+    poster_path: watchlistItem.poster_path,
+    genre_ids: watchlistItem.genres,
+    vote_average: watchlistItem.tmdbRating
+  };
+  state.view = 'log';
+  renderView();
+  el('search-panel').classList.add('hidden');
+  selectMovie(pseudoMovie, false);
+}
+
 function csvEscape(value){
   const s = String(value);
   if(/[",\n]/.test(s)) return '"' + s.replace(/"/g,'""') + '"';
@@ -1115,7 +1276,8 @@ function exportBackup(){
     version: 1,
     exportedAt: new Date().toISOString(),
     library: state.library,
-    genreMap: state.genreMap
+    genreMap: state.genreMap,
+    watchlist: state.watchlist
   };
   const blob = new Blob([JSON.stringify(payload, null, 2)], {type:'application/json'});
   const url = URL.createObjectURL(blob);
@@ -1127,6 +1289,10 @@ function exportBackup(){
   document.body.removeChild(a);
   URL.revokeObjectURL(url);
   el('backup-status').textContent = `Exported ${state.library.length} movies.`;
+  state.duelsSinceBackup = 0;
+  state.lastBackupAt = Date.now();
+  storageSet('duelcut:duelssincebackup', '0');
+  storageSet('duelcut:lastbackup', String(state.lastBackupAt));
 }
 
 function handleImportBackupFile(e){
@@ -1140,10 +1306,13 @@ function handleImportBackupFile(e){
       if(!Array.isArray(data.library)) throw new Error('bad format');
       state.library = data.library;
       if(data.genreMap) state.genreMap = data.genreMap;
+      if(Array.isArray(data.watchlist)) state.watchlist = data.watchlist;
       await storageSet('duelcut:library', JSON.stringify(state.library));
       if(data.genreMap) await storageSet('duelcut:genres', JSON.stringify(state.genreMap));
+      if(Array.isArray(data.watchlist)) await storageSet('duelcut:watchlist', JSON.stringify(state.watchlist));
       el('backup-status').textContent = `Imported ${state.library.length} movies. This replaced your previous library on this device.`;
       if(state.view === 'rankings') renderRankings();
+      if(state.view === 'watchlist') renderWatchlist();
     }catch(err){
       el('backup-status').textContent = `Couldn't read that file — make sure it's a Duel Cut backup (.json).`;
     }
@@ -1377,20 +1546,28 @@ function showDiscoverBatch(){
 
 function renderDiscoverResults(list){
   const container = el('discover-content');
-  container.innerHTML = `<p class="status-note" style="margin-top:0;">Lesser-known picks based on your top-rated movies. Tap one to open its page on The Movie Database.</p><div id="discover-grid" class="discover-grid"></div>`;
+  container.innerHTML = `<p class="status-note" style="margin-top:0;">Lesser-known picks based on your top-rated movies. Tap one to save it to your Watchlist.</p><div id="discover-grid" class="discover-grid"></div>`;
   const grid = el('discover-grid');
   list.forEach(movie => {
     const poster = posterUrl(movie.poster_path, 'w185');
     const year = (movie.release_date || '').slice(0,4) || '—';
-    const card = document.createElement('a');
+    const onWatchlist = state.watchlist.find(m => m.id === movie.id);
+    const card = document.createElement('div');
     card.className = 'result-card';
-    card.href = `https://www.themoviedb.org/movie/${movie.id}`;
-    card.target = '_blank';
-    card.rel = 'noopener noreferrer';
     card.innerHTML = `
       ${poster ? `<img src="${poster}" alt="${escapeHtml(movie.title)}">` : `<div class="placeholder">${escapeHtml(movie.title)}</div>`}
-      <div class="meta"><div class="t">${escapeHtml(movie.title)}</div><div class="y">${year}</div></div>
+      <div class="meta"><div class="t">${escapeHtml(movie.title)}</div><div class="y">${year}${onWatchlist?' · saved':''}</div></div>
     `;
+    if(onWatchlist){
+      card.style.opacity = '0.6';
+    }else{
+      card.onclick = () => {
+        addToWatchlist(movie);
+        card.style.opacity = '0.6';
+        card.onclick = null;
+        card.querySelector('.y').textContent = `${year} · saved`;
+      };
+    }
     grid.appendChild(card);
   });
 }
