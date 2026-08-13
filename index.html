@@ -262,7 +262,7 @@
         <select id="filter-decade"><option value="">All Decades</option></select>
         <select id="sort-select">
           <option value="rank_asc">Sort: Lowest Rank to Highest</option>
-          <option value="rank_desc">Sort: Highest Rank to Lowest</option>
+          <option value="rank_desc" selected>Sort: Highest Rank to Lowest</option>
           <option value="added_asc">Sort: Oldest Ranked to Newest</option>
           <option value="added_desc">Sort: Newest Ranked to Oldest</option>
           <option value="title_asc">Sort: A–Z</option>
@@ -386,7 +386,7 @@ const state = {
   rankingsQuery: '',
   filterGenre: '',
   filterDecade: '',
-  sortMode: 'rank_asc',
+  sortMode: 'rank_desc',
   totalDuels: 0,
   suggestPool: [],
   suggestPage: 1,
@@ -428,7 +428,7 @@ async function ensureGenreMap(){
     (data.genres || []).forEach(g => { map[g.id] = g.name; });
     state.genreMap = map;
     await storageSet('duelcut:genres', JSON.stringify(map));
-  }catch(e){ /* skip genre flavor if this fails */ }
+  }catch(e){ /* recap just skips genre flavor if this fails */ }
 }
 
 function bindEvents(){
@@ -517,7 +517,7 @@ async function runSearch(){
   }
   el('search-status').innerHTML = `<span class="spinner"></span>`;
   try{
-    const res = await fetch(`https://api.themoviedb.org/3/search/movie?api_key=${encodeURIComponent(state.apiKey)}&query=${encodeURIComponent(query)}`);
+    const res = await fetch(`https://api.themoviedb.org/3/search/movie?api_key=${encodeURIComponent(state.apiKey)}&query=${encodeURIComponent(query)}&include_adult=false`);
     if(!res.ok){
       el('search-status').innerHTML = `<div class="inline-msg warn">TMDB rejected that request. Check your API key in settings.</div>`;
       return;
@@ -536,6 +536,7 @@ function posterUrl(path, size){
 
 function renderSearchResults(results){
   const container = el('search-results');
+  results = results.filter(m => !m.adult);
   container.innerHTML = '';
   if(results.length===0){
     container.innerHTML = `<div class="empty-note">No matches. Try a different title.</div>`;
@@ -993,7 +994,7 @@ function renderRankingsList(){
     return !isNaN(y) && Math.floor(y/10)*10 === parseInt(state.filterDecade, 10);
   });
 
-  if(state.sortMode === 'rank_desc'){
+  if(state.sortMode === 'rank_asc'){
     ranked = [...ranked].reverse();
   }else if(state.sortMode === 'added_asc'){
     ranked = [...ranked].sort((a,b) => (a.movie.addedAt||0) - (b.movie.addedAt||0));
@@ -1004,7 +1005,7 @@ function renderRankingsList(){
   }else if(state.sortMode === 'title_desc'){
     ranked = [...ranked].sort((a,b) => b.movie.title.localeCompare(a.movie.title));
   }
-  // 'rank_asc' needs no extra sort — `ranked` is already ordered best-to-worst
+  // 'rank_desc' (highest rank = best) needs no extra sort — `ranked` is already ordered best-to-worst
 
   const visible = ranked;
 
@@ -1236,7 +1237,7 @@ async function handleImportLetterboxdFile(e){
     try{
       const query = encodeURIComponent(it.title);
       const yearParam = it.year ? `&year=${encodeURIComponent(it.year)}` : '';
-      const res = await fetch(`https://api.themoviedb.org/3/search/movie?api_key=${encodeURIComponent(state.apiKey)}&query=${query}${yearParam}`);
+      const res = await fetch(`https://api.themoviedb.org/3/search/movie?api_key=${encodeURIComponent(state.apiKey)}&query=${query}${yearParam}&include_adult=false`);
       if(!res.ok){ failed++; continue; }
       const data = await res.json();
       const match = (data.results || [])[0];
@@ -1339,11 +1340,11 @@ async function openDiscover(){
   const candidates = new Map();
   for(const seed of seeds){
     try{
-      const res = await fetch(`https://api.themoviedb.org/3/movie/${seed.id}/recommendations?api_key=${encodeURIComponent(state.apiKey)}`);
+      const res = await fetch(`https://api.themoviedb.org/3/movie/${seed.id}/recommendations?api_key=${encodeURIComponent(state.apiKey)}&include_adult=false`);
       if(res.ok){
         const data = await res.json();
         (data.results || []).forEach(m => {
-          if(!state.library.find(lm => lm.id === m.id) && !candidates.has(m.id)){
+          if(!m.adult && !state.library.find(lm => lm.id === m.id) && !candidates.has(m.id)){
             candidates.set(m.id, m);
           }
         });
@@ -1401,12 +1402,12 @@ async function ensureSuggestPool(minCount){
   while(state.suggestPool.length < minCount && attempts < 5){
     attempts++;
     try{
-      const res = await fetch(`https://api.themoviedb.org/3/movie/popular?api_key=${encodeURIComponent(state.apiKey)}&page=${state.suggestPage}`);
+      const res = await fetch(`https://api.themoviedb.org/3/movie/popular?api_key=${encodeURIComponent(state.apiKey)}&page=${state.suggestPage}&include_adult=false`);
       if(!res.ok) break;
       const data = await res.json();
       state.suggestPage++;
       (data.results || []).forEach(m => {
-        if(!state.library.find(lm => lm.id === m.id) && !state.suggestPool.find(p => p.id === m.id)){
+        if(!m.adult && !state.library.find(lm => lm.id === m.id) && !state.suggestPool.find(p => p.id === m.id)){
           state.suggestPool.push(m);
         }
       });
