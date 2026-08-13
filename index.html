@@ -324,11 +324,11 @@
 
 <div id="settings-modal" class="hidden">
   <div class="box">
-    <h2 class="display">TMDB API Key</h2>
-    <p>Duel Cut pulls posters and details from The Movie Database. Grab a free API key from
+    <h2 class="display">TMDB API Key <span style="color:var(--text-dim);font-weight:400;">(optional)</span></h2>
+    <p>Duel Cut already works out of the box. If you'd rather use your own TMDB key instead of the built-in one, grab a free key from
       <a href="https://www.themoviedb.org/settings/api" target="_blank">themoviedb.org/settings/api</a>
-      and paste it below. It's stored only for you.</p>
-    <input id="api-key-input" type="text" placeholder="Paste your TMDB API key">
+      and paste it below. Leave blank to use the default.</p>
+    <input id="api-key-input" type="text" placeholder="Optional — paste your own TMDB API key">
     <div class="row">
       <button class="cancel" id="settings-cancel">Cancel</button>
       <button class="save" id="settings-save">Save</button>
@@ -439,8 +439,11 @@
 </div>
 
 <script>
+const DEFAULT_API_KEY = 'aa8d690a98a62069774ffbaf2cdc2479';
+
 const state = {
   apiKey: null,
+  apiKeyOverride: null,
   library: [],
   view: 'log',
   pendingMovie: null,
@@ -480,7 +483,8 @@ async function storageSet(key, value){
 
 async function init(){
   const key = await storageGet('duelcut:api-key');
-  if(key) state.apiKey = key;
+  state.apiKeyOverride = key || null;
+  state.apiKey = key || DEFAULT_API_KEY;
   const lib = await storageGet('duelcut:library');
   if(lib){ try{ state.library = JSON.parse(lib); }catch(e){ state.library = []; } }
   const genres = await storageGet('duelcut:genres');
@@ -600,7 +604,7 @@ function renderView(){
 }
 
 function openSettings(){
-  el('api-key-input').value = state.apiKey || '';
+  el('api-key-input').value = state.apiKeyOverride || '';
   el('birth-year-input').value = state.birthYear || '';
   el('settings-modal').classList.remove('hidden');
 }
@@ -614,7 +618,13 @@ async function saveBirthYear(){
 }
 async function saveApiKey(){
   const val = el('api-key-input').value.trim();
-  state.apiKey = val || null;
+  if(val){
+    state.apiKeyOverride = val;
+    state.apiKey = val;
+  }else{
+    state.apiKeyOverride = null;
+    state.apiKey = DEFAULT_API_KEY;
+  }
   await storageSet('duelcut:api-key', val);
   closeSettings();
   ensureGenreMap();
