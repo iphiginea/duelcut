@@ -368,7 +368,7 @@
 
     <div class="settings-section">
       <h3>Extra Details for Insights</h3>
-      <p>Unlocks Favorite Director, Actor, Actress, Studio, Franchise, Country, Language, Cinematographer, Composer, Screenwriter, and Runtime Bias in Insights. New movies pick this up automatically — this fills it in for movies already in your library.</p>
+      <p>Unlocks Favorite Director, Actor, Actress, Studio, Franchise, Country, Cinematographer, Composer, Screenwriter, and Runtime Bias in Insights. New movies pick this up automatically — this fills it in for movies already in your library.</p>
       <div class="file-row">
         <button class="file-btn primary" id="backfill-btn">🔄 Fill In Movie Details</button>
       </div>
@@ -463,6 +463,7 @@ const state = {
   totalDuels: 0,
   suggestPool: [],
   suggestPage: 1,
+  suggestSeedIndex: 0,
   randomLoopActive: false,
   randomLoopTimeout: null,
   duelLog: [],
@@ -968,15 +969,10 @@ async function finalizeMovie(){
   state.duelHistory = [];
 
   if(state.isRandomDuel){
-    const opponent = state.duelQueue[0];
-    const scoreP = eloToScore(state.pendingMovie.elo);
-    const scoreO = eloToScore(opponent.elo);
     await storageSet('duelcut:library', JSON.stringify(state.library));
-    const winnerTitle = state.lastPendingWon ? state.pendingMovie.title : opponent.title;
-    showRandomToast(`⚔️ ${winnerTitle} wins! ${state.pendingMovie.title} ${scoreP} vs ${opponent.title} ${scoreO}`);
     state.isRandomDuel = false;
     if(state.randomLoopActive){
-      state.randomLoopTimeout = setTimeout(() => { startRandomDuel(); }, 1100);
+      startRandomDuel();
     }else{
       el('duel-arena').classList.add('hidden');
       el('search-panel').classList.remove('hidden');
@@ -1699,13 +1695,14 @@ function renderDiscoverResults(list){
 
 function closeDiscover(){ el('discover-modal').classList.add('hidden'); }
 
-async function ensureSuggestPool(minCount){
-  let attempts = 0;
-  while(state.suggestPool.length < minCount && attempts < 5){
-    attempts++;
+async function fillSuggestPool(){
+  const sorted = [...state.library].sort((a,b) => b.elo-a.elo);
+
+  if(sorted.length === 0){
+    // brand new library — nothing to base taste on yet, fall back to popular
     try{
       const res = await fetch(`https://api.themoviedb.org/3/movie/popular?api_key=${encodeURIComponent(state.apiKey)}&page=${state.suggestPage}&include_adult=false`);
-      if(!res.ok) break;
+      if(!res.ok) return;
       const data = await res.json();
       state.suggestPage++;
       (data.results || []).forEach(m => {
@@ -1713,14 +1710,50 @@ async function ensureSuggestPool(minCount){
           state.suggestPool.push(m);
         }
       });
-      if(!data.results || data.results.length === 0) break;
-    }catch(e){ break; }
+    }catch(e){ /* skip */ }
+    return;
+  }
+
+  const seeds = sorted.slice(state.suggestSeedIndex, state.suggestSeedIndex + 5);
+  if(seeds.length === 0) return;
+  state.suggestSeedIndex += seeds.length;
+
+  const candidates = new Map();
+  for(const seed of seeds){
+    try{
+      const res = await fetch(`https://api.themoviedb.org/3/movie/${seed.id}/recommendations?api_key=${encodeURIComponent(state.apiKey)}&include_adult=false`);
+      if(res.ok){
+        const data = await res.json();
+        (data.results || []).forEach(m => {
+          if(!m.adult && !state.library.find(lm => lm.id === m.id) && !state.suggestPool.find(p => p.id === m.id) && !candidates.has(m.id)){
+            candidates.set(m.id, m);
+          }
+        });
+      }
+    }catch(e){ /* skip this seed */ }
+    await new Promise(r => setTimeout(r, 120));
+  }
+
+  // Keep it mainstream (likely to have been seen) rather than obscure — the
+  // opposite bias from Discover, which favors low popularity on purpose.
+  const list = [...candidates.values()].filter(m => (m.vote_count || 0) >= 100);
+  list.sort((a,b) => (b.popularity || 0) - (a.popularity || 0));
+  state.suggestPool.push(...list);
+}
+
+async function ensureSuggestPool(minCount){
+  let attempts = 0;
+  while(state.suggestPool.length < minCount && attempts < 6){
+    attempts++;
+    const before = state.suggestPool.length;
+    await fillSuggestPool();
+    if(state.suggestPool.length === before) break; // no more seeds/pages left
   }
 }
 
 async function openSuggest(){
   el('suggest-modal').classList.remove('hidden');
-  el('suggest-content').innerHTML = `<div class="status-note"><span class="spinner"></span> Pulling up some popular picks…</div>`;
+  el('suggest-content').innerHTML = `<div class="status-note"><span class="spinner"></span> Finding movies similar to what you like…</div>`;
 
   if(!state.apiKey){
     el('suggest-content').innerHTML = `<div class="inline-msg warn">Add your TMDB API key in Settings first.</div>`;
@@ -1728,6 +1761,7 @@ async function openSuggest(){
   }
   state.suggestPool = [];
   state.suggestPage = 1;
+  state.suggestSeedIndex = 0;
   await ensureSuggestPool(2);
   if(state.suggestPool.length === 0){
     el('suggest-content').innerHTML = `<div class="empty-note">Couldn't find any suggestions right now — try again in a bit.</div>`;
@@ -1753,23 +1787,34 @@ async function showSuggestBatch(){
 
 function renderSuggestResults(list){
   const container = el('suggest-content');
-  container.innerHTML = `<p class="status-note" style="margin-top:0;">Tap one you've seen to duel it into your rankings, or roll again for two more.</p><div id="suggest-grid" class="discover-grid"></div>`;
+  container.innerHTML = `<p class="status-note" style="margin-top:0;">Tap a poster if you've seen it to duel it in. Tap 🔖 to save it for later instead.</p><div id="suggest-grid" class="discover-grid"></div>`;
   const grid = el('suggest-grid');
   list.forEach(movie => {
     const poster = posterUrl(movie.poster_path, 'w185');
     const year = (movie.release_date || '').slice(0,4) || '—';
     const already = state.library.find(m => m.id === movie.id);
+    const onWatchlist = state.watchlist.find(m => m.id === movie.id);
     const card = document.createElement('div');
     card.className = 'result-card';
     card.innerHTML = `
       ${poster ? `<img src="${poster}" alt="${escapeHtml(movie.title)}">` : `<div class="placeholder">${escapeHtml(movie.title)}</div>`}
-      <div class="meta"><div class="t">${escapeHtml(movie.title)}</div><div class="y">${year}${already?' · already logged':''}</div></div>
+      <button class="watchlist-add-btn ${onWatchlist?'added':''}" title="${onWatchlist?'On your watchlist':'Add to Watchlist'}">${onWatchlist?'✓':'🔖'}</button>
+      <div class="meta"><div class="t">${escapeHtml(movie.title)}</div><div class="y">${year}${already?' · already logged':onWatchlist?' · on watchlist':''}</div></div>
     `;
     card.onclick = () => {
       closeSuggest();
       state.view = 'log';
       renderView();
       selectMovie(movie, already);
+    };
+    const bookmarkBtn = card.querySelector('.watchlist-add-btn');
+    bookmarkBtn.onclick = (e) => {
+      e.stopPropagation();
+      if(already || bookmarkBtn.classList.contains('added')) return;
+      addToWatchlist(movie);
+      bookmarkBtn.classList.add('added');
+      bookmarkBtn.textContent = '✓';
+      bookmarkBtn.title = 'On your watchlist';
     };
     grid.appendChild(card);
   });
@@ -1994,7 +2039,14 @@ function computeSweetSpot(){
     const inWindow = withYear.filter(x => x.y >= start && x.y < end);
     if(inWindow.length < 3) continue;
     const avg = inWindow.reduce((s,x) => s+x.s, 0) / inWindow.length;
-    if(!best || avg > best.avg){ best = { start, end: end-1, avg, count: inWindow.length }; }
+    if(!best || avg > best.avg){
+      // Report the actual span of movies that landed in this window, not
+      // the artificial window boundary — otherwise the range can extend
+      // years past your newest movie with nothing actually in it.
+      const actualStart = Math.min(...inWindow.map(x => x.y));
+      const actualEnd = Math.max(...inWindow.map(x => x.y));
+      best = { start: actualStart, end: actualEnd, avg, count: inWindow.length };
+    }
   }
   return best;
 }
@@ -2204,8 +2256,6 @@ function buildInsights(){
     if(actress) html += insightCard('Favorite Actress', `<b>${escapeHtml(actress.key)}</b> — ${actress.count} films, averaging ${actress.avg.toFixed(1)}/10.`);
     const country = computeGroupFavorite(m => m.countries || [], 2);
     if(country) html += insightCard('Favorite Country', `<b>${escapeHtml(country.key)}</b> — ${country.count} films, averaging ${country.avg.toFixed(1)}/10.`);
-    const language = computeGroupFavorite(m => m.languages || [], 2);
-    if(language) html += insightCard('Favorite Language', `<b>${escapeHtml(language.key)}</b> — ${language.count} films, averaging ${language.avg.toFixed(1)}/10.`);
     const studio = computeGroupFavorite(m => m.studios || [], 2);
     if(studio) html += insightCard('Favorite Studio', `<b>${escapeHtml(studio.key)}</b> — ${studio.count} films, averaging ${studio.avg.toFixed(1)}/10.`);
     const franchise = computeGroupFavorite(m => m.franchise ? [m.franchise] : [], 2);
@@ -2217,7 +2267,7 @@ function buildInsights(){
     const writer = computeGroupFavorite(m => m.screenwriter ? [m.screenwriter] : [], 2);
     if(writer) html += insightCard('Favorite Screenwriter', `<b>${escapeHtml(writer.key)}</b> — ${writer.count} films, averaging ${writer.avg.toFixed(1)}/10.`);
   }else{
-    html += `<p class="insight-empty">Run "Fill In Movie Details" in Settings to unlock Director, Actor, Actress, Country, Language, Studio, Franchise, Cinematographer, Composer, and Screenwriter favorites.</p>`;
+    html += `<p class="insight-empty">Run "Fill In Movie Details" in Settings to unlock Director, Actor, Actress, Country, Studio, Franchise, Cinematographer, Composer, and Screenwriter favorites.</p>`;
   }
   html += `</div>`;
 
