@@ -131,6 +131,17 @@
   .stat-num{font-family:'Bebas Neue';font-size:32px;color:var(--amber);line-height:1;}
   .stat-label{font-size:11px;color:var(--text-dim);text-transform:uppercase;letter-spacing:0.06em;margin-top:4px;}
   .stats-heading{font-family:'Bebas Neue';font-size:18px;font-weight:400;margin:18px 0 10px;color:var(--text);}
+  .insights-box{max-width:520px;}
+  .insights-section{border-top:1px solid var(--border);margin-top:16px;padding-top:16px;}
+  .insights-section:first-child{border-top:none;margin-top:0;padding-top:0;}
+  .insights-section h3{font-family:'Bebas Neue';font-size:20px;font-weight:400;margin:0 0 10px;color:var(--amber);}
+  .insight-card{background:var(--surface-2);border-radius:10px;padding:12px 14px;margin-bottom:8px;}
+  .insight-card .label{font-size:11px;color:var(--text-dim);text-transform:uppercase;letter-spacing:0.08em;margin-bottom:4px;}
+  .insight-card .body{font-size:14px;line-height:1.5;color:var(--text);}
+  .insight-card .body b, .insight-card .body strong{color:var(--amber);}
+  .insight-empty{font-size:12px;color:var(--text-dim);font-style:italic;margin-bottom:8px;}
+  .confidence-row{display:flex;justify-content:space-between;align-items:center;background:var(--surface-2);border-radius:8px;padding:10px 12px;margin-bottom:6px;font-size:13px;}
+  .confidence-row .pct{font-family:'IBM Plex Mono';color:var(--amber);font-weight:600;}
   .stats-bars{display:flex;flex-direction:column;gap:8px;}
   .stats-bar-row{display:flex;align-items:center;gap:8px;font-size:12px;}
   .stats-bar-label{width:90px;flex:none;color:var(--text-dim);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
@@ -189,16 +200,16 @@
   .rank-row .confirm-remove button.yes{border-color:var(--crimson);color:var(--crimson);}
 
   /* Settings modal */
-  #settings-modal, #discover-modal, #compare-modal, #stats-modal, #suggest-modal{position:fixed;inset:0;background:rgba(10,10,14,0.7);display:flex;align-items:center;justify-content:center;padding:20px;z-index:10;}
-  #settings-modal .box, #discover-modal .box, #compare-modal .box, #stats-modal .box, #suggest-modal .box{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:24px;max-width:440px;width:100%;max-height:80vh;overflow-y:auto;}
-  #settings-modal h2, #discover-modal h2, #compare-modal h2, #stats-modal h2, #suggest-modal h2{margin:0 0 8px;font-family:'Bebas Neue';font-size:26px;font-weight:400;}
+  #settings-modal, #discover-modal, #compare-modal, #stats-modal, #suggest-modal, #insights-modal{position:fixed;inset:0;background:rgba(10,10,14,0.7);display:flex;align-items:center;justify-content:center;padding:20px;z-index:10;}
+  #settings-modal .box, #discover-modal .box, #compare-modal .box, #stats-modal .box, #suggest-modal .box, #insights-modal .box{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:24px;max-width:440px;width:100%;max-height:80vh;overflow-y:auto;}
+  #settings-modal h2, #discover-modal h2, #compare-modal h2, #stats-modal h2, #suggest-modal h2, #insights-modal h2{margin:0 0 8px;font-family:'Bebas Neue';font-size:26px;font-weight:400;}
   #settings-modal p{color:var(--text-dim);font-size:13px;line-height:1.5;margin-bottom:14px;}
   #settings-modal a{color:var(--amber);}
   #settings-modal input{width:100%;background:var(--surface-2);border:1px solid var(--border);color:var(--text);padding:10px 12px;border-radius:8px;font-family:'IBM Plex Mono';font-size:13px;margin-bottom:14px;}
-  #settings-modal .row, #discover-modal .row, #compare-modal .row, #stats-modal .row, #suggest-modal .row{display:flex;gap:8px;justify-content:flex-end;}
-  #settings-modal button, #discover-modal button, #compare-modal button, #stats-modal button, #suggest-modal button{padding:9px 16px;border-radius:8px;border:1px solid var(--border);background:var(--surface-2);color:var(--text);cursor:pointer;font-weight:600;font-size:13px;}
-  #settings-modal button.save, #discover-modal button.save, #compare-modal button.save, #stats-modal button.save, #suggest-modal button.save{background:var(--teal);border-color:var(--teal);color:var(--text);}
-  #settings-modal button.cancel:hover, #discover-modal button.cancel:hover, #compare-modal button.cancel:hover, #stats-modal button.cancel:hover, #suggest-modal button.cancel:hover{border-color:var(--text-dim);}
+  #settings-modal .row, #discover-modal .row, #compare-modal .row, #stats-modal .row, #suggest-modal .row, #insights-modal .row{display:flex;gap:8px;justify-content:flex-end;}
+  #settings-modal button, #discover-modal button, #compare-modal button, #stats-modal button, #suggest-modal button, #insights-modal button{padding:9px 16px;border-radius:8px;border:1px solid var(--border);background:var(--surface-2);color:var(--text);cursor:pointer;font-weight:600;font-size:13px;}
+  #settings-modal button.save, #discover-modal button.save, #compare-modal button.save, #stats-modal button.save, #suggest-modal button.save, #insights-modal button.save{background:var(--teal);border-color:var(--teal);color:var(--text);}
+  #settings-modal button.cancel:hover, #discover-modal button.cancel:hover, #compare-modal button.cancel:hover, #stats-modal button.cancel:hover, #suggest-modal button.cancel:hover, #insights-modal button.cancel:hover{border-color:var(--text-dim);}
   .settings-section{border-top:1px solid var(--border);margin-top:18px;padding-top:18px;}
   .settings-section h3{font-family:'Bebas Neue';font-size:20px;font-weight:400;margin:0 0 6px;}
   .settings-section p{color:var(--text-dim);font-size:13px;line-height:1.5;margin-bottom:12px;}
@@ -225,6 +236,7 @@
       </button>
       <div id="menu-dropdown" class="menu-dropdown hidden">
         <button id="stats-btn">📊 <span>Stats</span></button>
+        <button id="insights-btn">🧠 <span>Insights</span></button>
         <button id="suggest-btn">🍿 <span>Suggestions</span></button>
         <button id="random-duel-btn">🎲 <span>Random Duel</span></button>
         <button id="discover-btn">🔎 <span>Discover</span></button>
@@ -353,6 +365,24 @@
       </div>
       <div class="status-note" id="compare-status"></div>
     </div>
+
+    <div class="settings-section">
+      <h3>Extra Details for Insights</h3>
+      <p>Unlocks Favorite Director, Actor, Actress, Studio, Franchise, Country, Language, Cinematographer, Composer, Screenwriter, and Runtime Bias in Insights. New movies pick this up automatically — this fills it in for movies already in your library.</p>
+      <div class="file-row">
+        <button class="file-btn primary" id="backfill-btn">🔄 Fill In Movie Details</button>
+      </div>
+      <div class="status-note" id="backfill-status"></div>
+    </div>
+
+    <div class="settings-section">
+      <h3>Birth Year <span style="color:var(--text-dim);font-weight:400;">(optional)</span></h3>
+      <p>Only used for one fun stat in Insights — how many of your top movies came out before you were born.</p>
+      <input id="birth-year-input" type="number" inputmode="numeric" placeholder="e.g. 1994" min="1900" max="2025">
+      <div class="row">
+        <button class="save" id="birth-year-save">Save</button>
+      </div>
+    </div>
   </div>
 </div>
 
@@ -398,6 +428,16 @@
   </div>
 </div>
 
+<div id="insights-modal" class="hidden">
+  <div class="box insights-box">
+    <h2 class="display">Insights</h2>
+    <div id="insights-content"></div>
+    <div class="row">
+      <button class="cancel" id="insights-close">Close</button>
+    </div>
+  </div>
+</div>
+
 <script>
 const state = {
   apiKey: null,
@@ -422,6 +462,8 @@ const state = {
   suggestPage: 1,
   randomLoopActive: false,
   randomLoopTimeout: null,
+  duelLog: [],
+  birthYear: null,
   watchlist: [],
   lastBackupAt: 0,
   duelsSinceBackup: 0
@@ -451,6 +493,10 @@ async function init(){
   if(lastBackupRaw){ const n = parseInt(lastBackupRaw, 10); state.lastBackupAt = isNaN(n) ? 0 : n; }
   const sinceBackupRaw = await storageGet('duelcut:duelssincebackup');
   if(sinceBackupRaw){ const n = parseInt(sinceBackupRaw, 10); state.duelsSinceBackup = isNaN(n) ? 0 : n; }
+  const duelLogRaw = await storageGet('duelcut:duellog');
+  if(duelLogRaw){ try{ state.duelLog = JSON.parse(duelLogRaw); }catch(e){ state.duelLog = []; } }
+  const birthYearRaw = await storageGet('duelcut:birthyear');
+  if(birthYearRaw){ const n = parseInt(birthYearRaw, 10); state.birthYear = isNaN(n) ? null : n; }
   bindEvents();
   renderView();
   ensureGenreMap();
@@ -535,6 +581,10 @@ function bindEvents(){
   el('filter-decade').addEventListener('change', () => { state.filterDecade = el('filter-decade').value; renderRankingsList(); });
   el('stats-btn').onclick = () => { el('stats-content').innerHTML = buildStats(); el('stats-modal').classList.remove('hidden'); };
   el('stats-close').onclick = () => el('stats-modal').classList.add('hidden');
+  el('backfill-btn').onclick = backfillMovieDetails;
+  el('birth-year-save').onclick = saveBirthYear;
+  el('insights-btn').onclick = () => { el('insights-content').innerHTML = buildInsights(); el('insights-modal').classList.remove('hidden'); };
+  el('insights-close').onclick = () => el('insights-modal').classList.add('hidden');
   initDuelSwipe();
 }
 
@@ -551,9 +601,17 @@ function renderView(){
 
 function openSettings(){
   el('api-key-input').value = state.apiKey || '';
+  el('birth-year-input').value = state.birthYear || '';
   el('settings-modal').classList.remove('hidden');
 }
 function closeSettings(){ el('settings-modal').classList.add('hidden'); }
+async function saveBirthYear(){
+  const val = parseInt(el('birth-year-input').value, 10);
+  state.birthYear = isNaN(val) ? null : val;
+  if(state.birthYear){
+    await storageSet('duelcut:birthyear', String(state.birthYear));
+  }
+}
 async function saveApiKey(){
   const val = el('api-key-input').value.trim();
   state.apiKey = val || null;
@@ -629,13 +687,21 @@ function escapeHtml(s){
   return d.innerHTML;
 }
 
-function selectMovie(movie, already){
+async function selectMovie(movie, already){
   stopRandomLoop();
   if(already){
     state.view = 'rankings';
     renderView();
     return;
   }
+  el('search-panel').classList.add('hidden');
+  el('confirmation-view').classList.add('hidden');
+  el('duel-arena').classList.add('hidden');
+  el('search-status').innerHTML = `<span class="spinner"></span> Loading details…`;
+
+  const details = state.apiKey ? await fetchMovieDetails(movie.id) : null;
+  el('search-status').innerHTML = '';
+
   state.pendingMovie = {
     id: movie.id,
     title: movie.title,
@@ -645,7 +711,8 @@ function selectMovie(movie, already){
     genres: movie.genre_ids || [],
     tmdbRating: typeof movie.vote_average === 'number' ? movie.vote_average : null,
     rerankCount: 0,
-    addedAt: Date.now()
+    addedAt: Date.now(),
+    ...(details || {})
   };
   const opponents = pickOpponents(state.library, 5);
   state.duelQueue = opponents;
@@ -654,15 +721,41 @@ function selectMovie(movie, already){
   state.isRandomDuel = false;
   state.duelHistory = [];
 
-  el('search-panel').classList.add('hidden');
-  el('confirmation-view').classList.add('hidden');
-
   if(opponents.length===0){
     finalizeMovie();
     return;
   }
   el('duel-arena').classList.remove('hidden');
   renderDuel();
+}
+
+async function fetchMovieDetails(id){
+  try{
+    const res = await fetch(`https://api.themoviedb.org/3/movie/${id}?api_key=${encodeURIComponent(state.apiKey)}&append_to_response=credits`);
+    if(!res.ok) return null;
+    const data = await res.json();
+    const crew = (data.credits && data.credits.crew) || [];
+    const cast = (data.credits && data.credits.cast) || [];
+    const director = crew.find(c => c.job === 'Director');
+    const cinematographer = crew.find(c => c.job === 'Director of Photography');
+    const composer = crew.find(c => c.job === 'Original Music Composer');
+    const screenwriter = crew.find(c => c.job === 'Screenplay') || crew.find(c => c.job === 'Writer');
+    const leadActress = cast.filter(c => c.gender === 1).sort((a,b) => a.order-b.order)[0];
+    const leadActor = cast.filter(c => c.gender === 2).sort((a,b) => a.order-b.order)[0];
+    return {
+      runtime: typeof data.runtime === 'number' ? data.runtime : null,
+      director: director ? director.name : null,
+      cinematographer: cinematographer ? cinematographer.name : null,
+      composer: composer ? composer.name : null,
+      screenwriter: screenwriter ? screenwriter.name : null,
+      leadActor: leadActor ? leadActor.name : null,
+      leadActress: leadActress ? leadActress.name : null,
+      countries: (data.production_countries || []).map(c => c.name),
+      languages: (data.spoken_languages || []).map(l => l.english_name || l.name).filter(Boolean),
+      studios: (data.production_companies || []).map(c => c.name),
+      franchise: data.belongs_to_collection ? data.belongs_to_collection.name : null
+    };
+  }catch(e){ return null; }
 }
 
 function pickOpponents(library, max){
@@ -814,6 +907,18 @@ function handleDuelChoice(pendingWon){
     duelIndexBefore: state.duelIndex
   });
 
+  state.duelLog.push({
+    aId: state.pendingMovie.id,
+    aTitle: state.pendingMovie.title,
+    aEloBefore: state.pendingMovie.elo,
+    bId: opponent.id,
+    bTitle: opponent.title,
+    bEloBefore: opponent.elo,
+    winnerId: pendingWon ? state.pendingMovie.id : opponent.id,
+    timestamp: Date.now()
+  });
+  storageSet('duelcut:duellog', JSON.stringify(state.duelLog));
+
   state.pendingMovie.elo = state.pendingMovie.elo + K*(sP-eP);
   const libOpponent = state.library.find(m=>m.id===opponent.id);
   if(libOpponent) libOpponent.elo = libOpponent.elo + K*(sO-eO);
@@ -844,6 +949,8 @@ function undoLastDuel(){
   state.duelIndex = snap.duelIndexBefore;
   state.totalDuels = Math.max(0, state.totalDuels - 1);
   storageSet('duelcut:totalduels', String(state.totalDuels));
+  state.duelLog.pop();
+  storageSet('duelcut:duellog', JSON.stringify(state.duelLog));
   renderDuel();
 }
 
@@ -1277,7 +1384,9 @@ function exportBackup(){
     exportedAt: new Date().toISOString(),
     library: state.library,
     genreMap: state.genreMap,
-    watchlist: state.watchlist
+    watchlist: state.watchlist,
+    duelLog: state.duelLog,
+    birthYear: state.birthYear
   };
   const blob = new Blob([JSON.stringify(payload, null, 2)], {type:'application/json'});
   const url = URL.createObjectURL(blob);
@@ -1307,9 +1416,13 @@ function handleImportBackupFile(e){
       state.library = data.library;
       if(data.genreMap) state.genreMap = data.genreMap;
       if(Array.isArray(data.watchlist)) state.watchlist = data.watchlist;
+      if(Array.isArray(data.duelLog)) state.duelLog = data.duelLog;
+      if(typeof data.birthYear === 'number') state.birthYear = data.birthYear;
       await storageSet('duelcut:library', JSON.stringify(state.library));
       if(data.genreMap) await storageSet('duelcut:genres', JSON.stringify(state.genreMap));
       if(Array.isArray(data.watchlist)) await storageSet('duelcut:watchlist', JSON.stringify(state.watchlist));
+      if(Array.isArray(data.duelLog)) await storageSet('duelcut:duellog', JSON.stringify(state.duelLog));
+      if(typeof data.birthYear === 'number') await storageSet('duelcut:birthyear', String(state.birthYear));
       el('backup-status').textContent = `Imported ${state.library.length} movies. This replaced your previous library on this device.`;
       if(state.view === 'rankings') renderRankings();
       if(state.view === 'watchlist') renderWatchlist();
@@ -1414,6 +1527,7 @@ async function handleImportLetterboxdFile(e){
 
       if(state.library.find(m => m.id === match.id)){ skipped++; continue; }
 
+      const details = await fetchMovieDetails(match.id);
       const elo = it.rating != null ? 1500 + (it.rating - 3) * 200 : 1500;
       state.library.push({
         id: match.id,
@@ -1424,7 +1538,8 @@ async function handleImportLetterboxdFile(e){
         genres: match.genre_ids || [],
         tmdbRating: typeof match.vote_average === 'number' ? match.vote_average : null,
         rerankCount: 0,
-        addedAt: Date.now()
+        addedAt: Date.now(),
+        ...(details || {})
       });
       added++;
     }catch(err){
@@ -1652,6 +1767,498 @@ function renderSuggestResults(list){
 
 function closeSuggest(){ el('suggest-modal').classList.add('hidden'); }
 
+async function backfillMovieDetails(){
+  if(!state.apiKey){
+    el('backfill-status').textContent = 'Add your TMDB API key above first.';
+    return;
+  }
+  const targets = [...state.library, ...state.watchlist].filter(m => m.director === undefined);
+  if(targets.length === 0){
+    el('backfill-status').textContent = 'All your movies already have full details.';
+    return;
+  }
+  for(let i = 0; i < targets.length; i++){
+    el('backfill-status').textContent = `Fetching details ${i+1} of ${targets.length}: ${targets[i].title}…`;
+    const details = await fetchMovieDetails(targets[i].id);
+    if(details){
+      Object.assign(targets[i], details);
+    }else{
+      Object.assign(targets[i], {
+        runtime: null, director: null, cinematographer: null, composer: null,
+        screenwriter: null, leadActor: null, leadActress: null,
+        countries: [], languages: [], studios: [], franchise: null
+      });
+    }
+    await new Promise(r => setTimeout(r, 150));
+  }
+  await storageSet('duelcut:library', JSON.stringify(state.library));
+  await storageSet('duelcut:watchlist', JSON.stringify(state.watchlist));
+  el('backfill-status').textContent = `Done — filled in details for ${targets.length} movie${targets.length===1?'':'s'}.`;
+}
+
+function getCurrentRankMap(){
+  const sorted = [...state.library].sort((a,b) => b.elo-a.elo);
+  const map = {};
+  sorted.forEach((m,i) => { map[m.id] = i+1; });
+  return map;
+}
+
+function computeHeadToHead(){
+  const map = {};
+  state.duelLog.forEach(d => {
+    const key = [d.aId,d.bId].sort((x,y)=>x-y).join('-');
+    if(!map[key]) map[key] = { aId:d.aId, bId:d.bId, aTitle:d.aTitle, bTitle:d.bTitle, results: [] };
+    const rec = map[key];
+    if(rec.aId !== d.aId){ /* keep original a/b orientation, results still reference winnerId directly */ }
+    rec.results.push({ winnerId: d.winnerId, timestamp: d.timestamp });
+  });
+  return map;
+}
+
+function computeClosestCall(){
+  const h2h = computeHeadToHead();
+  const eloMap = {}; state.library.forEach(m => eloMap[m.id] = m.elo);
+  let best = null;
+  Object.values(h2h).forEach(pair => {
+    if(pair.results.length < 2) return;
+    const aWins = pair.results.filter(r => r.winnerId === pair.aId).length;
+    const bWins = pair.results.filter(r => r.winnerId === pair.bId).length;
+    if(aWins === 0 || bWins === 0) return;
+    const eloA = eloMap[pair.aId], eloB = eloMap[pair.bId];
+    if(eloA == null || eloB == null) return;
+    const gap = Math.abs(eloA-eloB);
+    if(!best || gap < best.gap){
+      best = { aTitle: pair.aTitle, bTitle: pair.bTitle, gap: Math.round(gap), aWins, bWins };
+    }
+  });
+  return best;
+}
+
+function computeNemesis(){
+  const h2h = computeHeadToHead();
+  let best = null;
+  Object.values(h2h).forEach(pair => {
+    if(pair.results.length < 2) return;
+    const aWins = pair.results.filter(r => r.winnerId === pair.aId).length;
+    const bWins = pair.results.filter(r => r.winnerId === pair.bId).length;
+    if(aWins === 0 || bWins === 0){
+      const total = aWins + bWins;
+      const dominantTitle = aWins === 0 ? pair.bTitle : pair.aTitle;
+      const victimTitle = aWins === 0 ? pair.aTitle : pair.bTitle;
+      const wins = Math.max(aWins,bWins), losses = Math.min(aWins,bWins);
+      if(!best || total > best.total){
+        best = { dominantTitle, victimTitle, wins, losses, total };
+      }
+    }
+  });
+  return best;
+}
+
+function computeMostIndecisive(){
+  const h2h = computeHeadToHead();
+  let best = null;
+  Object.values(h2h).forEach(pair => {
+    if(pair.results.length < 3) return;
+    const sorted = [...pair.results].sort((a,b) => a.timestamp-b.timestamp);
+    let flips = 0;
+    for(let i=1;i<sorted.length;i++){ if(sorted[i].winnerId !== sorted[i-1].winnerId) flips++; }
+    if(flips > 0 && (!best || flips > best.flips)){
+      best = { aTitle: pair.aTitle, bTitle: pair.bTitle, flips, meetings: pair.results.length };
+    }
+  });
+  return best;
+}
+
+function computePerfectRecords(){
+  const recordMap = {};
+  state.duelLog.forEach(d => {
+    if(!recordMap[d.aId]) recordMap[d.aId] = { title: d.aTitle, wins:0, losses:0 };
+    if(!recordMap[d.bId]) recordMap[d.bId] = { title: d.bTitle, wins:0, losses:0 };
+    if(d.winnerId === d.aId){ recordMap[d.aId].wins++; recordMap[d.bId].losses++; }
+    else{ recordMap[d.bId].wins++; recordMap[d.aId].losses++; }
+  });
+  return Object.values(recordMap).filter(r => r.losses === 0 && r.wins >= 2).sort((a,b) => b.wins-a.wins);
+}
+
+function computeGiantKiller(){
+  const rankMap = getCurrentRankMap();
+  let best = null;
+  state.duelLog.forEach(d => {
+    const loserId = d.winnerId === d.aId ? d.bId : d.aId;
+    const winnerRank = rankMap[d.winnerId], loserRank = rankMap[loserId];
+    if(winnerRank == null || loserRank == null) return;
+    if(winnerRank > loserRank){
+      const gap = winnerRank - loserRank;
+      if(!best || gap > best.gap){
+        best = {
+          winnerTitle: d.winnerId===d.aId ? d.aTitle : d.bTitle,
+          loserTitle: loserId===d.aId ? d.aTitle : d.bTitle,
+          gap, winnerRank, loserRank
+        };
+      }
+    }
+  });
+  return best;
+}
+
+function computeBiggestUpset(){
+  let best = null;
+  state.duelLog.forEach(d => {
+    const winnerElo = d.winnerId===d.aId ? d.aEloBefore : d.bEloBefore;
+    const loserElo = d.winnerId===d.aId ? d.bEloBefore : d.aEloBefore;
+    if(winnerElo < loserElo){
+      const gap = loserElo - winnerElo;
+      if(!best || gap > best.gap){
+        best = {
+          winnerTitle: d.winnerId===d.aId ? d.aTitle : d.bTitle,
+          loserTitle: d.winnerId===d.aId ? d.bTitle : d.aTitle,
+          gap: Math.round(gap)
+        };
+      }
+    }
+  });
+  return best;
+}
+
+function computeStreaks(){
+  const perMovie = {};
+  const sortedLog = [...state.duelLog].sort((a,b) => a.timestamp-b.timestamp);
+  sortedLog.forEach(d => {
+    if(!perMovie[d.aId]) perMovie[d.aId] = { title: d.aTitle, results: [] };
+    if(!perMovie[d.bId]) perMovie[d.bId] = { title: d.bTitle, results: [] };
+    perMovie[d.aId].results.push(d.winnerId === d.aId ? 'W' : 'L');
+    perMovie[d.bId].results.push(d.winnerId === d.bId ? 'W' : 'L');
+  });
+  let bestWin = null, bestLoss = null;
+  Object.values(perMovie).forEach(data => {
+    let curW=0, maxW=0, curL=0, maxL=0;
+    data.results.forEach(r => {
+      if(r==='W'){ curW++; maxW=Math.max(maxW,curW); curL=0; }
+      else{ curL++; maxL=Math.max(maxL,curL); curW=0; }
+    });
+    if(maxW >= 2 && (!bestWin || maxW > bestWin.streak)) bestWin = { title: data.title, streak: maxW };
+    if(maxL >= 2 && (!bestLoss || maxL > bestLoss.streak)) bestLoss = { title: data.title, streak: maxL };
+  });
+  return { bestWin, bestLoss };
+}
+
+function computeBattleTested(){
+  const countMap = {};
+  state.duelLog.forEach(d => {
+    countMap[d.aId] = (countMap[d.aId]||0) + 1;
+    countMap[d.bId] = (countMap[d.bId]||0) + 1;
+  });
+  const sorted = [...state.library].sort((a,b) => b.elo-a.elo);
+  const topSlice = sorted.slice(0, Math.max(5, Math.ceil(sorted.length*0.2)));
+  let best = null;
+  topSlice.forEach((m, idx) => {
+    const c = countMap[m.id] || 0;
+    if(!best || c > best.count){ best = { title: m.title, count: c, rank: idx+1 }; }
+  });
+  return best;
+}
+
+function computeConfidence(movieId){
+  const count = state.duelLog.filter(d => d.aId===movieId || d.bId===movieId).length;
+  return Math.round(100 * (1 - Math.exp(-count/5)));
+}
+
+function computeConfidenceExamples(){
+  if(state.library.length < 2) return null;
+  const sorted = [...state.library].sort((a,b) => b.elo-a.elo);
+  const withConf = sorted.map((m, idx) => ({ title: m.title, rank: idx+1, confidence: computeConfidence(m.id) }));
+  const highest = [...withConf].sort((a,b) => b.confidence-a.confidence)[0];
+  const lowest = [...withConf].sort((a,b) => a.confidence-b.confidence)[0];
+  return { highest, lowest };
+}
+
+function computeSweetSpot(){
+  const withYear = state.library.map(m => ({ y: parseInt(m.year,10), s: parseFloat(eloToScore(m.elo)) })).filter(x => !isNaN(x.y));
+  if(withYear.length < 5) return null;
+  const years = withYear.map(x => x.y);
+  const minY = Math.min(...years), maxY = Math.max(...years);
+  const windowSize = 8;
+  let best = null;
+  for(let start = minY; start <= maxY; start++){
+    const end = start + windowSize;
+    const inWindow = withYear.filter(x => x.y >= start && x.y < end);
+    if(inWindow.length < 3) continue;
+    const avg = inWindow.reduce((s,x) => s+x.s, 0) / inWindow.length;
+    if(!best || avg > best.avg){ best = { start, end: end-1, avg, count: inWindow.length }; }
+  }
+  return best;
+}
+
+function computeFavoriteDecade(){
+  const sorted = [...state.library].sort((a,b) => b.elo-a.elo);
+  const rankMap = {}; sorted.forEach((m,i) => rankMap[m.id]=i+1);
+  const decadeGroups = {};
+  state.library.forEach(m => {
+    const y = parseInt(m.year,10); if(isNaN(y)) return;
+    const d = Math.floor(y/10)*10;
+    if(!decadeGroups[d]) decadeGroups[d] = [];
+    decadeGroups[d].push(rankMap[m.id]);
+  });
+  let best = null;
+  Object.entries(decadeGroups).forEach(([d,ranks]) => {
+    if(ranks.length < 2) return;
+    const avgRank = ranks.reduce((s,r)=>s+r,0) / ranks.length;
+    const percentile = avgRank / state.library.length;
+    if(!best || percentile < best.percentile){ best = { decade: d, percentile, count: ranks.length }; }
+  });
+  return best;
+}
+
+function computeGenreRankings(){
+  const groups = {};
+  state.library.forEach(m => {
+    (m.genres||[]).forEach(gid => {
+      const name = state.genreMap[gid]; if(!name) return;
+      if(!groups[name]) groups[name] = [];
+      groups[name].push(parseFloat(eloToScore(m.elo)));
+    });
+  });
+  const entries = Object.entries(groups).filter(([k,arr]) => arr.length >= 2)
+    .map(([k,arr]) => ({ genre:k, avg: arr.reduce((s,v)=>s+v,0)/arr.length, count: arr.length }));
+  if(entries.length === 0) return null;
+  const overallAvg = entries.reduce((s,e)=>s+e.avg,0) / entries.length;
+  entries.forEach(e => { e.multiplier = overallAvg > 0 ? e.avg/overallAvg : 1; });
+  entries.sort((a,b) => b.avg-a.avg);
+  return { entries, top: entries[0], bottom: entries[entries.length-1] };
+}
+
+function computeGenreBlindSpot(){
+  const counts = {};
+  Object.values(state.genreMap).forEach(g => { counts[g] = 0; });
+  state.library.forEach(m => (m.genres||[]).forEach(gid => {
+    const name = state.genreMap[gid]; if(name != null) counts[name] = (counts[name]||0) + 1;
+  }));
+  const entries = Object.entries(counts);
+  if(entries.length === 0) return null;
+  entries.sort((a,b) => a[1]-b[1]);
+  return { genre: entries[0][0], count: entries[0][1] };
+}
+
+function computeGroupFavorite(groupByFn, minCount){
+  const groups = {};
+  state.library.forEach(m => {
+    const keys = groupByFn(m) || [];
+    keys.forEach(k => {
+      if(!k) return;
+      if(!groups[k]) groups[k] = [];
+      groups[k].push(parseFloat(eloToScore(m.elo)));
+    });
+  });
+  const entries = Object.entries(groups).filter(([k,arr]) => arr.length >= minCount)
+    .map(([k,arr]) => ({ key:k, avg: arr.reduce((s,v)=>s+v,0)/arr.length, count: arr.length }));
+  if(entries.length === 0) return null;
+  entries.sort((a,b) => b.avg-a.avg);
+  return entries[0];
+}
+
+function hasExtendedMetadata(){
+  return state.library.some(m => m.director !== undefined);
+}
+
+function computeRuntimeBias(){
+  const withRuntime = state.library.filter(m => typeof m.runtime === 'number' && m.runtime > 0);
+  if(withRuntime.length < 6) return null;
+  const under = withRuntime.filter(m => m.runtime < 100).map(m => parseFloat(eloToScore(m.elo)));
+  const over = withRuntime.filter(m => m.runtime >= 100).map(m => parseFloat(eloToScore(m.elo)));
+  if(under.length < 2 || over.length < 2) return null;
+  const avgUnder = under.reduce((s,v)=>s+v,0)/under.length;
+  const avgOver = over.reduce((s,v)=>s+v,0)/over.length;
+  const diffPct = avgOver > 0 ? Math.round(((avgUnder-avgOver)/avgOver)*100) : 0;
+  return { diffPct };
+}
+
+function computeDirectorLoyalty(){
+  const groups = {};
+  state.library.forEach(m => {
+    if(m.director){ if(!groups[m.director]) groups[m.director] = []; groups[m.director].push(m); }
+  });
+  const entries = Object.entries(groups).filter(([d,arr]) => arr.length >= 2);
+  if(entries.length === 0) return null;
+  entries.sort((a,b) => b[1].length-a[1].length);
+  const [director, movies] = entries[0];
+  const sorted = [...state.library].sort((a,b) => b.elo-a.elo);
+  const rankMap = {}; sorted.forEach((m,i) => rankMap[m.id]=i+1);
+  const cutoff = Math.ceil(state.library.length/2);
+  const inTopHalf = movies.filter(m => rankMap[m.id] <= cutoff).length;
+  return { director, total: movies.length, inTopHalf };
+}
+
+function computeOldSoul(){
+  if(!state.birthYear) return null;
+  const sorted = [...state.library].sort((a,b) => b.elo-a.elo).slice(0,25);
+  if(sorted.length < 5) return null;
+  const before = sorted.filter(m => { const y=parseInt(m.year,10); return !isNaN(y) && y < state.birthYear; }).length;
+  return { pct: Math.round((before/sorted.length)*100), n: sorted.length };
+}
+
+function insightCard(label, bodyHtml){
+  return `<div class="insight-card"><div class="label">${escapeHtml(label)}</div><div class="body">${bodyHtml}</div></div>`;
+}
+
+function buildInsights(){
+  if(state.library.length < 5){
+    return `<p class="empty-note">Log at least 5 movies and fight a few duels to unlock Insights.</p>`;
+  }
+
+  let html = '';
+
+  // Rivalries & Records
+  html += `<div class="insights-section"><h3>Rivalries &amp; Records</h3>`;
+  let anyRivalry = false;
+
+  const closest = computeClosestCall();
+  if(closest){
+    anyRivalry = true;
+    html += insightCard('Closest Call', `<b>${escapeHtml(closest.aTitle)}</b> and <b>${escapeHtml(closest.bTitle)}</b> keep trading places — only ${closest.gap} Elo points apart, ${closest.aWins}–${closest.bWins} head-to-head.`);
+  }
+  const nemesis = computeNemesis();
+  if(nemesis){
+    anyRivalry = true;
+    html += insightCard('Nemesis', `<b>${escapeHtml(nemesis.dominantTitle)}</b> is <b>${escapeHtml(nemesis.victimTitle)}</b>'s nemesis — ${nemesis.wins}–${nemesis.losses} head-to-head.`);
+  }
+  const perfect = computePerfectRecords();
+  if(perfect.length){
+    anyRivalry = true;
+    const list = perfect.slice(0,3).map(p => `<b>${escapeHtml(p.title)}</b> (${p.wins}–0)`).join(', ');
+    html += insightCard('Perfect Record', `Never lost a duel: ${list}.`);
+  }
+  const giantKiller = computeGiantKiller();
+  if(giantKiller && giantKiller.gap >= 5){
+    anyRivalry = true;
+    html += insightCard('Giant Killer', `<b>${escapeHtml(giantKiller.winnerTitle)}</b> (currently #${giantKiller.winnerRank}) once knocked off <b>${escapeHtml(giantKiller.loserTitle)}</b> (currently #${giantKiller.loserRank}).`);
+  }
+  const upset = computeBiggestUpset();
+  if(upset && upset.gap >= 40){
+    anyRivalry = true;
+    html += insightCard('Biggest Upset', `<b>${escapeHtml(upset.winnerTitle)}</b> beat <b>${escapeHtml(upset.loserTitle)}</b> as a serious underdog — a ${upset.gap}-point Elo gap.`);
+  }
+  const streaks = computeStreaks();
+  if(streaks.bestWin){
+    anyRivalry = true;
+    html += insightCard('Unbeaten Streak', `<b>${escapeHtml(streaks.bestWin.title)}</b> has won ${streaks.bestWin.streak} duels in a row.`);
+  }
+  if(streaks.bestLoss){
+    anyRivalry = true;
+    html += insightCard('Losing Streak', `Poor <b>${escapeHtml(streaks.bestLoss.title)}</b> has dropped ${streaks.bestLoss.streak} straight.`);
+  }
+  const indecisive = computeMostIndecisive();
+  if(indecisive){
+    anyRivalry = true;
+    html += insightCard('Most Indecisive Pairing', `<b>${escapeHtml(indecisive.aTitle)}</b> vs <b>${escapeHtml(indecisive.bTitle)}</b> has flipped ${indecisive.flips} times across ${indecisive.meetings} meetings.`);
+  }
+  const battleTested = computeBattleTested();
+  if(battleTested && battleTested.count > 0){
+    anyRivalry = true;
+    html += insightCard('Battle Tested', `<b>${escapeHtml(battleTested.title)}</b> (#${battleTested.rank}) has fought the most duels among your top movies — ${battleTested.count} total.`);
+  }
+  if(!anyRivalry){
+    html += `<p class="insight-empty">Not enough repeat matchups yet — keep dueling and re-ranking to unlock rivalries.</p>`;
+  }
+  html += `</div>`;
+
+  // Decade & Sweet Spot
+  html += `<div class="insights-section"><h3>Your Eras</h3>`;
+  const favDecade = computeFavoriteDecade();
+  if(favDecade){
+    html += insightCard('Favorite Decade', `Your decade: <b>the ${favDecade.decade}s</b>. Average placement: top ${Math.round(favDecade.percentile*100)}%.`);
+  }
+  const sweetSpot = computeSweetSpot();
+  if(sweetSpot){
+    html += insightCard('Your Sweet Spot', `Your cinematic sweet spot: <b>${sweetSpot.start}–${sweetSpot.end}</b>.`);
+  }
+  if(!favDecade && !sweetSpot){
+    html += `<p class="insight-empty">Add release years to more movies to see this.</p>`;
+  }
+  html += `</div>`;
+
+  // Tastes: genre (always available) + people/places (needs backfill)
+  html += `<div class="insights-section"><h3>Tastes</h3>`;
+  const genreRankings = computeGenreRankings();
+  if(genreRankings){
+    html += insightCard('Favorite Genre', `<b>${escapeHtml(genreRankings.top.genre)}</b> ranks ${genreRankings.top.multiplier.toFixed(1)}× higher in your list than the average genre.`);
+    if(genreRankings.entries.length > 1){
+      html += insightCard('Least Favorite Genre', `<b>${escapeHtml(genreRankings.bottom.genre)}</b> ranks ${genreRankings.bottom.multiplier.toFixed(1)}× the average genre — your weakest spot.`);
+    }
+  }
+  if(hasExtendedMetadata()){
+    const director = computeGroupFavorite(m => m.director ? [m.director] : [], 2);
+    if(director) html += insightCard('Favorite Director', `<b>${escapeHtml(director.key)}</b> — ${director.count} films seen, averaging ${director.avg.toFixed(1)}/10.`);
+    const actor = computeGroupFavorite(m => m.leadActor ? [m.leadActor] : [], 2);
+    if(actor) html += insightCard('Favorite Actor', `<b>${escapeHtml(actor.key)}</b> — ${actor.count} films, averaging ${actor.avg.toFixed(1)}/10.`);
+    const actress = computeGroupFavorite(m => m.leadActress ? [m.leadActress] : [], 2);
+    if(actress) html += insightCard('Favorite Actress', `<b>${escapeHtml(actress.key)}</b> — ${actress.count} films, averaging ${actress.avg.toFixed(1)}/10.`);
+    const country = computeGroupFavorite(m => m.countries || [], 2);
+    if(country) html += insightCard('Favorite Country', `<b>${escapeHtml(country.key)}</b> — ${country.count} films, averaging ${country.avg.toFixed(1)}/10.`);
+    const language = computeGroupFavorite(m => m.languages || [], 2);
+    if(language) html += insightCard('Favorite Language', `<b>${escapeHtml(language.key)}</b> — ${language.count} films, averaging ${language.avg.toFixed(1)}/10.`);
+    const studio = computeGroupFavorite(m => m.studios || [], 2);
+    if(studio) html += insightCard('Favorite Studio', `<b>${escapeHtml(studio.key)}</b> — ${studio.count} films, averaging ${studio.avg.toFixed(1)}/10.`);
+    const franchise = computeGroupFavorite(m => m.franchise ? [m.franchise] : [], 2);
+    if(franchise) html += insightCard('Favorite Franchise', `<b>${escapeHtml(franchise.key)}</b> — ${franchise.count} films, averaging ${franchise.avg.toFixed(1)}/10.`);
+    const dp = computeGroupFavorite(m => m.cinematographer ? [m.cinematographer] : [], 2);
+    if(dp) html += insightCard('Favorite Cinematographer', `<b>${escapeHtml(dp.key)}</b> — ${dp.count} films, averaging ${dp.avg.toFixed(1)}/10.`);
+    const composer = computeGroupFavorite(m => m.composer ? [m.composer] : [], 2);
+    if(composer) html += insightCard('Favorite Composer', `<b>${escapeHtml(composer.key)}</b> — ${composer.count} films, averaging ${composer.avg.toFixed(1)}/10.`);
+    const writer = computeGroupFavorite(m => m.screenwriter ? [m.screenwriter] : [], 2);
+    if(writer) html += insightCard('Favorite Screenwriter', `<b>${escapeHtml(writer.key)}</b> — ${writer.count} films, averaging ${writer.avg.toFixed(1)}/10.`);
+  }else{
+    html += `<p class="insight-empty">Run "Fill In Movie Details" in Settings to unlock Director, Actor, Actress, Country, Language, Studio, Franchise, Cinematographer, Composer, and Screenwriter favorites.</p>`;
+  }
+  html += `</div>`;
+
+  // Personality
+  html += `<div class="insights-section"><h3>Personality</h3>`;
+  let anyPersonality = false;
+  const blindSpot = computeGenreBlindSpot();
+  if(blindSpot){
+    anyPersonality = true;
+    html += insightCard('Genre Blind Spot', `You've ranked ${state.library.length} movies but only ${blindSpot.count} <b>${escapeHtml(blindSpot.genre)}</b>.`);
+  }
+  if(hasExtendedMetadata()){
+    const runtimeBias = computeRuntimeBias();
+    if(runtimeBias){
+      anyPersonality = true;
+      const dir = runtimeBias.diffPct >= 0 ? 'higher' : 'lower';
+      html += insightCard('Runtime Bias', `Movies under 100 minutes rank ${Math.abs(runtimeBias.diffPct)}% ${dir} in your list.`);
+    }
+    const loyalty = computeDirectorLoyalty();
+    if(loyalty){
+      anyPersonality = true;
+      html += insightCard('Director Loyalty', `You've seen ${loyalty.total} <b>${escapeHtml(loyalty.director)}</b> movies. ${loyalty.inTopHalf} rank in your top half.`);
+    }
+    const franchiseFav = computeGroupFavorite(m => m.franchise ? [m.franchise] : [], 2);
+    if(franchiseFav){
+      anyPersonality = true;
+      html += insightCard('Franchise Loyalty', `Your highest-rated franchise: <b>${escapeHtml(franchiseFav.key)}</b>.`);
+    }
+    const oldSoul = computeOldSoul();
+    if(oldSoul){
+      anyPersonality = true;
+      html += insightCard('Old Soul', `${oldSoul.pct}% of your top ${oldSoul.n} were released before you were born.`);
+    }
+  }
+  if(!anyPersonality){
+    html += `<p class="insight-empty">Run "Fill In Movie Details" in Settings for Runtime Bias, Director Loyalty, and more.</p>`;
+  }
+  html += `</div>`;
+
+  // Ranking Confidence
+  const conf = computeConfidenceExamples();
+  if(conf){
+    html += `<div class="insights-section"><h3>Ranking Confidence</h3>`;
+    html += `<div class="confidence-row"><span>#${conf.highest.rank} — ${escapeHtml(conf.highest.title)}</span><span class="pct">${conf.highest.confidence}%</span></div>`;
+    html += `<div class="confidence-row"><span>#${conf.lowest.rank} — ${escapeHtml(conf.lowest.title)}${conf.lowest.confidence < 60 ? ' (needs more duels)' : ''}</span><span class="pct">${conf.lowest.confidence}%</span></div>`;
+    html += `</div>`;
+  }
+
+  return html;
+}
+
 function buildStats(){
   const lib = state.library;
   if(lib.length === 0){
@@ -1691,7 +2298,7 @@ function buildStats(){
   let html = `
     <div class="stats-summary">
       <div class="stat-box"><div class="stat-num">${lib.length}</div><div class="stat-label">Movies</div></div>
-      <div class="stat-box"><div class="stat-num">${state.totalDuels}</div><div class="stat-label">Duels Fought</div></div>
+      <div class="stat-box"><div class="stat-num">${state.totalDuels}</div><div class="stat-label">Duels Completed</div></div>
       <div class="stat-box"><div class="stat-num">${avg.toFixed(1)}</div><div class="stat-label">Avg Score</div></div>
     </div>
   `;
