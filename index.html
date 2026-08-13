@@ -149,6 +149,9 @@
   .stats-bar-fill{height:100%;background:var(--teal);border-radius:4px;}
   .stats-bar-count{width:24px;flex:none;text-align:right;color:var(--text-dim);}
   .random-duel-status{font-size:12px;color:var(--amber);margin-bottom:10px;}
+  .install-nudge{display:flex;align-items:center;justify-content:space-between;gap:10px;background:var(--surface-2);border:1px solid var(--amber);border-radius:10px;padding:10px 12px;margin-bottom:16px;font-size:12px;color:var(--text);line-height:1.4;}
+  .install-nudge button{background:none;border:none;color:var(--text-dim);font-size:16px;cursor:pointer;flex:none;padding:0 2px;line-height:1;}
+  .install-nudge button:hover{color:var(--amber);}
   .random-toast{position:fixed;top:50%;left:50%;transform:translate(-50%,-40%);background:var(--surface);border:1px solid var(--amber);color:var(--text);padding:14px 20px;border-radius:12px;font-size:13px;text-align:center;opacity:0;transition:opacity .25s, transform .25s;z-index:200;max-width:82vw;box-shadow:0 10px 30px rgba(0,0,0,0.5);pointer-events:none;}
   .random-toast.show{opacity:1;transform:translate(-50%,-50%);}
   .confetti-container{position:fixed;inset:0;pointer-events:none;z-index:9999;overflow:hidden;}
@@ -245,6 +248,11 @@
       </div>
     </div>
   </header>
+
+  <div id="install-nudge" class="install-nudge hidden">
+    <span>📲 Add Duel Cut to your Home Screen — otherwise Safari can quietly clear your data after a week of not opening it. Tap Share, then "Add to Home Screen."</span>
+    <button id="install-nudge-close" title="Dismiss">×</button>
+  </div>
 
   <div id="random-duel-status" class="random-duel-status hidden"></div>
 
@@ -505,6 +513,19 @@ async function init(){
   bindEvents();
   renderView();
   ensureGenreMap();
+  maybeShowInstallNudge();
+}
+
+function isStandalone(){
+  return window.navigator.standalone === true ||
+    (window.matchMedia && window.matchMedia('(display-mode: standalone)').matches);
+}
+
+async function maybeShowInstallNudge(){
+  if(isStandalone()) return;
+  const dismissed = await storageGet('duelcut:installnudgedismissed');
+  if(dismissed) return;
+  el('install-nudge').classList.remove('hidden');
 }
 
 async function ensureGenreMap(){
@@ -587,6 +608,10 @@ function bindEvents(){
   el('stats-btn').onclick = () => { el('stats-content').innerHTML = buildStats(); el('stats-modal').classList.remove('hidden'); };
   el('stats-close').onclick = () => el('stats-modal').classList.add('hidden');
   el('backfill-btn').onclick = backfillMovieDetails;
+  el('install-nudge-close').onclick = async () => {
+    el('install-nudge').classList.add('hidden');
+    await storageSet('duelcut:installnudgedismissed', '1');
+  };
   el('birth-year-save').onclick = saveBirthYear;
   el('insights-btn').onclick = () => { el('insights-content').innerHTML = buildInsights(); el('insights-modal').classList.remove('hidden'); };
   el('insights-close').onclick = () => el('insights-modal').classList.add('hidden');
