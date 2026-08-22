@@ -332,14 +332,9 @@
 
 <div id="settings-modal" class="hidden">
   <div class="box">
-    <h2 class="display">TMDB API Key <span style="color:var(--text-dim);font-weight:400;">(optional)</span></h2>
-    <p>Duel Cut already works out of the box. If you'd rather use your own TMDB key instead of the built-in one, grab a free key from
-      <a href="https://www.themoviedb.org/settings/api" target="_blank">themoviedb.org/settings/api</a>
-      and paste it below. Leave blank to use the default.</p>
-    <input id="api-key-input" type="text" placeholder="Optional — paste your own TMDB API key">
+    <h2 class="display">Settings</h2>
     <div class="row">
-      <button class="cancel" id="settings-cancel">Cancel</button>
-      <button class="save" id="settings-save">Save</button>
+      <button class="cancel" id="settings-cancel">Close</button>
     </div>
 
     <div class="settings-section">
@@ -447,7 +442,7 @@
 </div>
 
 <script>
-const DEFAULT_API_KEY = 'aa8d690a98a62069774ffbaf2cdc2479';
+const DEFAULT_API_KEY = 'proxy';
 
 const state = {
   apiKey: null,
@@ -491,9 +486,9 @@ async function storageSet(key, value){
 }
 
 async function init(){
-  const key = await storageGet('duelcut:api-key');
-  state.apiKeyOverride = key || null;
-  state.apiKey = key || DEFAULT_API_KEY;
+  state.apiKeyOverride = null;
+  state.apiKey = DEFAULT_API_KEY;
+  try{ localStorage.removeItem('duelcut:api-key'); }catch(e){}
   const lib = await storageGet('duelcut:library');
   if(lib){ try{ state.library = JSON.parse(lib); }catch(e){ state.library = []; } }
   const genres = await storageGet('duelcut:genres');
@@ -532,7 +527,7 @@ async function ensureGenreMap(){
   if(Object.keys(state.genreMap).length > 0) return;
   if(!state.apiKey) return;
   try{
-    const res = await fetch(`https://api.themoviedb.org/3/genre/movie/list?api_key=${encodeURIComponent(state.apiKey)}`);
+    const res = await fetch(`https://duelcut-tmdb-proxy.kiah-harpool.workers.dev/3/genre/movie/list?api_key=${encodeURIComponent(state.apiKey)}`);
     if(!res.ok) return;
     const data = await res.json();
     const map = {};
@@ -570,7 +565,6 @@ function bindEvents(){
     }
   });
   el('settings-cancel').onclick = closeSettings;
-  el('settings-save').onclick = saveApiKey;
   el('search-btn').onclick = runSearch;
   el('search-input').addEventListener('keydown', e => { if(e.key==='Enter') runSearch(); });
   let debounceTimer;
@@ -630,7 +624,6 @@ function renderView(){
 }
 
 function openSettings(){
-  el('api-key-input').value = state.apiKeyOverride || '';
   el('birth-year-input').value = state.birthYear || '';
   el('settings-modal').classList.remove('hidden');
 }
@@ -642,20 +635,6 @@ async function saveBirthYear(){
     await storageSet('duelcut:birthyear', String(state.birthYear));
   }
 }
-async function saveApiKey(){
-  const val = el('api-key-input').value.trim();
-  if(val){
-    state.apiKeyOverride = val;
-    state.apiKey = val;
-  }else{
-    state.apiKeyOverride = null;
-    state.apiKey = DEFAULT_API_KEY;
-  }
-  await storageSet('duelcut:api-key', val);
-  closeSettings();
-  ensureGenreMap();
-}
-
 async function runSearch(){
   const query = el('search-input').value.trim();
   el('search-results').innerHTML = '';
@@ -666,7 +645,7 @@ async function runSearch(){
   }
   el('search-status').innerHTML = `<span class="spinner"></span>`;
   try{
-    const res = await fetch(`https://api.themoviedb.org/3/search/movie?api_key=${encodeURIComponent(state.apiKey)}&query=${encodeURIComponent(query)}&include_adult=false`);
+    const res = await fetch(`https://duelcut-tmdb-proxy.kiah-harpool.workers.dev/3/search/movie?api_key=${encodeURIComponent(state.apiKey)}&query=${encodeURIComponent(query)}&include_adult=false`);
     if(!res.ok){
       el('search-status').innerHTML = `<div class="inline-msg warn">TMDB rejected that request. Check your API key in settings.</div>`;
       return;
@@ -767,7 +746,7 @@ async function selectMovie(movie, already){
 
 async function fetchMovieDetails(id){
   try{
-    const res = await fetch(`https://api.themoviedb.org/3/movie/${id}?api_key=${encodeURIComponent(state.apiKey)}&append_to_response=credits`);
+    const res = await fetch(`https://duelcut-tmdb-proxy.kiah-harpool.workers.dev/3/movie/${id}?api_key=${encodeURIComponent(state.apiKey)}&append_to_response=credits`);
     if(!res.ok) return null;
     const data = await res.json();
     const crew = (data.credits && data.credits.crew) || [];
@@ -1550,7 +1529,7 @@ async function handleImportLetterboxdFile(e){
     try{
       const query = encodeURIComponent(it.title);
       const yearParam = it.year ? `&year=${encodeURIComponent(it.year)}` : '';
-      const res = await fetch(`https://api.themoviedb.org/3/search/movie?api_key=${encodeURIComponent(state.apiKey)}&query=${query}${yearParam}&include_adult=false`);
+      const res = await fetch(`https://duelcut-tmdb-proxy.kiah-harpool.workers.dev/3/search/movie?api_key=${encodeURIComponent(state.apiKey)}&query=${query}${yearParam}&include_adult=false`);
       if(!res.ok){ failed++; continue; }
       const data = await res.json();
       const match = (data.results || [])[0];
@@ -1655,7 +1634,7 @@ async function openDiscover(){
   const candidates = new Map();
   for(const seed of seeds){
     try{
-      const res = await fetch(`https://api.themoviedb.org/3/movie/${seed.id}/recommendations?api_key=${encodeURIComponent(state.apiKey)}&include_adult=false`);
+      const res = await fetch(`https://duelcut-tmdb-proxy.kiah-harpool.workers.dev/3/movie/${seed.id}/recommendations?api_key=${encodeURIComponent(state.apiKey)}&include_adult=false`);
       if(res.ok){
         const data = await res.json();
         (data.results || []).forEach(m => {
@@ -1726,7 +1705,7 @@ async function fillSuggestPool(){
   if(sorted.length === 0){
     // brand new library — nothing to base taste on yet, fall back to popular
     try{
-      const res = await fetch(`https://api.themoviedb.org/3/movie/popular?api_key=${encodeURIComponent(state.apiKey)}&page=${state.suggestPage}&include_adult=false`);
+      const res = await fetch(`https://duelcut-tmdb-proxy.kiah-harpool.workers.dev/3/movie/popular?api_key=${encodeURIComponent(state.apiKey)}&page=${state.suggestPage}&include_adult=false`);
       if(!res.ok) return;
       const data = await res.json();
       state.suggestPage++;
@@ -1746,7 +1725,7 @@ async function fillSuggestPool(){
   const candidates = new Map();
   for(const seed of seeds){
     try{
-      const res = await fetch(`https://api.themoviedb.org/3/movie/${seed.id}/recommendations?api_key=${encodeURIComponent(state.apiKey)}&include_adult=false`);
+      const res = await fetch(`https://duelcut-tmdb-proxy.kiah-harpool.workers.dev/3/movie/${seed.id}/recommendations?api_key=${encodeURIComponent(state.apiKey)}&include_adult=false`);
       if(res.ok){
         const data = await res.json();
         (data.results || []).forEach(m => {
