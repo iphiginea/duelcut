@@ -1,6 +1,7 @@
 name: Switch Duel Cut to TMDB proxy
 
 on:
+  workflow_dispatch:
   issues:
     types:
       - opened
@@ -10,7 +11,7 @@ permissions:
 
 jobs:
   patch:
-    if: github.event.issue.title == 'run-tmdb-proxy-migration'
+    if: github.event_name == 'workflow_dispatch' || github.event.issue.title == 'run-tmdb-proxy-migration'
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
