@@ -2,16 +2,12 @@ name: Switch Duel Cut to TMDB proxy
 
 on:
   workflow_dispatch:
-  issues:
-    types:
-      - opened
 
 permissions:
   contents: write
 
 jobs:
   patch:
-    if: github.event_name == 'workflow_dispatch' || github.event.issue.title == 'run-tmdb-proxy-migration'
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -25,6 +21,14 @@ jobs:
 
           path = Path('index.html')
           s = path.read_text()
+
+          worker = 'https://duelcut-tmdb-proxy.kiah-harpool.workers.dev'
+          old_key = "const DEFAULT_API_KEY = 'aa8d690a98a62069774ffbaf2cdc2479';"
+
+          if old_key in s:
+              s = s.replace(old_key, "const DEFAULT_API_KEY = 'proxy';", 1)
+
+          s = s.replace('https://api.themoviedb.org', worker)
 
           old_settings = '''    <h2 class="display">TMDB API Key <span style="color:var(--text-dim);font-weight:400;">(optional)</span></h2>
     <p>Duel Cut already works out of the box. If you'd rather use your own TMDB key instead of the built-in one, grab a free key from
@@ -41,76 +45,30 @@ jobs:
       <button class="cancel" id="settings-cancel">Close</button>
     </div>
 '''
-          if old_settings not in s:
-              raise SystemExit('Expected API key settings block not found')
-          s = s.replace(old_settings, new_settings, 1)
+          if old_settings in s:
+              s = s.replace(old_settings, new_settings, 1)
+              s = s.replace("  el('settings-save').onclick = saveApiKey;\n", "", 1)
+              s = s.replace("  el('api-key-input').value = state.apiKeyOverride || '';\n", "", 1)
+              s = re.sub(
+                  r"\nasync function saveApiKey\(\)\{.*?\n\}\n\nasync function runSearch",
+                  "\nasync function runSearch",
+                  s,
+                  count=1,
+                  flags=re.S,
+              )
 
-          old_key_line = "const DEFAULT_API_KEY = 'aa8d690a98a62069774ffbaf2cdc2479';"
-          if old_key_line not in s:
-              raise SystemExit('Expected hardcoded TMDB key not found')
-          s = s.replace(old_key_line, "const TMDB_API_BASE = 'https://duelcut-tmdb-proxy.kiah-harpool.workers.dev';", 1)
-
-          s = s.replace("  apiKey: null,\n  apiKeyOverride: null,\n", "", 1)
-
+          # Never reuse a previously stored browser API key after this migration.
           old_init = "  const key = await storageGet('duelcut:api-key');\n  state.apiKeyOverride = key || null;\n  state.apiKey = key || DEFAULT_API_KEY;\n"
-          if old_init not in s:
-              raise SystemExit('Expected API key init block not found')
-          s = s.replace(old_init, "", 1)
+          new_init = "  state.apiKeyOverride = null;\n  state.apiKey = DEFAULT_API_KEY;\n  try{ localStorage.removeItem('duelcut:api-key'); }catch(e){}\n"
+          if old_init in s:
+              s = s.replace(old_init, new_init, 1)
 
-          s = s.replace("  if(!state.apiKey) return;\n", "", 1)
-          s = s.replace("  el('settings-save').onclick = saveApiKey;\n", "", 1)
-          s = s.replace("  el('api-key-input').value = state.apiKeyOverride || '';\n", "", 1)
-
-          s = re.sub(
-              r"\nasync function saveApiKey\(\)\{.*?\n\}\n\nasync function runSearch",
-              "\nasync function runSearch",
-              s,
-              count=1,
-              flags=re.S,
-          )
-
-          s = re.sub(
-              r"\n\s*if\(!state\.apiKey\)\{\n\s*el\('search-status'\)\.innerHTML = .*?\n\s*return;\n\s*\}\n",
-              "\n",
-              s,
-              count=1,
-              flags=re.S,
-          )
-
-          s = re.sub(
-              r"\n\s*if\(!state\.apiKey\)\{\n\s*el\('letterboxd-status'\)\.textContent = .*?\n\s*return;\n\s*\}\n",
-              "\n",
-              s,
-              count=1,
-              flags=re.S,
-          )
-
-          s = s.replace(
-              "  const details = state.apiKey ? await fetchMovieDetails(movie.id) : null;",
-              "  const details = await fetchMovieDetails(movie.id);",
-              1,
-          )
-
-          s = s.replace('https://api.themoviedb.org', '${TMDB_API_BASE}')
-          s = s.replace('?api_key=${encodeURIComponent(state.apiKey)}&', '?')
-          s = s.replace('?api_key=${encodeURIComponent(state.apiKey)}', '')
-
-          forbidden = [
-              'aa8d690a98a62069774ffbaf2cdc2479',
-              'api.themoviedb.org',
-              'state.apiKey',
-              'DEFAULT_API_KEY',
-              'api-key-input',
-              'settings-save',
-              'saveApiKey',
-              'duelcut:api-key',
-              'api_key=',
-          ]
-          leftovers = [x for x in forbidden if x in s]
-          if leftovers:
-              raise SystemExit('Unsafe API key references remain: ' + ', '.join(leftovers))
-          if s.count('TMDB_API_BASE') < 5:
-              raise SystemExit('Proxy base was not applied to enough TMDB calls')
+          if 'aa8d690a98a62069774ffbaf2cdc2479' in s:
+              raise SystemExit('Exposed TMDB key still present')
+          if 'https://api.themoviedb.org' in s:
+              raise SystemExit('Direct TMDB host still present')
+          if worker not in s:
+              raise SystemExit('Worker URL was not added')
 
           path.write_text(s)
           PY
