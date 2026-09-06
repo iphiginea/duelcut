@@ -154,14 +154,6 @@
   .install-nudge button:hover{color:var(--amber);}
   .random-toast{position:fixed;top:50%;left:50%;transform:translate(-50%,-40%);background:var(--surface);border:1px solid var(--amber);color:var(--text);padding:14px 20px;border-radius:12px;font-size:13px;text-align:center;opacity:0;transition:opacity .25s, transform .25s;z-index:200;max-width:82vw;box-shadow:0 10px 30px rgba(0,0,0,0.5);pointer-events:none;}
   .random-toast.show{opacity:1;transform:translate(-50%,-50%);}
-  .confetti-container{position:fixed;inset:0;pointer-events:none;z-index:9999;overflow:hidden;}
-  .confetti-piece{position:absolute;top:-20px;border-radius:2px;animation-name:confetti-fall;animation-timing-function:cubic-bezier(.25,.46,.45,.94);animation-fill-mode:forwards;}
-  @keyframes confetti-fall{
-    0%{transform:translateY(0) rotate(0deg);opacity:1;}
-    100%{transform:translateY(115vh) rotate(720deg);opacity:0.85;}
-  }
-  .milestone-banner{position:fixed;top:18px;left:50%;transform:translate(-50%,-140%);background:var(--amber);color:#0b0b10;padding:14px 26px;border-radius:14px;font-family:'Bebas Neue';font-size:20px;letter-spacing:0.04em;text-align:center;z-index:10000;box-shadow:0 12px 30px rgba(0,0,0,0.5);transition:transform .4s cubic-bezier(.2,.9,.3,1.3);}
-  .milestone-banner.show{transform:translate(-50%,0);}
   .tier-row{display:flex;gap:10px;align-items:flex-start;margin-bottom:10px;background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:10px;}
   .tier-label{width:36px;flex:none;font-family:'Bebas Neue';font-size:24px;text-align:center;border-radius:6px;padding:8px 0;color:#0b0b10;}
   .tier-label.tier-s{background:var(--amber);}
@@ -202,6 +194,55 @@
   .rank-row .confirm-remove button{font-size:11px;padding:4px 8px;border-radius:6px;border:1px solid var(--border);background:var(--surface-2);color:var(--text);cursor:pointer;}
   .rank-row .confirm-remove button.yes{border-color:var(--crimson);color:var(--crimson);}
 
+
+  /* Purpose-driven duel home */
+  #duel-home{display:flex;flex-direction:column;gap:18px;}
+  .duel-home-kicker{font-family:'IBM Plex Mono';font-size:10px;text-transform:uppercase;letter-spacing:.16em;color:var(--text-dim);margin-bottom:6px;}
+  .confidence-card{background:linear-gradient(145deg,var(--surface),var(--surface-2));border:1px solid var(--border);border-radius:14px;padding:18px;}
+  .confidence-topline{display:flex;align-items:flex-end;justify-content:space-between;gap:16px;}
+  .confidence-title{font-family:'Bebas Neue';font-size:24px;letter-spacing:.03em;line-height:1;}
+  .confidence-percent{font-family:'Bebas Neue';font-size:46px;line-height:.85;color:var(--amber);}
+  .confidence-track,.mission-track{height:6px;background:#080512;border-radius:999px;overflow:hidden;margin-top:14px;}
+  .confidence-fill,.mission-fill{height:100%;background:var(--amber);border-radius:999px;transition:width .25s ease;}
+  .confidence-meta{display:flex;gap:12px;flex-wrap:wrap;margin-top:12px;color:var(--text-dim);font-family:'IBM Plex Mono';font-size:10px;text-transform:uppercase;letter-spacing:.05em;}
+  .home-section-title{font-family:'Bebas Neue';font-size:22px;letter-spacing:.03em;margin:0 0 10px;}
+  .missions-list{display:flex;flex-direction:column;gap:8px;}
+  .mission-card{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:13px 14px;display:grid;grid-template-columns:1fr auto;gap:8px 12px;align-items:center;}
+  .mission-card .mission-label{font-family:'IBM Plex Mono';font-size:9px;text-transform:uppercase;letter-spacing:.14em;color:var(--olive);margin-bottom:4px;}
+  .mission-card .mission-title{font-weight:600;font-size:14px;line-height:1.25;}
+  .mission-card .mission-copy{color:var(--text-dim);font-size:11px;line-height:1.4;margin-top:3px;}
+  .mission-card .mission-progress{grid-column:1 / -1;}
+  .mission-card button{background:none;border:1px solid var(--border);color:var(--text);border-radius:8px;padding:8px 10px;font-size:11px;font-weight:600;cursor:pointer;font-family:'IBM Plex Sans';white-space:nowrap;}
+  .mission-card button:hover{border-color:var(--amber);color:var(--amber);}
+  .mission-empty{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:14px;color:var(--text-dim);font-size:12px;line-height:1.5;}
+  .mode-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px;}
+  .mode-card{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:14px;text-align:left;color:var(--text);cursor:pointer;min-height:94px;font-family:'IBM Plex Sans';transition:.15s;}
+  .mode-card:hover{border-color:var(--amber);transform:translateY(-1px);}
+  .mode-card strong{display:block;font-size:13px;margin-bottom:4px;}
+  .mode-card span{display:block;color:var(--text-dim);font-size:11px;line-height:1.4;font-weight:400;}
+  .watched-btn{width:100%;background:var(--teal);border:1px solid var(--teal);color:var(--text);border-radius:12px;padding:13px 14px;font-weight:600;font-family:'IBM Plex Sans';cursor:pointer;}
+  .watched-btn:hover{filter:brightness(1.08);}
+  .duel-purpose{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:10px 12px;text-align:center;}
+  .duel-purpose .purpose-label{font-family:'IBM Plex Mono';font-size:9px;text-transform:uppercase;letter-spacing:.15em;color:var(--olive);margin-bottom:4px;}
+  .duel-purpose .purpose-copy{font-size:12px;line-height:1.4;color:var(--text-dim);}
+  .rank-row .info .details{font-family:'IBM Plex Mono';font-size:10px;color:var(--olive);margin-top:4px;text-transform:uppercase;letter-spacing:.03em;}
+  .rank-row .movement{font-family:'IBM Plex Mono';font-size:11px;min-width:30px;text-align:right;color:var(--text-dim);flex:none;}
+  .rank-row .movement.up{color:var(--olive);}
+  .rank-row .movement.down{color:var(--crimson);}
+  .rank-alert{position:fixed;left:50%;bottom:22px;transform:translate(-50%,140%);width:min(430px,calc(100vw - 28px));background:var(--surface);border:1px solid var(--amber);border-radius:14px;padding:14px 16px;z-index:10000;box-shadow:0 14px 36px rgba(0,0,0,.5);transition:transform .28s ease;}
+  .rank-alert.show{transform:translate(-50%,0);}
+  .rank-alert .rank-alert-label{font-family:'IBM Plex Mono';font-size:9px;text-transform:uppercase;letter-spacing:.15em;color:var(--amber);margin-bottom:4px;}
+  .rank-alert .rank-alert-title{font-family:'Bebas Neue';font-size:24px;letter-spacing:.02em;line-height:1.05;}
+  .rank-alert .rank-alert-copy{font-size:11px;color:var(--text-dim);margin-top:3px;}
+  @media (max-width:520px){
+    .mode-grid{grid-template-columns:1fr;}
+    .mission-card{grid-template-columns:1fr;}
+    .mission-card button{justify-self:start;}
+    .mission-card .mission-progress{grid-column:1;}
+    .confidence-percent{font-size:40px;}
+    .rank-row{gap:9px;}
+  }
+
   /* Settings modal */
   #settings-modal, #discover-modal, #compare-modal, #stats-modal, #suggest-modal, #insights-modal{position:fixed;inset:0;background:rgba(10,10,14,0.7);display:flex;align-items:center;justify-content:center;padding:20px;z-index:10;}
   #settings-modal .box, #discover-modal .box, #compare-modal .box, #stats-modal .box, #suggest-modal .box, #insights-modal .box{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:24px;max-width:440px;width:100%;max-height:80vh;overflow-y:auto;}
@@ -241,7 +282,7 @@
         <button id="stats-btn">📊 <span>Stats</span></button>
         <button id="insights-btn">🧠 <span>Insights</span></button>
         <button id="suggest-btn">🍿 <span>Suggestions</span></button>
-        <button id="random-duel-btn">🎲 <span>Random Duel</span></button>
+        <button id="random-duel-btn">◫ <span>Quick Duel</span></button>
         <button id="discover-btn">🔎 <span>Discover</span></button>
         <button id="export-csv-btn">⬇️ <span>Export CSV</span></button>
         <button id="settings-btn">⚙ <span>Settings</span></button>
@@ -257,14 +298,39 @@
   <div id="random-duel-status" class="random-duel-status hidden"></div>
 
   <nav>
-    <button id="tab-log" class="active">Log</button>
+    <button id="tab-log" class="active">Duel</button>
     <button id="tab-watchlist">Watchlist</button>
     <button id="tab-rankings">Rankings</button>
   </nav>
 
   <main>
     <section id="log-view">
-      <div id="search-panel">
+      <div id="duel-home">
+        <div id="duel-home-progress"></div>
+
+        <section>
+          <div class="duel-home-kicker">Missions</div>
+          <h2 class="home-section-title">Today's Cut</h2>
+          <div id="missions-list" class="missions-list"></div>
+        </section>
+
+        <section>
+          <div class="duel-home-kicker">Duel Modes</div>
+          <h2 class="home-section-title">Choose Your Cut</h2>
+          <div class="mode-grid">
+            <button class="mode-card" data-duel-mode="quick"><strong>Quick Duel</strong><span>The next useful matchup. No random filler.</span></button>
+            <button class="mode-card" data-duel-mode="settle"><strong>Settle My Ranking</strong><span>Prioritize close calls and low-confidence positions.</span></button>
+            <button class="mode-card" data-duel-mode="rank_movie"><strong>Rank a Movie</strong><span>Choose one film and sharpen exactly where it belongs.</span></button>
+            <button class="mode-card" data-duel-mode="top10"><strong>Top 10 Check</strong><span>Pressure-test the boundary of your ten best films.</span></button>
+            <button class="mode-card" data-duel-mode="recent"><strong>Recently Watched</strong><span>Give your newest additions more evidence.</span></button>
+            <button class="mode-card" data-duel-mode="rivals"><strong>Rivals</strong><span>Resolve head-to-head matchups your choices still can't separate.</span></button>
+          </div>
+        </section>
+
+        <button id="watched-something-btn" class="watched-btn">I watched something</button>
+      </div>
+
+      <div id="search-panel" class="hidden">
         <div class="search-row">
           <input id="search-input" type="text" placeholder="Search a movie you've seen…" autocomplete="off">
           <button id="search-btn">Search</button>
@@ -274,21 +340,22 @@
       </div>
 
       <div id="duel-arena" class="hidden">
+        <div id="duel-purpose" class="duel-purpose"></div>
         <div class="duel-progress mono" id="duel-progress"></div>
         <div id="duel-stage" class="duel-stage">
           <div class="duel-card" id="duel-left"></div>
           <div class="vs-divider"><span>VS</span></div>
           <div class="duel-card" id="duel-right"></div>
         </div>
-        <div class="inline-msg" style="text-align:center;">Swipe left or right toward the one you liked more — or just tap it.</div>
+        <div class="inline-msg" style="text-align:center;">Tap the movie that wins. Swipe works too.</div>
         <button id="undo-duel-btn" class="undo-btn hidden">↺ Undo last pick</button>
       </div>
 
       <div id="confirmation-view" class="hidden confirmation">
         <div class="rank-number mono" id="confirm-rank"></div>
-        <div class="rank-out-of">out of 10</div>
+        <div class="rank-out-of" id="confirm-rank-label">movies ranked</div>
         <p id="confirm-text"></p>
-        <button id="confirm-done">Log another</button>
+        <button id="confirm-done">Back to Duel</button>
       </div>
     </section>
 
@@ -473,7 +540,12 @@ const state = {
   birthYear: null,
   watchlist: [],
   lastBackupAt: 0,
-  duelsSinceBackup: 0
+  duelsSinceBackup: 0,
+  currentDuelMode: 'quick',
+  duelPurpose: null,
+  modeDuelsRemaining: 0,
+  lastPairKey: null,
+  rankMovement: {}
 };
 
 const el = id => document.getElementById(id);
@@ -573,6 +645,27 @@ function bindEvents(){
     debounceTimer = setTimeout(runSearch, 400);
   });
   el('confirm-done').onclick = resetToSearch;
+  el('watched-something-btn').onclick = () => openMovieSearch('add_movie');
+  document.querySelectorAll('[data-duel-mode]').forEach(btn => {
+    btn.onclick = () => {
+      const mode = btn.dataset.duelMode;
+      if(mode === 'rank_movie') openMovieSearch('rank_movie');
+      else startMode(mode, 1);
+    };
+  });
+  el('missions-list').addEventListener('click', (e) => {
+    const btn = e.target.closest('button[data-mode],button[data-movie-id]');
+    if(!btn) return;
+    if(btn.dataset.movieId){
+      const movie = state.library.find(m => String(m.id) === String(btn.dataset.movieId));
+      if(movie) startRerank(movie);
+      return;
+    }
+    const mode = btn.dataset.mode;
+    const count = Math.max(1, parseInt(btn.dataset.count || '1', 10));
+    if(mode === 'rank_movie') openMovieSearch('rank_movie');
+    else startMode(mode, count);
+  });
   el('export-csv-btn').onclick = exportCSV;
   el('export-backup-btn').onclick = exportBackup;
   el('import-backup-input').addEventListener('change', handleImportBackupFile);
@@ -591,8 +684,7 @@ function bindEvents(){
   el('view-tier-btn').onclick = () => { state.rankingsViewMode = 'tiers'; updateViewToggle(); renderRankingsList(); };
   el('random-duel-btn').onclick = () => {
     stopRandomLoop();
-    state.randomLoopActive = true;
-    startRandomDuel();
+    startMode('quick', 1);
   };
   el('undo-duel-btn').onclick = undoLastDuel;
   el('compare-input').addEventListener('change', handleCompareFile);
@@ -621,7 +713,286 @@ function renderView(){
   el('rankings-view').classList.toggle('hidden', state.view!=='rankings');
   if(state.view==='rankings') renderRankings();
   if(state.view==='watchlist') renderWatchlist();
+  if(state.view==='log' && !state.pendingMovie && el('confirmation-view').classList.contains('hidden')) showDuelHome();
 }
+
+function getSortedLibrary(){
+  return [...state.library].sort((a,b) => b.elo-a.elo);
+}
+
+function getDuelCount(movieId){
+  return state.duelLog.reduce((count,d) => count + ((d.aId===movieId || d.bId===movieId) ? 1 : 0), 0);
+}
+
+function computeOverallConfidence(){
+  if(state.library.length === 0) return 0;
+  return Math.round(state.library.reduce((sum,m) => sum + computeConfidence(m.id), 0) / state.library.length);
+}
+
+function pairKey(a,b){
+  return [String(a.id),String(b.id)].sort().join('-');
+}
+
+function wasRecentlyCompared(a,b){
+  const key = pairKey(a,b);
+  return state.duelLog.slice(-4).some(d => [String(d.aId),String(d.bId)].sort().join('-') === key);
+}
+
+function getPairRecord(a,b){
+  let aWins = 0, bWins = 0, meetings = 0;
+  state.duelLog.forEach(d => {
+    const ids = [String(d.aId),String(d.bId)];
+    if(ids.includes(String(a.id)) && ids.includes(String(b.id))){
+      meetings++;
+      if(String(d.winnerId) === String(a.id)) aWins++;
+      else if(String(d.winnerId) === String(b.id)) bWins++;
+    }
+  });
+  return {aWins,bWins,meetings};
+}
+
+function getRivalryPair(){
+  const pairs = [];
+  const h2h = computeHeadToHead();
+  Object.values(h2h).forEach(pair => {
+    const a = state.library.find(m => m.id === pair.aId);
+    const b = state.library.find(m => m.id === pair.bId);
+    if(!a || !b || pair.results.length < 2) return;
+    const aWins = pair.results.filter(r => r.winnerId === pair.aId).length;
+    const bWins = pair.results.filter(r => r.winnerId === pair.bId).length;
+    const margin = Math.abs(aWins-bWins);
+    if(margin > 1) return;
+    pairs.push({a,b,aWins,bWins,meetings:pair.results.length,score:margin*80 + Math.abs(a.elo-b.elo)});
+  });
+  pairs.sort((x,y) => x.score-y.score || y.meetings-x.meetings);
+  return pairs[0] || null;
+}
+
+function pickBestPair(mode='quick'){
+  const sorted = getSortedLibrary();
+  if(sorted.length < 2) return null;
+
+  if(mode === 'rivals'){
+    const rivalry = getRivalryPair();
+    return rivalry ? {a:rivalry.a,b:rivalry.b} : null;
+  }
+
+  if(mode === 'recent'){
+    const recent = [...state.library].sort((a,b) => (b.addedAt||0)-(a.addedAt||0));
+    const target = recent.find(m => getDuelCount(m.id) < 5) || recent[0];
+    const opponents = state.library.filter(m => m.id !== target.id).sort((a,b) => Math.abs(a.elo-target.elo)-Math.abs(b.elo-target.elo));
+    const opponent = opponents.find(m => pairKey(target,m) !== state.lastPairKey) || opponents[0];
+    return opponent ? {a:target,b:opponent} : null;
+  }
+
+  let pairs = [];
+  for(let i=0;i<sorted.length-1;i++){
+    const a = sorted[i], b = sorted[i+1];
+    const rankA = i+1, rankB = i+2;
+    const gap = Math.abs(a.elo-b.elo);
+    const confidence = (computeConfidence(a.id)+computeConfidence(b.id))/2;
+    const recentPenalty = wasRecentlyCompared(a,b) ? 120 : 0;
+    const repeatPenalty = pairKey(a,b) === state.lastPairKey ? 220 : 0;
+    const boundaryPenalty = mode === 'top10' ? (Math.abs(rankA-10)+Math.abs(rankB-10))*30 : 0;
+    pairs.push({a,b,rankA,rankB,score:gap + confidence*.35 + recentPenalty + repeatPenalty + boundaryPenalty});
+  }
+
+  if(mode === 'top10') pairs = pairs.filter(p => p.rankA >= 7 && p.rankB <= Math.min(13,sorted.length));
+  pairs.sort((x,y) => x.score-y.score);
+  return pairs[0] || null;
+}
+
+function buildDuelPurpose(a,b,mode){
+  const ranks = getCurrentRankMap();
+  const rankA = ranks[a.id], rankB = ranks[b.id];
+  const gap = Math.round(Math.abs(a.elo-b.elo));
+  const record = getPairRecord(a,b);
+
+  if(mode === 'top10'){
+    const higher = rankA < rankB ? {m:a,r:rankA} : {m:b,r:rankB};
+    const lower = rankA < rankB ? {m:b,r:rankB} : {m:a,r:rankA};
+    return {label:'Top 10 Check', text:`#${lower.r} is challenging #${higher.r} near your Top 10 boundary.`};
+  }
+  if(mode === 'rivals' && record.meetings >= 2){
+    return {label:'Rivalry', text:`You've split this ${record.aWins}–${record.bWins} across ${record.meetings} meetings. This one can break the tie.`};
+  }
+  if(mode === 'recent'){
+    const recent = (a.addedAt||0) >= (b.addedAt||0) ? a : b;
+    return {label:'Recent Watch', text:`${recent.title} is still settling into your ranking. This comparison adds useful evidence.`};
+  }
+  if(gap <= 45){
+    return {label:'Close Call', text:`Only ${gap} Elo points separate these films.`};
+  }
+  const low = [a,b].sort((x,y) => computeConfidence(x.id)-computeConfidence(y.id))[0];
+  if(computeConfidence(low.id) < 70){
+    return {label:'Ranking Check', text:`${low.title} has a low-confidence placement. This duel helps sharpen it.`};
+  }
+  return {label:'Cross-Check', text:'A useful comparison to keep your Elo order honest.'};
+}
+
+function renderDuelHome(){
+  const confidence = computeOverallConfidence();
+  const uncertain = state.library.filter(m => computeConfidence(m.id) < 60).length;
+  el('duel-home-progress').innerHTML = `
+    <div class="confidence-card">
+      <div class="duel-home-kicker">Elo Model</div>
+      <div class="confidence-topline">
+        <div><div class="confidence-title">Ranking Confidence</div></div>
+        <div class="confidence-percent">${confidence}%</div>
+      </div>
+      <div class="confidence-track"><div class="confidence-fill" style="width:${confidence}%"></div></div>
+      <div class="confidence-meta">
+        <span>${state.library.length} films ranked</span>
+        <span>${state.totalDuels} duels</span>
+        <span>${uncertain} uncertain placement${uncertain===1?'':'s'}</span>
+      </div>
+    </div>`;
+  renderMissions();
+}
+
+function renderMissions(){
+  const container = el('missions-list');
+  if(state.library.length < 2){
+    container.innerHTML = `<div class="mission-empty">Add at least two movies and Duel Cut will start generating missions from the weak spots in your ranking.</div>`;
+    return;
+  }
+  const missions = [];
+  const sorted = getSortedLibrary();
+
+  if(sorted.length >= 10){
+    const top = sorted.slice(0,10);
+    const topConfidence = Math.round(top.reduce((s,m) => s+computeConfidence(m.id),0)/top.length);
+    const unsettled = top.filter(m => computeConfidence(m.id) < 70).length;
+    if(unsettled > 0){
+      missions.push({label:'Boundary',title:'Settle your Top 10',copy:`${unsettled} Top 10 film${unsettled===1?'':'s'} still need stronger evidence.`,progress:topConfidence,button:'Continue',mode:'top10',count:Math.min(5,Math.max(2,unsettled))});
+    }
+  }
+
+  const low = [...state.library].sort((a,b) => computeConfidence(a.id)-computeConfidence(b.id))[0];
+  if(low && computeConfidence(low.id) < 80){
+    const c = computeConfidence(low.id);
+    missions.push({label:'Placement',title:`Place ${low.title}`,copy:`${getDuelCount(low.id)} duel${getDuelCount(low.id)===1?'':'s'} so far · ${c}% confidence.`,progress:c,button:'Rank it',movieId:low.id});
+  }
+
+  const rivalry = getRivalryPair();
+  if(rivalry){
+    missions.push({label:'Rivalry',title:`${rivalry.a.title} vs. ${rivalry.b.title}`,copy:`Head-to-head: ${rivalry.aWins}–${rivalry.bWins}. Settle the relationship.`,progress:Math.min(95,45+rivalry.meetings*8),button:'Settle it',mode:'rivals',count:1});
+  }
+
+  if(missions.length < 3){
+    const overall = computeOverallConfidence();
+    missions.push({label:'Cleanup',title:'Tighten your ranking',copy:'Duel Cut will prioritize close neighbors and low-confidence positions.',progress:overall,button:'Start',mode:'settle',count:3});
+  }
+
+  container.innerHTML = missions.slice(0,3).map(m => `
+    <div class="mission-card">
+      <div>
+        <div class="mission-label">${escapeHtml(m.label)}</div>
+        <div class="mission-title">${escapeHtml(m.title)}</div>
+        <div class="mission-copy">${escapeHtml(m.copy)}</div>
+      </div>
+      <button ${m.movieId!=null ? `data-movie-id="${m.movieId}"` : `data-mode="${m.mode}" data-count="${m.count||1}"`}>${escapeHtml(m.button)}</button>
+      <div class="mission-progress"><div class="mission-track"><div class="mission-fill" style="width:${Math.max(0,Math.min(100,m.progress||0))}%"></div></div></div>
+    </div>`).join('');
+}
+
+function showDuelHome(){
+  state.pendingMovie = null;
+  state.duelQueue = [];
+  state.duelIndex = 0;
+  state.duelPurpose = null;
+  el('search-panel').classList.add('hidden');
+  el('duel-arena').classList.add('hidden');
+  el('confirmation-view').classList.add('hidden');
+  el('duel-home').classList.remove('hidden');
+  renderDuelHome();
+}
+
+function openMovieSearch(mode='add_movie'){
+  stopRandomLoop();
+  state.currentDuelMode = mode;
+  state.pendingMovie = null;
+  el('duel-home').classList.add('hidden');
+  el('duel-arena').classList.add('hidden');
+  el('confirmation-view').classList.add('hidden');
+  el('search-panel').classList.remove('hidden');
+  el('search-input').placeholder = mode === 'rank_movie' ? 'Search a movie to place or re-rank…' : "Search a movie you've seen…";
+  el('search-input').focus();
+}
+
+function startMode(mode, count=1, continuing=false){
+  stopRandomLoop();
+  if(state.library.length < 2){
+    showRandomToast('Log at least 2 movies before starting this mode.');
+    return;
+  }
+  if(!continuing){
+    state.currentDuelMode = mode;
+    state.modeDuelsRemaining = Math.max(1,count);
+  }
+  const pair = pickBestPair(mode);
+  if(!pair){
+    showRandomToast(mode === 'rivals' ? 'No unresolved rivalries yet — try Settle My Ranking.' : 'No useful matchup is available yet.');
+    showDuelHome();
+    return;
+  }
+  startPairDuel(pair.a,pair.b,mode);
+}
+
+function startPairDuel(a,b,mode){
+  state.pendingMovie = a;
+  state.duelQueue = [b];
+  state.duelIndex = 0;
+  state.isRerank = false;
+  state.isRandomDuel = true;
+  state.duelHistory = [];
+  state.duelPurpose = buildDuelPurpose(a,b,mode);
+  state.lastPairKey = pairKey(a,b);
+  state.view = 'log';
+  renderView();
+  el('duel-home').classList.add('hidden');
+  el('search-panel').classList.add('hidden');
+  el('confirmation-view').classList.add('hidden');
+  el('duel-arena').classList.remove('hidden');
+  renderDuel();
+}
+
+function captureRankMovement(beforeRanks, afterRanks){
+  Object.keys(afterRanks).forEach(id => {
+    const before = beforeRanks[id];
+    const after = afterRanks[id];
+    if(before && after && before !== after){
+      state.rankMovement[id] = before-after;
+    }
+  });
+}
+
+function showRankAlert(movie,label,oldRank,newRank){
+  const existing = document.querySelector('.rank-alert');
+  if(existing) existing.remove();
+  const alert = document.createElement('div');
+  alert.className = 'rank-alert';
+  const rankCopy = oldRank == null ? `Entered at #${newRank}` : `#${oldRank} → #${newRank}`;
+  alert.innerHTML = `<div class="rank-alert-label">${escapeHtml(label)}</div><div class="rank-alert-title">${escapeHtml(movie.title)}</div><div class="rank-alert-copy">${rankCopy}</div>`;
+  document.body.appendChild(alert);
+  requestAnimationFrame(() => alert.classList.add('show'));
+  setTimeout(() => {
+    alert.classList.remove('show');
+    setTimeout(() => alert.remove(),300);
+  },3200);
+}
+
+function detectRankMilestones(beforeRanks, afterRanks, ids){
+  ids.forEach(id => {
+    const before = beforeRanks[id], after = afterRanks[id];
+    if(!before || !after || before === after) return;
+    const movie = state.library.find(m => String(m.id) === String(id));
+    if(!movie) return;
+    if(after === 1 && before !== 1) showRankAlert(movie,'New #1',before,after);
+    else if(before > 10 && after <= 10) showRankAlert(movie,'New Top 10',before,after);
+  });
+}
+
 
 function openSettings(){
   el('birth-year-input').value = state.birthYear || '';
@@ -705,10 +1076,15 @@ function escapeHtml(s){
 async function selectMovie(movie, already){
   stopRandomLoop();
   if(already){
+    if(state.currentDuelMode === 'rank_movie'){
+      startRerank(already);
+      return;
+    }
     state.view = 'rankings';
     renderView();
     return;
   }
+  el('duel-home').classList.add('hidden');
   el('search-panel').classList.add('hidden');
   el('confirmation-view').classList.add('hidden');
   el('duel-arena').classList.add('hidden');
@@ -729,7 +1105,7 @@ async function selectMovie(movie, already){
     addedAt: Date.now(),
     ...(details || {})
   };
-  const opponents = pickOpponents(state.library, 5);
+  const opponents = pickOpponents(state.library, 5, state.pendingMovie);
   state.duelQueue = opponents;
   state.duelIndex = 0;
   state.isRerank = false;
@@ -773,15 +1149,31 @@ async function fetchMovieDetails(id){
   }catch(e){ return null; }
 }
 
-function pickOpponents(library, max){
-  if(library.length<=max) return library.slice();
-  const pool = [...library];
+function pickOpponents(library, max, targetMovie=null){
+  if(library.length === 0) return [];
+  const targetElo = targetMovie && typeof targetMovie.elo === 'number' ? targetMovie.elo : 1500;
+  const sorted = [...library].sort((a,b) => a.elo-b.elo);
+  if(sorted.length <= max) return sorted.sort((a,b) => Math.abs(a.elo-targetElo)-Math.abs(b.elo-targetElo));
+
+  let nearestIdx = 0;
+  let nearestGap = Infinity;
+  sorted.forEach((m,i) => {
+    const gap = Math.abs(m.elo-targetElo);
+    if(gap < nearestGap){ nearestGap = gap; nearestIdx = i; }
+  });
+
   const chosen = [];
-  while(chosen.length < max && pool.length > 0){
-    const idx = Math.floor(Math.random()*pool.length);
-    chosen.push(pool.splice(idx,1)[0]);
-  }
-  return chosen;
+  const add = idx => {
+    if(idx < 0 || idx >= sorted.length) return;
+    const movie = sorted[idx];
+    if(!chosen.find(m => m.id === movie.id)) chosen.push(movie);
+  };
+  [0,-1,1,-3,3,-6,6].forEach(offset => add(nearestIdx+offset));
+  [0,Math.floor(sorted.length*.25),Math.floor(sorted.length*.5),Math.floor(sorted.length*.75),sorted.length-1].forEach(add);
+  [...sorted].sort((a,b) => Math.abs(a.elo-targetElo)-Math.abs(b.elo-targetElo)).forEach(movie => {
+    if(chosen.length < max && !chosen.find(m => m.id === movie.id)) chosen.push(movie);
+  });
+  return chosen.slice(0,max);
 }
 
 function duelCardHtml(movie){
@@ -794,7 +1186,19 @@ function duelCardHtml(movie){
 
 function renderDuel(){
   const opponent = state.duelQueue[state.duelIndex];
-  el('duel-progress').textContent = `Duel ${state.duelIndex+1} of ${state.duelQueue.length}`;
+  let purpose = state.duelPurpose;
+  if(!state.isRandomDuel){
+    if(state.isRerank){
+      purpose = {label:'Ranking Check', text:`Testing ${state.pendingMovie.title} against nearby films to sharpen its position.`};
+    }else{
+      const remaining = state.duelQueue.length-state.duelIndex;
+      purpose = {label:'Placement', text:`Help place ${state.pendingMovie.title}. ${remaining} comparison${remaining===1?'':'s'} remaining in this pass.`};
+    }
+  }
+  el('duel-purpose').innerHTML = `<div class="purpose-label">${escapeHtml((purpose&&purpose.label)||'Useful Matchup')}</div><div class="purpose-copy">${escapeHtml((purpose&&purpose.text)||'This comparison adds information to your ranking.')}</div>`;
+  el('duel-progress').textContent = state.isRandomDuel && state.modeDuelsRemaining > 1
+    ? `${state.modeDuelsRemaining} duels left in this mission`
+    : (state.duelQueue.length > 1 ? `Duel ${state.duelIndex+1} of ${state.duelQueue.length}` : 'Choose the winner');
   el('duel-left').innerHTML = duelCardHtml(state.pendingMovie);
   el('duel-right').innerHTML = duelCardHtml(opponent);
   el('duel-left').onclick = () => handleDuelChoice(true);
@@ -909,6 +1313,7 @@ function eloToScore(elo){
 
 function handleDuelChoice(pendingWon){
   const K = 48;
+  const beforeRanks = getCurrentRankMap();
   const opponent = state.duelQueue[state.duelIndex];
   const eP = expectedScore(state.pendingMovie.elo, opponent.elo);
   const eO = 1-eP;
@@ -937,12 +1342,12 @@ function handleDuelChoice(pendingWon){
   state.pendingMovie.elo = state.pendingMovie.elo + K*(sP-eP);
   const libOpponent = state.library.find(m=>m.id===opponent.id);
   if(libOpponent) libOpponent.elo = libOpponent.elo + K*(sO-eO);
+  const afterRanks = getCurrentRankMap();
+  captureRankMovement(beforeRanks, afterRanks);
+  detectRankMilestones(beforeRanks, afterRanks, [state.pendingMovie.id, opponent.id]);
   state.lastPendingWon = pendingWon;
   state.totalDuels++;
   storageSet('duelcut:totalduels', String(state.totalDuels));
-  if(state.totalDuels > 0 && state.totalDuels % 50 === 0){
-    celebrateMilestone(state.totalDuels);
-  }
   maybeAutoBackup();
 
   state.duelIndex++;
@@ -966,6 +1371,7 @@ function undoLastDuel(){
   storageSet('duelcut:totalduels', String(state.totalDuels));
   state.duelLog.pop();
   storageSet('duelcut:duellog', JSON.stringify(state.duelLog));
+  state.rankMovement = {};
   renderDuel();
 }
 
@@ -974,19 +1380,24 @@ async function finalizeMovie(){
 
   if(state.isRandomDuel){
     await storageSet('duelcut:library', JSON.stringify(state.library));
+    const finishedMode = state.currentDuelMode;
     state.isRandomDuel = false;
-    if(state.randomLoopActive){
-      startRandomDuel();
+    state.duelPurpose = null;
+    if(state.modeDuelsRemaining > 1){
+      state.modeDuelsRemaining--;
+      setTimeout(() => startMode(finishedMode, state.modeDuelsRemaining, true), 180);
     }else{
-      el('duel-arena').classList.add('hidden');
-      el('search-panel').classList.remove('hidden');
+      state.modeDuelsRemaining = 0;
+      showDuelHome();
     }
     return;
   }
 
   el('duel-arena').classList.add('hidden');
+  const wasNew = !state.isRerank;
+  const beforeRanks = getCurrentRankMap();
 
-  if(!state.isRerank){
+  if(wasNew){
     state.library.push(state.pendingMovie);
   }else{
     state.pendingMovie.rerankCount = (state.pendingMovie.rerankCount || 0) + 1;
@@ -994,10 +1405,15 @@ async function finalizeMovie(){
   await storageSet('duelcut:library', JSON.stringify(state.library));
   const sorted = [...state.library].sort((a,b)=>b.elo-a.elo);
   const rank = sorted.findIndex(m=>m.id===state.pendingMovie.id) + 1;
-  const score = eloToScore(state.pendingMovie.elo);
-  const verb = state.isRerank ? 're-ranked' : 'lands';
-  el('confirm-rank').textContent = `${score}`;
-  el('confirm-text').textContent = `${state.pendingMovie.title} ${verb} at #${rank} of ${state.library.length}, with a power score of ${score}/10.`;
+  const afterRanks = getCurrentRankMap();
+  captureRankMovement(beforeRanks, afterRanks);
+  if(wasNew && rank === 1) showRankAlert(state.pendingMovie,'New #1',null,rank);
+  else if(wasNew && rank <= 10) showRankAlert(state.pendingMovie,'New Top 10',null,rank);
+
+  const verb = state.isRerank ? 'now sits' : 'lands';
+  el('confirm-rank').textContent = `#${rank}`;
+  el('confirm-rank-label').textContent = `${state.library.length} movies ranked`;
+  el('confirm-text').textContent = `${state.pendingMovie.title} ${verb} at ${Math.round(state.pendingMovie.elo)} Elo after ${getDuelCount(state.pendingMovie.id)} duels.`;
   state.isRerank = false;
   el('confirmation-view').classList.remove('hidden');
 }
@@ -1016,16 +1432,18 @@ function showRandomToast(text){
 
 function startRerank(movie){
   stopRandomLoop();
+  state.currentDuelMode = 'rank_movie';
   state.pendingMovie = movie;
   state.isRerank = true;
   state.isRandomDuel = false;
   state.duelHistory = [];
   const pool = state.library.filter(m => m.id !== movie.id);
-  state.duelQueue = pickOpponents(pool, 5);
+  state.duelQueue = pickOpponents(pool, 5, movie);
   state.duelIndex = 0;
 
   state.view = 'log';
   renderView();
+  el('duel-home').classList.add('hidden');
   el('search-panel').classList.add('hidden');
   el('confirmation-view').classList.add('hidden');
 
@@ -1035,39 +1453,6 @@ function startRerank(movie){
   }
   el('duel-arena').classList.remove('hidden');
   renderDuel();
-}
-
-function triggerConfetti(){
-  const container = document.createElement('div');
-  container.className = 'confetti-container';
-  document.body.appendChild(container);
-  const colors = ['#ba0101', '#e99d25', '#add794', '#f3ecdd'];
-  for(let i = 0; i < 90; i++){
-    const piece = document.createElement('div');
-    piece.className = 'confetti-piece';
-    const size = 6 + Math.random() * 6;
-    piece.style.left = Math.random() * 100 + 'vw';
-    piece.style.width = size + 'px';
-    piece.style.height = size + 'px';
-    piece.style.background = colors[Math.floor(Math.random() * colors.length)];
-    piece.style.animationDuration = (2.4 + Math.random() * 1.6) + 's';
-    piece.style.animationDelay = (Math.random() * 0.4) + 's';
-    container.appendChild(piece);
-  }
-  setTimeout(() => container.remove(), 4500);
-}
-
-function celebrateMilestone(count){
-  triggerConfetti();
-  const banner = document.createElement('div');
-  banner.className = 'milestone-banner';
-  banner.textContent = `🎉 ${count} duels fought!`;
-  document.body.appendChild(banner);
-  requestAnimationFrame(() => banner.classList.add('show'));
-  setTimeout(() => {
-    banner.classList.remove('show');
-    setTimeout(() => banner.remove(), 400);
-  }, 2800);
 }
 
 function maybeAutoBackup(){
@@ -1092,33 +1477,7 @@ function stopRandomLoop(){
 }
 
 function startRandomDuel(){
-  if(state.library.length < 2){
-    stopRandomLoop();
-    el('duel-arena').classList.add('hidden');
-    el('search-panel').classList.remove('hidden');
-    const note = el('random-duel-status');
-    note.textContent = 'Log at least 2 movies before you can start a random duel.';
-    note.classList.remove('hidden');
-    setTimeout(() => note.classList.add('hidden'), 3000);
-    return;
-  }
-  const pool = [...state.library];
-  const a = pool.splice(Math.floor(Math.random()*pool.length), 1)[0];
-  const b = pool.splice(Math.floor(Math.random()*pool.length), 1)[0];
-
-  state.pendingMovie = a;
-  state.duelQueue = [b];
-  state.duelIndex = 0;
-  state.isRerank = false;
-  state.isRandomDuel = true;
-  state.duelHistory = [];
-
-  state.view = 'log';
-  renderView();
-  el('search-panel').classList.add('hidden');
-  el('confirmation-view').classList.add('hidden');
-  el('duel-arena').classList.remove('hidden');
-  renderDuel();
+  startMode('quick',1);
 }
 
 function resetToSearch(){
@@ -1127,11 +1486,11 @@ function resetToSearch(){
   state.duelIndex = 0;
   state.isRandomDuel = false;
   state.duelHistory = [];
-  el('confirmation-view').classList.add('hidden');
-  el('search-panel').classList.remove('hidden');
+  state.duelPurpose = null;
   el('search-input').value = '';
   el('search-results').innerHTML = '';
   el('search-status').innerHTML = '';
+  showDuelHome();
 }
 
 function renderRankings(){
@@ -1228,14 +1587,19 @@ function renderRankingsList(){
     const row = document.createElement('div');
     row.className = 'rank-row';
     const thumb = posterUrl(movie.poster_path, 'w92');
+    const movement = state.rankMovement[movie.id] || 0;
+    const movementText = movement > 0 ? `↑${movement}` : movement < 0 ? `↓${Math.abs(movement)}` : '—';
+    const movementClass = movement > 0 ? 'up' : movement < 0 ? 'down' : '';
+    const directorLine = movie.director ? `${movie.year} · ${escapeHtml(movie.director)}` : `${movie.year}`;
     row.innerHTML = `
       <div class="rank mono">${rank}</div>
       ${thumb ? `<img src="${thumb}" alt="">` : `<div class="placeholder-thumb">${escapeHtml(movie.title.slice(0,2))}</div>`}
       <div class="info">
         <div class="t">${escapeHtml(movie.title)}</div>
-        <div class="y">${movie.year}</div>
+        <div class="y">${directorLine}</div>
+        <div class="details">${Math.round(movie.elo)} Elo · ${getDuelCount(movie.id)} duel${getDuelCount(movie.id)===1?'':'s'}</div>
       </div>
-      <div class="score mono">${eloToScore(movie.elo)}</div>
+      <div class="movement ${movementClass}">${movementText}</div>
       <button class="rerank-btn" title="Re-rank">↻</button>
       <button class="remove-btn" data-id="${movie.id}" title="Remove">×</button>
     `;
