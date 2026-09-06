@@ -21,11 +21,12 @@ nav{display:grid;grid-template-columns:repeat(3,1fr);gap:7px;margin-bottom:22px}
 .result-strip{background:var(--surface);border:1px solid var(--border);border-left:3px solid var(--amber);border-radius:10px;padding:12px 14px;margin-bottom:12px}.result-strip .big{font-family:'Bebas Neue';font-size:24px}.result-strip .small{color:var(--dim);font-size:11px;margin-top:3px}.result-strip .move{font-family:'IBM Plex Mono';color:var(--amber)}
 .top10-alert{position:fixed;left:50%;bottom:calc(18px + env(safe-area-inset-bottom));transform:translate(-50%,20px);z-index:80;width:min(92vw,520px);background:var(--surface);border:1px solid var(--amber);border-radius:14px;padding:14px 16px;box-shadow:0 18px 44px rgba(0,0,0,.5);opacity:0;transition:.25s;pointer-events:none}.top10-alert.show{opacity:1;transform:translate(-50%,0)}.top10-alert .k{font-size:9px;text-transform:uppercase;letter-spacing:.16em;color:var(--olive)}.top10-alert .t{font-family:'Bebas Neue';font-size:26px;margin-top:2px}.top10-alert .s{font-size:11px;color:var(--dim)}
 .search-row{display:flex;gap:7px;margin:10px 0 14px}.search-row input{flex:1;min-width:0;background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:11px 12px;color:var(--text)}.search-row input:focus{outline:none;border-color:var(--amber)}.search-row button{border:0;background:var(--red);color:var(--text);border-radius:10px;padding:0 15px;font-weight:600}.search-results{display:grid;grid-template-columns:repeat(auto-fill,minmax(112px,1fr));gap:9px}.search-card{background:var(--surface);border:1px solid var(--border);border-radius:10px;overflow:hidden;padding:0;text-align:left;color:var(--text)}.search-card:hover{border-color:var(--amber)}.search-card:disabled{opacity:.5;cursor:default}.search-card img,.search-card .poster-placeholder{width:100%;aspect-ratio:2/3}.search-card .sm{padding:8px}.search-card .sm b{font-size:12px;display:block}.search-card .sm span{font-size:10px;color:var(--dim)}
+.insights-wrap{margin:4px 0 24px}.insights-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:8px}.insight-card{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:13px 14px;min-height:112px}.insight-card .insight-label{font-size:9px;text-transform:uppercase;letter-spacing:.14em;color:var(--olive);margin-bottom:7px}.insight-card .insight-title{font-size:14px;font-weight:600;line-height:1.35}.insight-card .insight-detail{font-size:10px;color:var(--dim);line-height:1.45;margin-top:6px}.insight-card.featured{border-color:rgba(233,157,37,.55)}.insight-card.featured .insight-title{font-family:'Bebas Neue';font-size:21px;font-weight:400;letter-spacing:.02em}.insights-empty{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:15px;color:var(--dim);font-size:11px;line-height:1.5}
 .rank-toolbar{display:flex;gap:8px;margin-bottom:4px}.rank-toolbar input{flex:1;background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:10px 12px;color:var(--text)}.rank-toolbar input:focus{outline:none;border-color:var(--amber)}.rank-note{font-size:9px;color:var(--dim);margin:7px 0 12px;text-align:right}.ranking-list{display:flex;flex-direction:column}.rank-row{display:grid;grid-template-columns:42px 1fr auto;gap:10px;padding:13px 2px;border-bottom:1px solid var(--border);align-items:center}.rank-num{font-family:'Bebas Neue';font-size:27px;color:var(--dim);text-align:center}.rank-row.top .rank-num{color:var(--amber)}.rank-title{font-weight:600;font-size:14px}.rank-sub{font-size:11px;color:var(--dim);margin-top:3px}.rank-stats{text-align:right;white-space:nowrap}.rank-rating{font-family:'IBM Plex Mono';font-size:13px;color:var(--text)}.rank-duels{font-size:10px;color:var(--dim);margin-top:3px}.rank-move{font-family:'IBM Plex Mono';font-size:10px;margin-top:3px}.rank-move.up{color:var(--olive)}.rank-move.down{color:var(--red)}.rank-move.flat{color:var(--dim)}.rank-btn{grid-column:2/4;justify-self:start;background:none;border:0;color:var(--amber);font-size:10px;padding:0;margin-top:-3px}
 .library-list{display:grid;gap:8px}.library-row{background:var(--surface);border:1px solid var(--border);border-radius:11px;padding:12px 13px;display:flex;justify-content:space-between;gap:12px;align-items:center}.library-row b{font-size:13px}.library-row span{font-size:10px;color:var(--dim)}.library-row button{background:none;border:1px solid var(--border);color:var(--amber);border-radius:999px;font-size:10px;padding:7px 10px}
 .modal{position:fixed;inset:0;background:rgba(4,0,17,.86);z-index:70;display:flex;align-items:flex-end;justify-content:center;padding:16px}.sheet{width:min(100%,620px);max-height:82vh;overflow:auto;background:var(--surface);border:1px solid var(--border);border-radius:18px;padding:18px}.sheet h2{font-family:'Bebas Neue';font-size:28px;font-weight:400;margin:0 0 6px}.sheet p{font-size:12px;color:var(--dim);line-height:1.45}.pick-list{display:grid;gap:6px;margin-top:12px}.pick-list button{background:var(--surface2);border:1px solid var(--border);color:var(--text);border-radius:10px;padding:10px 12px;text-align:left}.sheet-close{width:100%;margin-top:14px;background:none;border:1px solid var(--border);color:var(--dim);border-radius:10px;padding:10px}
 .empty{padding:22px 4px;color:var(--dim);font-size:13px;line-height:1.5}.status{font-size:11px;color:var(--dim);margin-bottom:10px}
-@media(max-width:520px){#app{padding-left:12px;padding-right:12px}.brand h1{font-size:30px}.confidence-meta{grid-template-columns:1fr 1fr}.confidence-meta div:last-child{display:none}.mode-chips{grid-template-columns:1fr 1fr}.duel-stage{grid-template-columns:1fr 28px 1fr}.vs{font-size:16px}.card-meta{padding:8px}.card-title{font-size:12px}.rank-row{grid-template-columns:36px 1fr auto;gap:8px}.rank-num{font-size:23px}}
+@media(max-width:520px){#app{padding-left:12px;padding-right:12px}.insights-grid{grid-template-columns:1fr}.brand h1{font-size:30px}.confidence-meta{grid-template-columns:1fr 1fr}.confidence-meta div:last-child{display:none}.mode-chips{grid-template-columns:1fr 1fr}.duel-stage{grid-template-columns:1fr 28px 1fr}.vs{font-size:16px}.card-meta{padding:8px}.card-title{font-size:12px}.rank-row{grid-template-columns:36px 1fr auto;gap:8px}.rank-num{font-size:23px}}
 </style>
 </head>
 <body>
@@ -364,9 +365,59 @@ function showTop10(movie,from,to){
   $('top10Title').textContent=movie.title;$('top10Sub').textContent=`#${from} → #${to}`;
   const a=$('top10Alert');a.classList.add('show');setTimeout(()=>a.classList.remove('show'),3200);
 }
+function buildInsights(){
+  const insights=[],s=sortedLib(),ranks=rankMap(),counts=duelCounts(),byId=Object.fromEntries(state.library.map(m=>[Number(m.id),m]));
+  if(!s.length)return insights;
+  const movers=Object.entries(state.rankMovement||{}).map(([id,v])=>({m:byId[Number(id)],delta:v?.delta||0})).filter(x=>x.m&&x.delta>0).sort((a,b)=>b.delta-a.delta);
+  if(movers.length&&movers[0].delta>=2){
+    const x=movers[0];insights.push({label:'ON THE MOVE',title:`${x.m.title} just climbed ${x.delta} spots.`,detail:`Now #${ranks[x.m.id]} after your most recent duel.`,featured:true});
+  }
+  const rivals=rivalPairs();
+  if(rivals.length){
+    const r=rivals[0],ps=pairStats()[pairKey(r.a.id,r.b.id)];
+    insights.push({label:'TIGHTEST RIVALRY',title:`${r.a.title} and ${r.b.title} refuse to separate.`,detail:`Your decisions are split ${ps.aWins}–${ps.bWins}; only ${Math.round(r.gap)} Elo points separate them.`});
+  }
+  const directorGroups={};
+  s.forEach(m=>{const d=(m.director||'').trim();if(!d)return;(directorGroups[d]||(directorGroups[d]=[])).push(ranks[m.id])});
+  const directors=Object.entries(directorGroups).filter(([,rs])=>rs.length>=2).map(([name,rs])=>({name,n:rs.length,avg:rs.reduce((a,b)=>a+b,0)/rs.length,best:Math.min(...rs)})).sort((a,b)=>a.avg-b.avg||b.n-a.n);
+  if(directors.length){
+    const d=directors[0];insights.push({label:'DIRECTOR',title:`${d.name} is your strongest recurring director.`,detail:`${d.n} ranked films · average position #${Math.round(d.avg)}.`});
+  }
+  const decadeGroups={};
+  s.forEach(m=>{const y=parseInt(m.year,10);if(!Number.isFinite(y))return;const d=Math.floor(y/10)*10;(decadeGroups[d]||(decadeGroups[d]=[])).push(ranks[m.id])});
+  const decades=Object.entries(decadeGroups).filter(([,rs])=>rs.length>=3).map(([d,rs])=>({d:Number(d),n:rs.length,avg:rs.reduce((a,b)=>a+b,0)/rs.length,top25:rs.filter(r=>r<=25).length})).sort((a,b)=>(b.top25-a.top25)||(a.avg-b.avg));
+  if(decades.length){
+    const d=decades[0];insights.push({label:'DECADE',title:`The ${d.d}s are especially strong in your canon.`,detail:`${d.top25} film${d.top25===1?'':'s'} in your Top 25 · ${d.n} ranked overall.`});
+  }
+  let upset=null;
+  state.duelLog.forEach(d=>{
+    const aBefore=Number(d.aEloBefore),bBefore=Number(d.bEloBefore);
+    if(!Number.isFinite(aBefore)||!Number.isFinite(bBefore))return;
+    const winnerIsA=Number(d.winnerId)===Number(d.aId),winnerBefore=winnerIsA?aBefore:bBefore,loserBefore=winnerIsA?bBefore:aBefore;
+    const gap=loserBefore-winnerBefore;
+    if(gap>0&&(!upset||gap>upset.gap)){
+      const w=byId[Number(d.winnerId)],lid=winnerIsA?Number(d.bId):Number(d.aId),l=byId[lid];
+      if(w&&l)upset={w,l,gap};
+    }
+  });
+  if(upset)insights.push({label:'BIGGEST UPSET',title:`${upset.w.title} beat ${upset.l.title} against the ranking.`,detail:`It overcame a ${Math.round(upset.gap)}-point Elo gap.`});
+  const tested=state.library.map(m=>({m,n:counts[m.id]||0})).sort((a,b)=>b.n-a.n)[0];
+  if(tested&&tested.n>=4)insights.push({label:'MOST TESTED',title:`${tested.m.title} has faced the most scrutiny.`,detail:`${tested.n} duels · currently #${ranks[tested.m.id]} at ${Math.round(tested.m.elo)} Elo.`});
+  const top=s.slice(0,Math.min(25,s.length)),oldCount=top.filter(m=>parseInt(m.year,10)<1980).length,newCount=top.filter(m=>parseInt(m.year,10)>=2000).length;
+  if(top.length>=10&&Math.abs(oldCount-newCount)>=4){
+    if(oldCount>newCount)insights.push({label:'ERA LEAN',title:'Your upper ranking leans older.',detail:`${oldCount} of your Top ${top.length} were released before 1980, versus ${newCount} from 2000 onward.`});
+    else insights.push({label:'ERA LEAN',title:'Your upper ranking leans modern.',detail:`${newCount} of your Top ${top.length} were released from 2000 onward, versus ${oldCount} before 1980.`});
+  }
+  return insights.slice(0,6);
+}
+function insightsHtml(){
+  const insights=buildInsights();
+  if(!insights.length)return `<div class="insights-empty">Keep dueling. Once Duel Cut has enough evidence, this section will surface patterns in your directors, eras, rivalries, upsets, and ranking movement.</div>`;
+  return `<div class="insights-grid">${insights.map(x=>`<div class="insight-card ${x.featured?'featured':''}"><div class="insight-label">${esc(x.label)}</div><div class="insight-title">${esc(x.title)}</div><div class="insight-detail">${esc(x.detail)}</div></div>`).join('')}</div>`;
+}
 function renderRankings(){
   const root=$('rankView'),counts=duelCounts(),s=sortedLib();
-  root.innerHTML=`<div class="block-head"><div><div class="kicker">Your canon</div><h2 class="section-title">RANKINGS</h2></div><p>${s.length} films</p></div><div class="rank-toolbar"><input id="rankSearch" placeholder="Search rankings"></div><div class="rank-note">movement shown from your most recent duel</div><div id="rankingList" class="ranking-list"></div>`;
+  root.innerHTML=`<div class="block-head"><div><div class="kicker">Your canon</div><h2 class="section-title">RANKINGS</h2></div><p>${s.length} films</p></div><div class="insights-wrap"><div class="block-head"><div><div class="kicker">What your choices are saying</div><h2 class="section-title">INSIGHTS</h2></div></div>${insightsHtml()}</div><div class="rank-toolbar"><input id="rankSearch" placeholder="Search rankings"></div><div class="rank-note">movement shown from your most recent duel</div><div id="rankingList" class="ranking-list"></div>`;
   const draw=()=>{
     const q=$('rankSearch').value.trim().toLowerCase();
     $('rankingList').innerHTML=s.map((m,i)=>({m,i})).filter(x=>!q||x.m.title.toLowerCase().includes(q)||(x.m.director||'').toLowerCase().includes(q)).map(({m,i})=>{
